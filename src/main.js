@@ -1,3 +1,4 @@
+import "./styles.css";
 const VERSION = "1.24.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
 const plans = [
