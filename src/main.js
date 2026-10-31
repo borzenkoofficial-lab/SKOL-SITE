@@ -1,10 +1,11 @@
 import "./styles.css";
 const VERSION = "1.24.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
+/* Access IDs mirror EDITION_FEATURES in struktura-crm-source/src/license-core.cjs. */
 const plans = [
-  {id:"START", title:"Рабочая база", desc:"Клиенты, заявки, объекты и задачи — базовое пространство для ежедневной работы.", features:["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"], note:"Для самостоятельной работы и небольших команд", color:"light"},
-  {id:"PRO", title:"Контроль экономики", desc:"Расширенный контур для расчётов, производства и контроля финансов.", features:["Всё из START","Финансы и платежи","Производство и ПИ","Инженерный расчёт","Отчёты"], note:"Для подрядчиков и руководителей проектов", color:"red"},
-  {id:"BUSINESS", title:"Полный контур", desc:"Инструменты поиска заказов и расширенной аналитики для растущей компании.", features:["Всё из PRO","Радар заказов","Расширенная аналитика","Инженерные планы","Встроенный браузер"], note:"Для компаний с несколькими направлениями", color:"dark"}
+  {id:"START", featureIds:[], title:"Рабочая база", desc:"Клиенты, заявки, объекты и задачи — базовое пространство для ежедневной работы.", features:["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"], note:"Для самостоятельной работы и небольших команд", color:"light"},
+  {id:"PRO", featureIds:["engineering","finance","production","reports"], title:"Контроль экономики", desc:"Расширенный контур для расчётов, производства и контроля финансов.", features:["Всё из START","Финансы и денежные операции","Производство и ПИ","Инженерный расчёт","Отчёты"], note:"Для подрядчиков и руководителей проектов", color:"red"},
+  {id:"BUSINESS", featureIds:["advanced_analytics","engineering","engineering_plans","finance","order_radar","production","reports","web_browser"], title:"Полный контур", desc:"Инструменты поиска заказов и расширенной аналитики для растущей компании.", features:["Всё из PRO","Радар заказов","Расширенная аналитика","Инженерные планы","Встроенный браузер"], note:"Для компаний с несколькими направлениями", color:"dark"}
 ];
 const path = location.pathname.replace(/\/+$/, "") || "/";
 const route = path === "/download" ? "download" : path === "/tariffs" ? "tariffs" : path === "/activation" ? "activation" : "home";
