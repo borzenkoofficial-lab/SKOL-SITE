@@ -27,3 +27,17 @@ test("page metadata is set per route and base HTML remains Russian", () => {
   assert.match(html, /<html lang="ru">/);
   assert.match(html, /rel="canonical"/);
 });
+
+test("visual system provides accessible light and dark themes", () => {
+  assert.match(source, /function setupTheme\(\)/);
+  assert.match(source, /skol-theme/);
+  assert.match(source, /theme-toggle/);
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /:root\[data-theme="dark"\]/);
+  assert.match(styles, /--bg:#f5f3ef/);
+  assert.match(styles, /prefers-reduced-motion/);
+});
+test("theme control is initialized and has an accessible label", () => {
+  assert.match(source, /aria-label="Включить тёмную тему"/);
+  assert.match(source, /setupTheme\(\);setupMotion\(\)/);
+});
