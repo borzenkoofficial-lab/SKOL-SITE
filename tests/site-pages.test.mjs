@@ -95,3 +95,18 @@ test("navigation hover uses a jelly animation, glow and accessible focus state",
   assert.match(styles, /box-shadow:0 0 8px rgba\(239,106,33/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
 });
+
+test("hero dashboard mockup uses a non-overlapping responsive layout", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.hero-monitor-main\s*\{[^}]*display:grid/s);
+  assert.match(styles, /grid-template-rows:auto auto auto minmax\(52px,1fr\) auto/);
+  assert.match(styles, /\.hero-monitor-metrics>div\s*\{[^}]*min-height:50px/s);
+  assert.match(styles, /@media\(max-width:600px\)/);
+});
+test("hero dashboard mockup has jelly hover and reduced-motion behavior", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /@keyframes hero-monitor-jelly/);
+  assert.match(styles, /\.hero-monitor:hover\s*\{/);
+  assert.match(styles, /animation:hero-monitor-jelly/);
+  assert.match(styles, /\.hero-monitor:hover\{animation:none!important\}/);
+});
