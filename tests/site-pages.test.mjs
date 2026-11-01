@@ -163,7 +163,7 @@ test("homepage sections have dedicated responsive layouts", () => {
 
 test("tariff selection synchronizes cards, request form and comparison matrix", () => {
   assert.match(source, /function setupTariffSelection\(\)/);
-  assert.match(source, /data-tariff-plan/);
+  assert.match(source, /dataset\.tariffPlan/);
   assert.match(source, /tariff-selected-status/);
   assert.match(source, /data-plan-col/);
   assert.match(source, /setupTariffSelection\(\)/);
