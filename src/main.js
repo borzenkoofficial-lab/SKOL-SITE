@@ -2,11 +2,93 @@ import "./styles.css";
 const VERSION = "1.24.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
 /* Access IDs mirror EDITION_FEATURES in struktura-crm-source/src/license-core.cjs. */
-const plans = [
-  {id:"START", featureIds:[], title:"Рабочая база", desc:"Клиенты, заявки, объекты и задачи — базовое пространство для ежедневной работы.", features:["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"], note:"Для самостоятельной работы и небольших команд", color:"light"},
-  {id:"PRO", featureIds:["engineering","finance","production","reports"], title:"Контроль экономики", desc:"Расширенный контур для расчётов, производства и контроля финансов.", features:["Всё из START","Финансы и денежные операции","Производство и ПИ","Инженерный расчёт","Отчёты"], note:"Для подрядчиков и руководителей проектов", color:"red"},
-  {id:"BUSINESS", featureIds:["advanced_analytics","engineering","engineering_plans","finance","order_radar","production","reports","web_browser"], title:"Полный контур", desc:"Инструменты поиска заказов и расширенной аналитики для растущей компании.", features:["Всё из PRO","Радар заказов","Расширенная аналитика","Инженерные планы","Встроенный браузер"], note:"Для компаний с несколькими направлениями", color:"dark"}
+const tariffFeatures = [
+  {id:"engineering",name:"Инженерный расчёт",description:"Расчёт стоимости, состава и трудоёмкости работ."},
+  {id:"engineering_plans",name:"Инженерные планы",description:"Работа с инженерными планами и ведомостями."},
+  {id:"finance",name:"Финансы и платежи",description:"Поступления, расходы и финансовые показатели."},
+  {id:"order_radar",name:"Радар заказов",description:"Поиск и обработка потенциальных заказов."},
+  {id:"production",name:"Производство и ПИ",description:"Планирование и контроль производства."},
+  {id:"reports",name:"Отчёты",description:"Отчётные представления и сводки."},
+  {id:"web_browser",name:"Встроенный браузер",description:"Встроенный браузер для работы с веб-источниками."}
 ];
+let tariffConfig = null;
+let plans = [
+  {id:"START",featureIds:[],title:"Рабочая база",desc:"Клиенты, заявки, объекты и задачи — базовое пространство для ежедневной работы.",features:["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"],note:"Для самостоятельной работы и небольших команд",color:"light",price:null,maxDevices:50},
+  {id:"PRO",featureIds:["engineering","finance","production","reports"],title:"Контроль экономики",desc:"Расширенный контур для расчётов, производства и контроля финансов.",features:["Всё из START","Финансы и платежи","Производство и ПИ","Инженерный расчёт","Отчёты"],note:"Для подрядчиков и руководителей проектов",color:"red",price:null,maxDevices:50},
+  {id:"BUSINESS",featureIds:["engineering","engineering_plans","finance","order_radar","production","reports","web_browser"],title:"Полный контур",desc:"Инструменты поиска заказов и полный набор доступных модулей СКОЛ CRM.",features:["Всё из START","Финансы и платежи","Производство и ПИ","Инженерный расчёт","Отчёты","Радар заказов","Инженерные планы","Встроенный браузер"],note:"Для компаний с несколькими направлениями",color:"dark",price:null,maxDevices:50}
+];
+function applyTariffConfig(config){
+  const known=new Set(tariffFeatures.map(item=>item.id));
+  if(!config||config.format!=="SKOL_TARIFF_CONFIG"||config.schemaVersion!==1||config.catalogVersion!==1||config.product!=="SKOL_CRM"||config.currency!=="RUB"||!Array.isArray(config.plans)||!config.plans.length||config.plans.length>30)return false;
+  if(!Array.isArray(config.featureIds)||config.featureIds.slice().sort().join("|")!==[...known].sort().join("|"))return false;
+  const seen=new Set();
+  const mapped=config.plans.filter(item=>item.enabled!==false).map((item,index)=>{
+    const id=String(item.id||"").toUpperCase();
+    if(!/^[A-Z][A-Z0-9_-]{1,47}$/.test(id)||seen.has(id)||!Array.isArray(item.features))throw new Error("Некорректный ID или состав тарифа.");
+    seen.add(id);
+    const featureIds=item.features.map(value=>String(value));
+    if(new Set(featureIds).size!==featureIds.length||featureIds.some(value=>!known.has(value)))throw new Error("В конфигурации найден неизвестный или повторяющийся модуль.");
+    const price=item.price===null||item.price===undefined?null:Number(item.price);
+    if(price!==null&&(!Number.isSafeInteger(price)||price<0||price>100000000))throw new Error("Некорректная цена в файле тарифов.");
+    const maxDevices=Number(item.maxDevices??50);
+    if(!Number.isSafeInteger(maxDevices)||maxDevices<1||maxDevices>50)throw new Error("Некорректный лимит компьютеров.");
+    const base=id==="START"?["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"]:["Всё из START"];
+    const featureNames=featureIds.map(featureId=>tariffFeatures.find(feature=>feature.id===featureId).name);
+    const color=id==="START"?"light":id==="BUSINESS"?"dark":"red";
+    return {id,featureIds,title:id==="START"?"Рабочая база":id==="PRO"?"Контроль экономики":id==="BUSINESS"?"Полный контур":String(item.name||id),desc:String(item.description||""),features:base.concat(featureNames),note:maxDevices<50?"До "+maxDevices+" компьютеров · "+String(item.description||""):String(item.description||"Стоимость и условия согласуются с менеджером"),color,price,maxDevices};
+  });
+  if(!mapped.length)throw new Error("В публичной конфигурации нет включённых тарифов.");
+  tariffConfig=config;
+  plans=mapped;
+  return true;
+}
+async function loadTariffConfig(){
+  try{
+    const response=await fetch("/skol-tariff-config.json",{cache:"no-store"});
+    if(!response.ok)throw new Error("Файл тарифной конфигурации недоступен.");
+    const config=await response.json();
+    if(!applyTariffConfig(config))throw new Error("Версия публичной конфигурации тарифов не поддерживается.");
+  }catch(error){console.warn("SKOL tariff config fallback:",error.message);}
+}
+function currentTariffFeatures(){
+  return [...document.querySelectorAll("[data-feature-toggle]:checked")].map(input=>input.dataset.featureToggle).sort();
+}
+function createTariffLicenseRequest(form){
+  const data=form?new FormData(form):new FormData();
+  const planId=document.querySelector("#plan-select")?.value||"CUSTOM";
+  const plan=plans.find(item=>item.id===planId);
+  const features=currentTariffFeatures();
+  return {
+    format:"SKOL_LICENSE_REQUEST",
+    schemaVersion:1,
+    catalogVersion:1,
+    product:"SKOL_CRM",
+    planId:plan?plan.id:"CUSTOM",
+    planName:plan?plan.title:"Индивидуальная конфигурация",
+    features,
+    seatCount:Number(data.get("seats")||1),
+    customer:{name:String(data.get("name")||"").trim(),contact:String(data.get("contact")||"").trim()},
+    message:""
+  };
+}
+function downloadTariffLicenseRequest(){
+  const form=document.querySelector("#tariff-form");
+  const request=createTariffLicenseRequest(form);
+  const blob=new Blob([JSON.stringify(request,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+  link.href=url;
+  link.download="skol-license-request.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  toast("JSON-заявка подготовлена для импорта в СКОЛ License Manager.");
+}
+function tariffBuilder(){
+  return '<section class="tariff-builder section-pad" id="tariff-builder"><div class="section-kicker"><span>02 / КОНСТРУКТОР</span><span>СОБЕРИТЕ СВОЮ ЛИЦЕНЗИЮ</span></div><div class="tariff-builder-heading"><div><h2>Нужен другой<br><em>состав модулей?</em></h2><p>Отметьте только те инструменты, которые нужны вашей команде. Базовые клиенты, заявки, объекты и задачи входят в любую конфигурацию.</p></div><div class="builder-counter"><b id="builder-count">0 / 7</b><span>МОДУЛЕЙ ВЫБРАНО</span></div></div><div class="tariff-builder-grid"><div class="builder-module-list">'+tariffFeatures.map(feature=>'<label class="builder-module"><input type="checkbox" data-feature-toggle="'+feature.id+'"><span class="builder-module-copy"><b>'+feature.name+'</b><small>'+feature.description+'</small></span><i aria-hidden="true">+</i></label>').join("")+'</div><aside class="builder-summary"><span class="eyebrow">ВАША КОНФИГУРАЦИЯ</span><h3 id="builder-plan-name">START</h3><p id="builder-plan-description">Базовое рабочее пространство СКОЛ CRM.</p><div class="builder-summary-line"><span>Выбранные модули</span><b id="builder-module-count">0</b></div><ul id="builder-feature-summary"><li>Базовые функции CRM</li></ul><div class="builder-price"><small>СТОИМОСТЬ</small><b id="builder-price">По запросу</b></div><p class="builder-price-note">Цена не рассчитывается на стороне браузера. Условия и стоимость подтверждает менеджер.</p><button class="button button-red" id="downloadTariffRequest" type="button">Скачать JSON-конфигурацию ↗</button><a class="builder-text-link" href="#tariff-request">Перейти к оформлению заявки ↓</a></aside></div></section>';
+}
+
 const path = location.pathname.replace(/\/+$/, "") || "/";
 const route = path === "/catalog" ? "catalog" : path === "/products/skol-crm" ? "product" : path === "/download" ? "download" : path === "/tariffs" ? "tariffs" : path === "/activation" ? "activation" : "home";
 const nav = [["Программа","/#product"],["Возможности","/#features"],["Тарифы","/tariffs"],["Скачать","/download"]];
