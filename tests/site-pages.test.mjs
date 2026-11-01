@@ -81,3 +81,17 @@ test("SKOL brand acronym is expanded in the homepage hero", () => {
   assert.match(source, /class="skol-expansion"/);
   for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
 });
+
+test("desktop navigation has four accessible interactive product links", () => {
+  assert.match(source, /data-nav-item/);
+  for (const label of ["Продукты","Платформа","Тарифы","Поддержка"]) assert.ok(source.includes("['"+label+"'"));
+  assert.match(source, /aria-current="page"/);
+});
+test("navigation hover uses a jelly animation, glow and accessible focus state", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /@keyframes nav-jelly/);
+  assert.match(styles, /\.desktop-nav a:hover/);
+  assert.match(styles, /\.desktop-nav a:focus-visible/);
+  assert.match(styles, /box-shadow:0 0 8px rgba\(239,106,33/);
+  assert.match(styles, /prefers-reduced-motion:reduce/);
+});
