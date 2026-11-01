@@ -39,7 +39,7 @@ test("visual system provides accessible light and dark themes", () => {
 });
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
-  assert.match(source, /setupTheme\(\);setupCatalogFolders\(\);setupMotion\(\)/);
+  assert.match(source, /setupTheme\(\);setupCatalogFolders\(\);setupHomeInteractions\(\);setupMotion\(\)/);
 });
 
 test("reference-driven visual system is present across SKOL", () => {
