@@ -1004,3 +1004,28 @@ img,svg,video{max-width:100%}
 @media(max-width:600px){
  .platform-hero-copy h1.skol-expansion{font-size:clamp(37px,9.5vw,58px);line-height:.91;gap:3px;margin-bottom:18px}
 }
+
+/* Navigation micro-interactions: light-up, elastic jelly and tactile press. */
+.desktop-nav{gap:clamp(8px,1.5vw,20px)}
+.desktop-nav a{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:1px solid transparent;border-radius:999px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.01em;transform:translateZ(0);transform-origin:50% 70%;transition:color .2s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease}
+.desktop-nav a>span{position:relative;z-index:1;transition:transform .24s var(--ease),letter-spacing .24s ease}
+.desktop-nav a>i{position:absolute;left:50%;bottom:4px;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0;transform:translate(-50%,5px) scale(.3);box-shadow:0 0 0 0 rgba(239,106,33,0);transition:opacity .2s,transform .25s var(--ease),box-shadow .25s,width .25s}
+.desktop-nav a:hover,.desktop-nav a:focus-visible,.desktop-nav a.active{color:#201d19;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,239,226,.88));border-color:rgba(239,106,33,.19);box-shadow:0 7px 19px rgba(91,57,29,.09),inset 0 1px 0 rgba(255,255,255,.95)}
+.desktop-nav a:hover,.desktop-nav a:focus-visible{animation:nav-jelly .62s cubic-bezier(.2,.9,.25,1.35) both}
+.desktop-nav a:hover>span,.desktop-nav a:focus-visible>span,.desktop-nav a.active>span{transform:translateY(-2px);letter-spacing:.025em}
+.desktop-nav a:hover>i,.desktop-nav a:focus-visible>i,.desktop-nav a.active>i{width:15px;height:3px;opacity:1;transform:translate(-50%,0) scale(1);border-radius:99px;box-shadow:0 0 8px rgba(239,106,33,.55),0 0 16px rgba(239,106,33,.25)}
+.desktop-nav a:active{animation:none;transform:translateY(1px) scale(.94,.9);background:var(--accent-soft);box-shadow:inset 0 2px 7px rgba(121,67,27,.12)}
+.desktop-nav a:focus-visible{outline:2px solid rgba(239,106,33,.55);outline-offset:3px}
+@keyframes nav-jelly{
+  0%{transform:translateY(0) scale(1,1)}
+  22%{transform:translateY(-3px) scale(1.09,.88)}
+  42%{transform:translateY(0) scale(.96,1.08)}
+  61%{transform:translateY(-1px) scale(1.035,.97)}
+  78%{transform:translateY(0) scale(.99,1.02)}
+  100%{transform:translateY(0) scale(1,1)}
+}
+:root[data-theme="dark"] .desktop-nav a:hover,:root[data-theme="dark"] .desktop-nav a:focus-visible,:root[data-theme="dark"] .desktop-nav a.active{color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,138,69,.13));border-color:rgba(255,138,69,.3);box-shadow:0 7px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.08)}
+:root[data-theme="dark"] .desktop-nav a:hover>i,:root[data-theme="dark"] .desktop-nav a:focus-visible>i,:root[data-theme="dark"] .desktop-nav a.active>i{box-shadow:0 0 9px rgba(255,138,69,.8),0 0 18px rgba(255,138,69,.35)}
+@media(max-width:1120px){.desktop-nav{gap:5px}.desktop-nav a{padding:0 10px;font-size:9px}}
+@media(hover:none),(pointer:coarse){.desktop-nav a:hover{animation:none;transform:none}.desktop-nav a:hover>span{transform:none;letter-spacing:inherit}}
+@media(prefers-reduced-motion:reduce){.desktop-nav a,.desktop-nav a>span,.desktop-nav a>i{transition:none!important}.desktop-nav a:hover,.desktop-nav a:focus-visible{animation:none!important}}
