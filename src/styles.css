@@ -1927,3 +1927,27 @@ img,svg,video{max-width:100%}
 .tariff-particle-field i:nth-child(4n){width:5px;height:5px;background:#fff;box-shadow:0 0 14px 3px rgba(255,255,255,.85)}
 @keyframes tariff-particle-rise{0%{opacity:0;transform:translate3d(0,20px,0) scale(.5)}20%{opacity:.8}75%{opacity:.55}100%{opacity:0;transform:translate3d(15px,-58px,0) scale(1.25)}}
 @media(prefers-reduced-motion:reduce){.tariff-hero-scene{transform:none!important}.tariff-particle-field{display:none}}
+
+
+/* Tariff journey: scroll chapters, active plan feedback and comparison focus */
+.tariff-cards,.comparison-section,.tariff-request{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.tariff-cards:not(.tariff-revealed),.comparison-section:not(.tariff-revealed),.tariff-request:not(.tariff-revealed){opacity:0;transform:translateY(38px);filter:blur(5px)}
+[data-comparison-row]{opacity:1;transform:translateX(0);transition:opacity .55s var(--ease),transform .55s var(--ease),background .25s}
+[data-comparison-row]:not(.tariff-revealed){opacity:0;transform:translateX(-18px)}
+[data-comparison-row].tariff-revealed{transition-delay:calc(var(--row-index,0)*35ms)}
+.tariff-card-3d.is-selected{outline:2px solid var(--accent);outline-offset:4px;box-shadow:0 26px 70px rgba(239,106,33,.19);transform:translateY(-7px)}
+.tariff-card-3d.is-selected:before{opacity:1;background:radial-gradient(circle at 50% 15%,rgba(239,106,33,.22),transparent 58%)}
+.tariff-card-3d [data-plan][aria-current="true"]{box-shadow:0 0 0 3px rgba(239,106,33,.17),0 12px 28px rgba(239,106,33,.16)}
+.comparison-row [data-plan-col]{transition:background .25s,color .25s,transform .25s}
+.comparison-row [data-plan-col].is-plan-active{background:var(--accent-soft);color:var(--accent-strong);transform:scale(1.06);border-radius:8px}
+.comparison-head [data-plan-col].is-plan-active{background:var(--accent);color:white}
+.tariff-selected-status{margin:0;padding:12px 0;color:var(--accent-strong);font-size:9px;font-weight:800;letter-spacing:.02em}
+.tariff-form select:focus-visible,.tariff-form input:focus-visible,.tariff-card-3d a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.tariff-request{background:radial-gradient(ellipse at 90% 20%,rgba(239,106,33,.11),transparent 42%),var(--canvas-deep)}
+.tariff-form{background:color-mix(in srgb,var(--surface) 86%,transparent);border-color:var(--line)}
+.tariff-request:before{color:color-mix(in srgb,var(--ink) 4%,transparent)}
+:root[data-theme="dark"] .tariff-request{background:radial-gradient(ellipse at 90% 20%,rgba(239,106,33,.13),transparent 42%),var(--canvas-deep)}
+:root[data-theme="dark"] .tariff-form{background:color-mix(in srgb,var(--surface) 92%,transparent)}
+:root[data-theme="dark"] .tariff-selected-status{color:#ff9a62}
+@media(max-width:600px){.tariff-cards:not(.tariff-revealed),.comparison-section:not(.tariff-revealed),.tariff-request:not(.tariff-revealed){transform:translateY(20px)}.tariff-card-3d.is-selected{transform:none;outline-offset:2px}}
+@media(prefers-reduced-motion:reduce){.tariff-cards,.comparison-section,.tariff-request,[data-comparison-row],.tariff-card-3d.is-selected,.comparison-row [data-plan-col]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;animation:none!important}}
