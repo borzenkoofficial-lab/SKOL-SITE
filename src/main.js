@@ -174,7 +174,84 @@ function setupTheme(){const root=document.documentElement,button=document.queryS
 function setupMotion(){const curtain=document.querySelector(".page-transition");document.querySelectorAll('a[href^="/"]').forEach(a=>a.addEventListener("click",e=>{const href=a.getAttribute("href");if(!href||href.startsWith("/#")||href.includes("#")||a.target==="_blank"||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const next=new URL(href,location.origin);if(next.pathname===location.pathname)return;e.preventDefault();if(curtain){curtain.classList.remove("enter");curtain.classList.add("leave");setTimeout(()=>location.assign(next.href),420)}else location.assign(next.href)}));const items=document.querySelectorAll(".reveal,.bento-card,.section-kicker,.release-card,.activation-step,.side-card,.home-reveal");if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("is-visible");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -35px 0px"});items.forEach(x=>io.observe(x))}else items.forEach(x=>x.classList.add("is-visible"));const menu=document.querySelector(".menu-toggle"),mobile=document.querySelector(".mobile-menu");if(menu&&mobile)menu.addEventListener("click",()=>{const open=menu.getAttribute("aria-expanded")==="true";menu.setAttribute("aria-expanded",String(!open));mobile.classList.toggle("open",!open);document.body.classList.toggle("menu-open",!open)});document.querySelectorAll(".mobile-menu a").forEach(a=>a.addEventListener("click",()=>{mobile.classList.remove("open");menu.setAttribute("aria-expanded","false");document.body.classList.remove("menu-open")}));const progress=document.querySelector(".scroll-progress");let scrollFrame=0;window.addEventListener("scroll",()=>{if(scrollFrame)return;scrollFrame=requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-window.innerHeight;if(progress)progress.style.transform="scaleX("+(max>0?window.scrollY/max:0)+")";scrollFrame=0})},{passive:true})}
 function setupParticles(){const scene=document.querySelector(".hero-visual");if(!scene)return;const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;const monitor=scene.querySelector(".hero-monitor");if(!reduced){const layer=document.createElement("div");layer.className="hero-particle-field";layer.setAttribute("aria-hidden","true");for(let i=0;i<22;i++){const p=document.createElement("i");p.className="hero-particle";p.style.setProperty("--x",(6+(i*37)%88)+"%");p.style.setProperty("--y",(5+(i*53)%88)+"%");p.style.setProperty("--delay",-(i%9)*.7+"s");p.style.setProperty("--duration",7+(i%6)*1.3+"s");layer.appendChild(p)}scene.appendChild(layer);let frame=0;scene.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{scene.style.setProperty("--tilt-x",(-y*5).toFixed(2)+"deg");scene.style.setProperty("--tilt-y",(x*7).toFixed(2)+"deg");scene.style.setProperty("--pointer-x",(x*22).toFixed(1)+"px");scene.style.setProperty("--pointer-y",(y*18).toFixed(1)+"px")})});scene.addEventListener("pointerleave",()=>{scene.style.setProperty("--tilt-x","0deg");scene.style.setProperty("--tilt-y","0deg");scene.style.setProperty("--pointer-x","0px");scene.style.setProperty("--pointer-y","0px")});let ticking=false;window.addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const r=scene.getBoundingClientRect(),progress=Math.max(-1,Math.min(1,(window.innerHeight*.5-(r.top+r.height*.5))/window.innerHeight));scene.style.setProperty("--scroll-depth",(progress*18).toFixed(1)+"px");ticking=false})},{passive:true})}if(monitor)monitor.setAttribute("aria-label","Объёмная демонстрация интерфейса СКОЛ CRM");}
 function setupTariffMotion(){const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;const scene=document.querySelector(".tariff-hero-scene");const cards=[...document.querySelectorAll("[data-tariff-card]")];if(!reduced&&scene){const field=document.createElement("div");field.className="tariff-particle-field";field.setAttribute("aria-hidden","true");for(let i=0;i<24;i++){const dot=document.createElement("i");dot.style.setProperty("--x",(4+(i*41)%92)+"%");dot.style.setProperty("--y",(5+(i*29)%88)+"%");dot.style.setProperty("--delay",-(i%11)*.8+"s");dot.style.setProperty("--duration",(7+(i%7)*1.2)+"s");field.appendChild(dot)}scene.appendChild(field);let frame=0;scene.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{scene.style.setProperty("--scene-x",(-y*7).toFixed(2)+"deg");scene.style.setProperty("--scene-y",(x*9).toFixed(2)+"deg")})});scene.addEventListener("pointerleave",()=>{scene.style.setProperty("--scene-x","0deg");scene.style.setProperty("--scene-y","0deg")})}if(!reduced&&cards.length){cards.forEach(card=>{let frame=0;card.addEventListener("pointermove",e=>{if(e.pointerType==="touch"||window.innerWidth<760)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{card.style.transform="perspective(1100px) rotateX("+(-y*5).toFixed(2)+"deg) rotateY("+(x*6).toFixed(2)+"deg) translateY(-5px)";card.style.setProperty("--glow-x",(x+0.5)*100+"%");card.style.setProperty("--glow-y",(y+0.5)*100+"%")})});card.addEventListener("pointerleave",()=>{if(frame)cancelAnimationFrame(frame);card.style.transform="";card.style.setProperty("--glow-x","50%");card.style.setProperty("--glow-y","0%")})});if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-in-view");io.unobserve(entry.target)}}),{threshold:.18});cards.forEach(card=>io.observe(card))}else cards.forEach(card=>card.classList.add("is-in-view"))}} 
-function setupTariffSelection(){const cards=[...document.querySelectorAll("[data-tariff-card]")],select=document.querySelector("#plan-select"),status=document.querySelector("#tariff-selected-status"),cols=[...document.querySelectorAll("[data-plan-col]")];function selectPlan(plan){if(!["START","PRO","BUSINESS"].includes(plan))return;document.documentElement.dataset.tariffPlan=plan;if(select)select.value=plan;if(status)status.textContent="Выбрана конфигурация: "+plan+" · можно отправить запрос на подключение";cards.forEach(card=>{const active=card.querySelector("[data-plan]")?.dataset.plan===plan;card.classList.toggle("is-selected",active);const link=card.querySelector("[data-plan]");if(link)link.setAttribute("aria-current",active?"true":"false")});cols.forEach(col=>col.classList.toggle("is-plan-active",col.dataset.planCol===plan))}document.querySelectorAll("[data-plan]").forEach(link=>link.addEventListener("click",()=>selectPlan(link.dataset.plan)));select?.addEventListener("change",()=>selectPlan(select.value));const sections=[...document.querySelectorAll(".tariff-cards,.comparison-section,.tariff-request,[data-comparison-row]")];sections.filter(section=>section.hasAttribute("data-comparison-row")).forEach((row,index)=>row.style.setProperty("--row-index",index));if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&"IntersectionObserver"in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("tariff-revealed");observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -40px 0px"});sections.forEach(section=>observer.observe(section))}else sections.forEach(section=>section.classList.add("tariff-revealed"))}
+function setupTariffSelection(){
+  const cards=[...document.querySelectorAll("[data-tariff-card]")];
+  const select=document.querySelector("#plan-select");
+  const status=document.querySelector("#tariff-selected-status");
+  const cols=[...document.querySelectorAll("[data-plan-col]")];
+  const toggles=[...document.querySelectorAll("[data-feature-toggle]")];
+  const summary=document.querySelector("#builder-feature-summary");
+  const download=document.querySelector("#downloadTariffRequest");
+  let activePlanId=plans.some(plan=>plan.id==="START")?"START":plans[0]?.id||"CUSTOM";
+  function featureIds(){return toggles.filter(input=>input.checked).map(input=>input.dataset.featureToggle).sort()}
+  function sameFeatures(a,b){return a.length===b.length&&a.every((id,index)=>id===b[index])}
+  function render(){
+    const selected=featureIds();
+    let plan=plans.find(item=>item.id===activePlanId);
+    if(activePlanId!=="CUSTOM"&&(!plan||!sameFeatures([...plan.featureIds].sort(),selected))){
+      activePlanId="CUSTOM";
+      plan=null;
+    }
+    if(activePlanId==="CUSTOM"){
+      const match=plans.find(item=>sameFeatures([...item.featureIds].sort(),selected));
+      if(match){activePlanId=match.id;plan=match}
+    }
+    const name=plan?plan.name:"Индивидуальная конфигурация";
+    const description=plan?plan.desc:"Набор модулей будет зафиксирован в заявке и подписанной лицензии.";
+    const price=plan&&plan.price!==null?new Intl.NumberFormat("ru-RU").format(plan.price)+" ₽":"По запросу";
+    const label=$("#builder-plan-name"),desc=$("#builder-plan-description"),priceNode=$("#builder-price"),count=$("#builder-count"),moduleCount=$("#builder-module-count");
+    if(label)label.textContent=name;
+    if(desc)desc.textContent=description;
+    if(priceNode)priceNode.textContent=price;
+    if(count)count.textContent=selected.length+" / "+tariffFeatures.length;
+    if(moduleCount)moduleCount.textContent=String(selected.length);
+    if(summary){
+      summary.replaceChildren();
+      if(!selected.length){
+        const li=document.createElement("li");
+        li.textContent="Базовые функции CRM";
+        summary.append(li);
+      }else{
+        selected.forEach(id=>{
+          const feature=tariffFeatures.find(item=>item.id===id);
+          if(!feature)return;
+          const li=document.createElement("li");
+          li.textContent=feature.name;
+          summary.append(li);
+        });
+      }
+    }
+    if(select)select.value=activePlanId;
+    if(status)status.textContent=plan?"Выбрана конфигурация: "+plan.id+" · "+selected.length+" дополнительных модулей":"Индивидуальная конфигурация · "+selected.length+" модулей выбрано";
+    cards.forEach(card=>{
+      const active=card.id===String(activePlanId).toLowerCase();
+      card.classList.toggle("is-selected",active);
+      const link=card.querySelector("[data-plan]");
+      if(link)link.setAttribute("aria-current",active?"true":"false");
+    });
+    cols.forEach(col=>col.classList.toggle("is-plan-active",col.dataset.planCol===activePlanId));
+  }
+  function selectPlan(id){
+    if(id==="CUSTOM"){activePlanId="CUSTOM";render();return}
+    const plan=plans.find(item=>item.id===id);
+    if(!plan)return;
+    activePlanId=plan.id;
+    const selected=new Set(plan.featureIds);
+    toggles.forEach(input=>{input.checked=selected.has(input.dataset.featureToggle)});
+    render();
+  }
+  document.querySelectorAll("[data-plan]").forEach(link=>link.addEventListener("click",()=>selectPlan(link.dataset.plan)));
+  select?.addEventListener("change",()=>selectPlan(select.value));
+  toggles.forEach(input=>input.addEventListener("change",()=>{activePlanId="CUSTOM";render()}));
+  download?.addEventListener("click",downloadTariffLicenseRequest);
+  const sections=[...document.querySelectorAll(".tariff-cards,.tariff-builder,.comparison-section,.tariff-request,[data-comparison-row]")];
+  sections.filter(section=>section.hasAttribute("data-comparison-row")).forEach((row,index)=>row.style.setProperty("--row-index",index));
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&"IntersectionObserver"in window){
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("tariff-revealed");observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    sections.forEach(section=>observer.observe(section));
+  }else sections.forEach(section=>section.classList.add("tariff-revealed"));
+  selectPlan(activePlanId);
+}
 function setPageMeta(){const pages={home:["СКОЛ — платформа программных продуктов","Программные продукты СКОЛ для реальных задач бизнеса. Каталог, лицензии, обновления и поддержка."],catalog:["Каталог программ СКОЛ — программные продукты","Каталог программных продуктов СКОЛ. Сейчас доступна СКОЛ CRM — локальная система управления строительным бизнесом."],product:["СКОЛ CRM — возможности, модули и лицензии","Подробное описание СКОЛ CRM: клиенты, заявки, объекты, сметы, производство, финансы, поиск заказов и офлайн-лицензирование."],tariffs:["Тарифы СКОЛ CRM — START, PRO, BUSINESS","Сравнение возможностей и тарифов СКОЛ CRM. Подключение через менеджера, офлайн-ключи."],download:["Скачать СКОЛ CRM — версии и обновления","Страница загрузок СКОЛ CRM для Windows: версии, изменения, установка и обновления."],activation:["Активация СКОЛ CRM — офлайн-лицензия","Инструкция по Device ID и локальной активации СКОЛ CRM с цифровой подписью Ed25519."]};const meta=pages[route]||pages.home;document.title=meta[0];let description=document.querySelector('meta[name="description"]');if(description)description.content=meta[1];let canonical=document.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement("link");canonical.rel="canonical";document.head.appendChild(canonical)}canonical.href=location.origin+location.pathname;let ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=meta[0];let ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=meta[1]}
 function boot(){setPageMeta();const content=route==="catalog"?catalog():route==="product"?product():route==="tariffs"?tariffs():route==="download"?download():route==="activation"?activation():home();document.querySelector("#app").innerHTML='<div class="page-transition enter"></div><div class="scroll-progress"></div>'+header()+content+footer();setupTheme();setupCatalogFolders();setupHomeInteractions();setupMotion();setupDemo();setupForms();setupParticles();setupTariffMotion();setupTariffSelection();document.querySelectorAll('a[href^="/#"]').forEach(a=>a.addEventListener("click",e=>{if(route==="home"){const t=document.getElementById(a.getAttribute("href").split("#")[1]);if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"})}}}));if(location.hash)setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView({behavior:"smooth"}),160)}
 boot();
