@@ -1,0 +1,61 @@
+{
+  "format": "SKOL_TARIFF_CONFIG",
+  "schemaVersion": 1,
+  "catalogVersion": 1,
+  "product": "SKOL_CRM",
+  "currency": "RUB",
+  "featureIds": [
+    "engineering",
+    "engineering_plans",
+    "finance",
+    "order_radar",
+    "production",
+    "reports",
+    "web_browser"
+  ],
+  "plans": [
+    {
+      "id": "START",
+      "name": "START",
+      "description": "Базовые клиенты, заявки, объекты и задачи.",
+      "price": null,
+      "maxDevices": 50,
+      "features": [],
+      "enabled": true,
+      "displayOrder": 1
+    },
+    {
+      "id": "PRO",
+      "name": "PRO",
+      "description": "Финансы, производство, инженерный расчёт и отчёты.",
+      "price": null,
+      "maxDevices": 50,
+      "features": [
+        "engineering",
+        "finance",
+        "production",
+        "reports"
+      ],
+      "enabled": true,
+      "displayOrder": 2
+    },
+    {
+      "id": "BUSINESS",
+      "name": "BUSINESS",
+      "description": "Полный набор доступных модулей CRM.",
+      "price": null,
+      "maxDevices": 50,
+      "features": [
+        "engineering",
+        "engineering_plans",
+        "finance",
+        "order_radar",
+        "production",
+        "reports",
+        "web_browser"
+      ],
+      "enabled": true,
+      "displayOrder": 3
+    }
+  ]
+}

@@ -1951,3 +1951,50 @@ img,svg,video{max-width:100%}
 :root[data-theme="dark"] .tariff-selected-status{color:#ff9a62}
 @media(max-width:600px){.tariff-cards:not(.tariff-revealed),.comparison-section:not(.tariff-revealed),.tariff-request:not(.tariff-revealed){transform:translateY(20px)}.tariff-card-3d.is-selected{transform:none;outline-offset:2px}}
 @media(prefers-reduced-motion:reduce){.tariff-cards,.comparison-section,.tariff-request,[data-comparison-row],.tariff-card-3d.is-selected,.comparison-row [data-plan-col]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;animation:none!important}}
+
+
+/* Configurable tariff builder */
+.tariff-price{margin:10px 0 12px;color:var(--accent-strong);font-size:17px;font-weight:800;letter-spacing:-.04em}
+.tariff-builder{padding-top:100px;padding-bottom:100px;background:var(--canvas-deep)}
+.tariff-builder-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin:20px 0 35px}
+.tariff-builder-heading h2{margin:0;font-size:clamp(34px,5vw,58px);letter-spacing:-.07em;line-height:.98}
+.tariff-builder-heading>div:first-child>p{max-width:580px;margin:20px 0 0;color:var(--muted);font-size:12px;line-height:1.8}
+.builder-counter{display:grid;gap:6px;flex:0 0 auto;padding:17px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-align:right}
+.builder-counter b{font-size:25px;letter-spacing:-.06em;color:var(--accent-strong)}
+.builder-counter span{font-size:7px;letter-spacing:.13em;color:var(--muted);font-weight:800}
+.tariff-builder-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.7fr);gap:24px;align-items:start}
+.builder-module-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.builder-module{position:relative;display:flex;gap:13px;align-items:flex-start;min-height:105px;padding:18px;border:1px solid var(--line);border-radius:13px;background:var(--surface);cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
+.builder-module:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 14px 30px rgba(44,35,25,.07)}
+.builder-module input{position:relative;flex:0 0 auto;width:17px;height:17px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+.builder-module-copy{display:grid;gap:7px;padding-right:16px}
+.builder-module-copy b{font-size:12px;color:var(--ink)}
+.builder-module-copy small{font-size:10px;color:var(--muted);line-height:1.6}
+.builder-module>i{position:absolute;right:15px;top:13px;color:var(--accent);font-style:normal;font-size:17px;opacity:.65}
+.builder-module:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--surface) 91%,var(--accent) 9%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent)}
+.builder-module:has(input:checked)>i{transform:rotate(45deg);opacity:1}
+.builder-module input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.builder-summary{position:sticky;top:95px;padding:24px;border:1px solid var(--line);border-radius:17px;background:var(--surface);box-shadow:0 18px 45px rgba(44,35,25,.08)}
+.builder-summary h3{margin:13px 0 8px;font-size:25px;letter-spacing:-.06em;color:var(--ink)}
+.builder-summary>p{margin:0;color:var(--muted);font-size:10px;line-height:1.7}
+.builder-summary-line{display:flex;justify-content:space-between;align-items:center;margin:21px 0 12px;padding-top:15px;border-top:1px solid var(--line);font-size:9px;color:var(--muted)}
+.builder-summary-line b{color:var(--ink);font-size:13px}
+.builder-summary ul{display:grid;gap:9px;min-height:55px;margin:0;padding:0;list-style:none}
+.builder-summary li{position:relative;padding-left:14px;color:var(--ink);font-size:10px;line-height:1.5}
+.builder-summary li:before{content:"";position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.builder-price{display:flex;justify-content:space-between;align-items:center;margin:19px 0 7px;padding:15px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.builder-price small{font-size:7px;letter-spacing:.12em;color:var(--muted);font-weight:800}
+.builder-price b{font-size:14px;color:var(--accent-strong)}
+.builder-summary .builder-price-note{margin:0 0 16px;font-size:9px}
+.builder-summary .button{width:100%;justify-content:center}
+.builder-text-link{display:block;margin-top:13px;text-align:center;color:var(--muted);font-size:9px;text-decoration:none}
+.builder-text-link:hover{color:var(--accent-strong)}
+.comparison-section .comparison-row{grid-template-columns:minmax(170px,1.8fr) repeat(3,minmax(70px,1fr))}
+.comparison-section .comparison-head{grid-template-columns:minmax(170px,1.8fr) repeat(3,minmax(70px,1fr))}
+:root[data-theme="dark"] .tariff-builder{background:var(--canvas-deep)}
+:root[data-theme="dark"] .builder-module,:root[data-theme="dark"] .builder-summary,:root[data-theme="dark"] .builder-counter{background:var(--surface);border-color:var(--line)}
+:root[data-theme="dark"] .builder-module-copy b,:root[data-theme="dark"] .builder-summary h3,:root[data-theme="dark"] .builder-summary li{color:var(--ink)}
+:root[data-theme="dark"] .builder-module-copy small,:root[data-theme="dark"] .builder-summary>p,:root[data-theme="dark"] .builder-summary-line{color:var(--muted)}
+@media(max-width:900px){.tariff-builder-grid{grid-template-columns:1fr}.builder-summary{position:relative;top:auto}.builder-module-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.tariff-builder{padding-top:65px;padding-bottom:70px}.tariff-builder-heading{align-items:flex-start;flex-direction:column;margin-bottom:24px}.builder-counter{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left}.builder-module-list{grid-template-columns:1fr;gap:8px}.builder-module{min-height:unset;padding:15px}.builder-summary{padding:19px}.tariff-price{font-size:15px}.comparison-section .comparison-row,.comparison-section .comparison-head{grid-template-columns:minmax(125px,1.7fr) repeat(3,minmax(48px,.6fr))}.comparison-section .comparison-row>span{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.builder-module,.builder-module:hover,.builder-module>i{transition:none!important;transform:none!important;animation:none!important}}
