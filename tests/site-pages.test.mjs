@@ -56,3 +56,22 @@ test("license page no longer renders animated particle canvas", () => {
   assert.match(source, /function setupParticles\(\)\{\}/);
   assert.match(source, /key-visual-plate/);
 });
+
+test("catalogue product is presented as an accessible interactive folder", () => {
+  assert.match(source, /data-catalog-folder/);
+  assert.match(source, /aria-expanded="false"/);
+  assert.match(source, /aria-controls="catalog-product-details"/);
+  assert.match(source, /function setupCatalogFolders\(\)/);
+  assert.match(source, /setupCatalogFolders\(\)/);
+  assert.match(source, /Открыть папку продукта СКОЛ CRM/);
+  assert.match(source, /Изучить программу/);
+});
+test("folder reveal has hover, keyboard, touch and reduced-motion styling", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.catalog-folder:hover \.folder-reveal/);
+  assert.match(styles, /\.catalog-folder:focus-within \.folder-reveal/);
+  assert.match(styles, /\.catalog-folder\.is-open \.folder-reveal/);
+  assert.match(styles, /@media\(max-width:600px\)/);
+  assert.match(styles, /folder-reveal-inner/);
+  assert.match(styles, /prefers-reduced-motion/);
+});
