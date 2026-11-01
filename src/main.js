@@ -24,7 +24,7 @@ function applyTariffConfig(config){
   const seen=new Set();
   const mapped=config.plans.filter(item=>item.enabled!==false).map((item,index)=>{
     const id=String(item.id||"").toUpperCase();
-    if(!/^[A-Z][A-Z0-9_-]{1,47}$/.test(id)||seen.has(id)||!Array.isArray(item.features))throw new Error("Некорректный ID или состав тарифа.");
+    if(!/^[A-Z][A-Z0-9_-]{1,47}$/.test(id)||id==="CUSTOM"||seen.has(id)||!Array.isArray(item.features))throw new Error("Некорректный или зарезервированный ID либо состав тарифа.");
     seen.add(id);
     const featureIds=item.features.map(value=>String(value));
     if(new Set(featureIds).size!==featureIds.length||featureIds.some(value=>!known.has(value)))throw new Error("В конфигурации найден неизвестный или повторяющийся модуль.");
