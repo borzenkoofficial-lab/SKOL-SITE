@@ -1823,3 +1823,100 @@ img,svg,video{max-width:100%}
  .hero-monitor,.hero-floating-card,.hero-particle,.hero-orange-route,.hero-monitor-chart i{animation:none!important;transition:none!important}
  .hero-monitor,.hero-back-panel,.hero-mini-device,.hero-floor,.hero-scene-halo{transform:none!important}
 }
+
+
+/* SKOL tariffs — immersive 3D edition system */
+.tariff-hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 76% 46%,rgba(239,106,33,.10),transparent 38%),var(--canvas)}
+.tariff-hero-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3%;min-height:540px;padding:42px 0 55px}
+.tariff-hero-copy{position:relative;z-index:3;max-width:650px}
+.tariff-hero-copy h1{margin:20px 0;font-size:clamp(48px,6.8vw,92px);line-height:.91;letter-spacing:-.085em}
+.tariff-hero-copy h1 em,.tariff-intro-row h2 em{font-style:normal;color:var(--accent)}
+.tariff-hero-lead{max-width:510px;margin:0 0 26px;color:var(--muted);font-size:13px;line-height:1.9}
+.tariff-hero-copy>.button{margin:0 0 38px}
+.tariff-hero-meta{display:flex;flex-wrap:wrap;gap:13px 22px;color:#8b8379;font-size:7px;font-weight:800;letter-spacing:.12em}
+.tariff-hero-meta span{display:flex;align-items:center;gap:7px}
+.tariff-hero-scene{--scene-x:0deg;--scene-y:0deg;position:relative;min-height:470px;perspective:1100px;transform-style:preserve-3d;isolation:isolate}
+.tariff-scene-grid{position:absolute;inset:8% 1%;opacity:.55;background-image:linear-gradient(rgba(135,124,109,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(135,124,109,.13) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse,black 20%,transparent 73%);transform:rotateX(58deg) rotateZ(-25deg) scale(1.15);animation:tariff-grid-drift 18s linear infinite}
+@keyframes tariff-grid-drift{to{background-position:64px 64px}}
+.tariff-scene-orbit{position:absolute;left:50%;top:48%;width:360px;height:170px;border:1px solid rgba(239,106,33,.35);border-radius:50%;transform-style:preserve-3d;box-shadow:0 0 28px rgba(239,106,33,.06);pointer-events:none}
+.tariff-scene-orbit:after{content:"";position:absolute;left:12%;top:14%;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px 5px rgba(239,106,33,.28)}
+.orbit-one{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(-24deg);animation:tariff-orbit-a 13s linear infinite}
+.orbit-two{width:290px;height:290px;border-color:rgba(65,58,49,.16);transform:translate(-50%,-50%) rotateY(68deg) rotateZ(22deg);animation:tariff-orbit-b 17s linear infinite}
+@keyframes tariff-orbit-a{to{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(336deg)}}
+@keyframes tariff-orbit-b{to{transform:translate(-50%,-50%) rotateY(68deg) rotateZ(382deg)}}
+.tariff-scene-core{position:absolute;left:50%;top:48%;width:190px;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.65);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(235,228,217,.78));box-shadow:22px 32px 70px rgba(49,38,25,.16),inset 0 1px 0 #fff;transform:translate(-50%,-50%) rotateY(-19deg) rotateX(9deg) rotateZ(-5deg);transform-style:preserve-3d;animation:tariff-core-float 6s ease-in-out infinite}
+.tariff-scene-core:before{content:"";position:absolute;inset:13px;border:1px solid rgba(153,137,117,.2);border-radius:19px;transform:translateZ(10px)}
+.tariff-scene-core span{font-size:13px;font-weight:900;letter-spacing:.23em}
+.tariff-scene-core strong{margin:2px 0 8px;color:var(--accent);font-size:61px;line-height:.9;letter-spacing:-.1em}
+.tariff-scene-core i{font-size:7px;font-style:normal;font-weight:800;letter-spacing:.16em;color:#8d8377}
+@keyframes tariff-core-float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -12px;rotate:1deg}}
+.tariff-scene-chip{position:absolute;z-index:4;display:grid;gap:5px;min-width:112px;padding:12px 15px;border:1px solid rgba(255,255,255,.7);border-radius:12px;background:rgba(255,255,255,.78);box-shadow:0 15px 30px rgba(54,42,30,.10);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform-style:preserve-3d}
+.tariff-scene-chip small{font-size:6px;font-weight:800;letter-spacing:.13em;color:#8c8378}
+.tariff-scene-chip b{font-size:13px;letter-spacing:-.04em}
+.chip-start{left:1%;top:24%;transform:translateZ(65px) rotate(-8deg);animation:tariff-chip-a 7s ease-in-out infinite}
+.chip-pro{right:0;top:18%;transform:translateZ(90px) rotate(7deg);animation:tariff-chip-b 8s ease-in-out infinite}
+.chip-business{right:4%;bottom:13%;transform:translateZ(45px) rotate(-5deg);animation:tariff-chip-c 9s ease-in-out infinite}
+@keyframes tariff-chip-a{50%{translate:0 -12px;rotate:2deg}}
+@keyframes tariff-chip-b{50%{translate:0 13px;rotate:-2deg}}
+@keyframes tariff-chip-c{50%{translate:0 -9px;rotate:2deg}}
+.tariff-scene-coordinates{position:absolute;left:2%;bottom:8%;color:#9b9185;font:700 7px/1.8 monospace;letter-spacing:.1em}
+.tariff-hero-copy .eyebrow,.tariff-hero-copy h1,.tariff-hero-lead,.tariff-hero-copy>.button,.tariff-hero-meta{animation:tariff-copy-in .8s var(--ease) both}
+.tariff-hero-copy h1{animation-delay:.08s}.tariff-hero-lead{animation-delay:.16s}.tariff-hero-copy>.button{animation-delay:.24s}.tariff-hero-meta{animation-delay:.32s}
+@keyframes tariff-copy-in{from{opacity:0;transform:translateY(22px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.tariff-cards{padding-top:95px;padding-bottom:105px;background:var(--canvas)}
+.tariff-intro-row{display:flex;justify-content:space-between;align-items:flex-end;gap:35px;margin:42px 0 12px}
+.tariff-intro-row h2{margin:0;font-size:clamp(43px,5.5vw,72px);line-height:.94;letter-spacing:-.08em}
+.tariff-intro-row>p{max-width:390px;margin:0 0 4px;color:var(--muted);font-size:11px;line-height:1.9}
+.tariff-grid{perspective:1400px;gap:17px;margin-top:30px}
+.tariff-card-3d{position:relative;isolation:isolate;overflow:hidden;min-height:620px;padding:25px 26px 24px;border-radius:22px;transform-style:preserve-3d;will-change:transform;transition:transform .22s ease-out,border-color .35s,box-shadow .35s;box-shadow:0 14px 40px rgba(54,42,30,.06)}
+.tariff-card-3d:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.65;background:radial-gradient(circle at var(--glow-x,50%) var(--glow-y,0%),rgba(239,106,33,.15),transparent 48%);pointer-events:none}
+.tariff-card-3d:after{content:"";position:absolute;z-index:-1;right:-60px;top:110px;width:230px;height:230px;border:1px solid rgba(145,128,108,.14);border-radius:50%;box-shadow:0 0 0 22px rgba(145,128,108,.035),0 0 0 44px rgba(145,128,108,.025);pointer-events:none}
+.tariff-card-3d.red{border-color:rgba(239,106,33,.5);box-shadow:0 20px 55px rgba(239,106,33,.12)}
+.tariff-card-3d.dark{background:linear-gradient(145deg,#302d29,#1f1e1c 75%);border-color:#292622;box-shadow:0 25px 60px rgba(30,26,22,.2)}
+.tariff-card-3d .tariff-card-top{position:relative;z-index:2}
+.tariff-card-orb{position:relative;width:115px;height:105px;margin:26px auto 19px;display:grid;place-items:center;transform-style:preserve-3d}
+.tariff-card-orb:before,.tariff-card-orb:after,.tariff-card-orb i{content:"";position:absolute;inset:12px;border:1px solid rgba(239,106,33,.34);border-radius:50%;transform:rotateX(67deg) rotateZ(-25deg)}
+.tariff-card-orb:after{inset:1px;border-color:rgba(130,119,104,.25);transform:rotateY(67deg) rotateZ(28deg)}
+.tariff-card-orb i:nth-child(1){inset:20px;border-color:rgba(239,106,33,.6);transform:rotateX(72deg) rotateZ(52deg);animation:tariff-card-spin 10s linear infinite}
+.tariff-card-orb i:nth-child(2){inset:5px;border-color:rgba(130,119,104,.23);transform:rotateY(72deg) rotateZ(-35deg);animation:tariff-card-spin 14s linear infinite reverse}
+.tariff-card-orb i:nth-child(3){inset:34px;border:0;background:radial-gradient(circle at 35% 30%,#fff,rgba(239,106,33,.9) 55%,rgba(156,66,27,.3));box-shadow:0 0 24px rgba(239,106,33,.26);transform:translateZ(22px)}
+.tariff-card-orb span{position:relative;z-index:2;color:var(--ink);font-size:11px;font-weight:900;letter-spacing:.08em;transform:translateZ(34px)}
+.tariff-card.dark .tariff-card-orb span{color:#fff}
+@keyframes tariff-card-spin{to{rotate:360deg}}
+.tariff-card-heading{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tariff-card-heading h2{margin:0;font-size:37px;letter-spacing:-.08em}
+.tariff-card-heading>span{color:#999084;font-size:6px;font-weight:800;letter-spacing:.12em}
+.tariff-card-3d h3{margin:5px 0 10px;font-size:16px}
+.tariff-card-3d>p{min-height:58px;font-size:10px}
+.tariff-card-3d .tariff-divider{margin:18px 0 15px}
+.tariff-card-3d ul{gap:10px;margin:13px 0 22px}
+.tariff-card-3d li{font-size:9px}
+.tariff-card-3d .tariff-card-bottom{gap:13px}
+.tariff-card-3d .tariff-card-bottom .button{display:flex;justify-content:space-between;align-items:center}
+.tariff-card-3d .tariff-card-bottom .button b{font-size:15px}
+.tariff-card-index{position:absolute;right:25px;bottom:19px;color:rgba(130,119,104,.5);font:700 6px monospace;letter-spacing:.15em}
+.tariff-card.dark .tariff-card-index{color:rgba(255,255,255,.3)}
+.tariff-card-3d.dark .tariff-card-heading>span{color:#b4aca1}
+.tariff-card-3d.dark .tariff-card-bottom>span{color:#c0b8ae}
+.tariff-card-3d.dark li{color:#e0d9d0}
+.tariff-card-3d.is-in-view{animation:tariff-card-enter .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--card-index)*.12s)}
+@keyframes tariff-card-enter{from{opacity:0;transform:translateY(35px) rotateX(8deg);filter:blur(5px)}to{opacity:1;transform:translateY(0) rotateX(0);filter:blur(0)}}
+.comparison-section .comparison-table{box-shadow:0 18px 50px rgba(54,42,30,.05)}
+.comparison-section .comparison-row{transition:background .25s,transform .25s}
+.comparison-section .comparison-row:not(.comparison-head):hover{background:var(--surface-soft)}
+.comparison-section .comparison-row .yes{font-size:14px}
+.tariff-request{position:relative;overflow:hidden;background:radial-gradient(ellipse at 90% 20%,rgba(239,106,33,.1),transparent 40%),#eeeae4}
+.tariff-request:before{content:"SKOL";position:absolute;right:-2%;bottom:-.28em;color:rgba(104,89,71,.045);font-size:clamp(180px,28vw,420px);font-weight:900;letter-spacing:-.12em;line-height:1;pointer-events:none}
+.tariff-request-grid{position:relative;z-index:1}
+.tariff-form{position:relative;overflow:hidden;background:rgba(255,255,255,.76);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);box-shadow:0 22px 55px rgba(58,45,31,.09)}
+.tariff-form:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#d85c2a,#f2a05d,transparent)}
+.tariff-form-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--line);color:#8b8379;font-size:7px;font-weight:800;letter-spacing:.15em}
+.tariff-form-top b{display:flex;align-items:center;gap:6px;color:#548452;font-size:7px}
+.tariff-form-top .live-dot{margin:0}
+.tariff-form label{color:#554e45}
+.tariff-form input,.tariff-form select{transition:transform .2s,border-color .2s,box-shadow .2s}
+.tariff-form input:focus,.tariff-form select:focus{transform:translateY(-1px)}
+@media(max-width:1050px){.tariff-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tariff-card-3d:last-child{grid-column:1/-1;min-height:560px}.tariff-hero-grid{grid-template-columns:1fr .9fr}.tariff-scene-core{scale:.85}}
+@media(max-width:760px){.tariff-hero-grid{grid-template-columns:1fr;padding-top:28px}.tariff-hero-scene{min-height:370px;margin-top:12px}.tariff-scene-core{scale:.8}.tariff-scene-orbit{scale:.8}.tariff-intro-row{display:grid;gap:18px}.tariff-grid{grid-template-columns:1fr}.tariff-card-3d:last-child{grid-column:auto;min-height:0}.tariff-card-3d{min-height:0}.tariff-card-orb{margin:20px auto 14px}.tariff-card-3d:after{top:85px}.tariff-hero-meta{gap:10px 15px}.tariff-request-grid{grid-template-columns:1fr;gap:25px}}
+@media(max-width:480px){.tariff-hero-copy h1{font-size:clamp(43px,13vw,61px)}.tariff-hero-scene{min-height:310px;margin-left:-10px;margin-right:-10px}.tariff-scene-core{scale:.7}.tariff-scene-orbit{scale:.67}.tariff-scene-chip{min-width:90px;padding:9px 10px}.tariff-scene-chip b{font-size:11px}.chip-start{left:0}.chip-pro{right:0}.chip-business{right:0;bottom:7%}.tariff-intro-row h2{font-size:47px}.tariff-card-3d{padding:22px}.tariff-card-heading h2{font-size:34px}.comparison-row{grid-template-columns:minmax(0,1fr) repeat(3,55px);gap:5px;padding:13px 10px}.comparison-row>span{font-size:8px}.comparison-row>b{font-size:9px}.tariff-request:before{font-size:170px}}
+@media(prefers-reduced-motion:reduce){.tariff-hero-copy .eyebrow,.tariff-hero-copy h1,.tariff-hero-lead,.tariff-hero-copy>.button,.tariff-hero-meta,.tariff-scene-grid,.tariff-scene-orbit,.tariff-scene-core,.tariff-scene-chip,.tariff-card-orb i,.tariff-card-3d.is-in-view{animation:none!important;transition:none!important}.tariff-card-3d{transform:none!important}}
