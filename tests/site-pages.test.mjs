@@ -177,3 +177,36 @@ test("tariff sections and comparison rows reveal progressively with accessible m
   assert.match(styles, /prefers-reduced-motion:reduce/);
   assert.match(styles, /:root\[data-theme="dark"\] \.tariff-request/);
 });
+
+test("tariff builder exposes only seven CRM-enforced modules and can export a license request", () => {
+  for (const id of ["engineering", "engineering_plans", "finance", "order_radar", "production", "reports", "web_browser"]) {
+    assert.ok(source.includes('id:"' + id + '"') || source.includes('id: "' + id + '"'));
+    assert.ok(source.includes('data-feature-toggle="'+id+'"'));
+  }
+  assert.match(source, /function tariffBuilder\(\)/);
+  assert.match(source, /function createTariffLicenseRequest\(form\)/);
+  assert.match(source, /SKOL_LICENSE_REQUEST/);
+  assert.match(source, /downloadTariffLicenseRequest/);
+  assert.match(source, /function applyTariffConfig\(config\)/);
+  assert.match(source, /loadTariffConfig\(\)/);
+  assert.doesNotMatch(source, /advanced_analytics/);
+});
+
+test("public tariff config follows the strict CRM schema and keeps unapproved prices blank", () => {
+  const config = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
+  assert.equal(config.format, "SKOL_TARIFF_CONFIG");
+  assert.equal(config.schemaVersion, 1);
+  assert.equal(config.catalogVersion, 1);
+  assert.equal(config.product, "SKOL_CRM");
+  assert.deepEqual(config.plans.map(plan => plan.id), ["START", "PRO", "BUSINESS"]);
+  assert.ok(config.plans.every(plan => plan.price === null));
+  assert.deepEqual(config.plans[1].features, ["engineering", "finance", "production", "reports"]);
+  assert.deepEqual(config.plans[2].features, ["engineering", "engineering_plans", "finance", "order_radar", "production", "reports", "web_browser"]);
+});
+
+test("tariff route waits for validated configuration before rendering the page", () => {
+  assert.match(source, /async function boot\(\)/);
+  assert.match(source, /if\(route==="tariffs"\)await loadTariffConfig\(\)/);
+  assert.match(source, /SKOL boot failed/);
+  assert.match(source, /tariff-builder/);
+});
