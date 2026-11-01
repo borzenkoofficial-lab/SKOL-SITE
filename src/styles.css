@@ -996,3 +996,11 @@ img,svg,video{max-width:100%}
 @media(prefers-reduced-motion:reduce){
  .folder-cover,.folder-cover-flap,.folder-screen,.folder-reveal,.folder-reveal-inner,.folder-open-icon{transition:none!important}
 }
+
+/* SKOL acronym lockup in the homepage hero. */
+.platform-hero-copy h1.skol-expansion{display:grid;gap:2px;margin-bottom:25px;font-size:clamp(48px,5.1vw,76px);line-height:.9;letter-spacing:-.078em}
+.platform-hero-copy h1.skol-expansion>span{display:block;white-space:nowrap}
+.platform-hero-copy h1.skol-expansion>span>i{font-style:normal;color:var(--accent)}
+@media(max-width:600px){
+ .platform-hero-copy h1.skol-expansion{font-size:clamp(37px,9.5vw,58px);line-height:.91;gap:3px;margin-bottom:18px}
+}
