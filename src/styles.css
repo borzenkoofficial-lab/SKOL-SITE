@@ -1029,3 +1029,130 @@ img,svg,video{max-width:100%}
 @media(max-width:1120px){.desktop-nav{gap:5px}.desktop-nav a{padding:0 10px;font-size:9px}}
 @media(hover:none),(pointer:coarse){.desktop-nav a:hover{animation:none;transform:none}.desktop-nav a:hover>span{transform:none;letter-spacing:inherit}}
 @media(prefers-reduced-motion:reduce){.desktop-nav a,.desktop-nav a>span,.desktop-nav a>i{transition:none!important}.desktop-nav a:hover,.desktop-nav a:focus-visible{animation:none!important}}
+
+/* Hero dashboard mockup: controlled grid, consistent spacing and jelly hover. */
+.hero-monitor{
+  height:auto;
+  min-height:0;
+  aspect-ratio:1.24;
+  transform-origin:52% 68%;
+  will-change:transform;
+  transition:box-shadow .3s ease,filter .3s ease;
+}
+.hero-monitor-body{
+  height:auto;
+  min-height:0;
+  grid-template-columns:clamp(42px,5.2vw,54px) minmax(0,1fr);
+}
+.hero-monitor-main{
+  min-width:0;
+  min-height:0;
+  display:grid;
+  grid-template-rows:auto auto auto minmax(52px,1fr) auto;
+  align-content:stretch;
+  gap:10px;
+  padding:clamp(13px,1.8vw,20px) clamp(13px,2vw,22px);
+}
+.hero-monitor-main>span{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  line-height:1.45;
+  letter-spacing:.12em;
+}
+.hero-monitor-main>strong{
+  min-width:0;
+  margin:0;
+  font-size:clamp(19px,2.2vw,30px);
+  line-height:1.04;
+  letter-spacing:-.065em;
+  white-space:normal;
+}
+.hero-monitor-metrics{gap:clamp(4px,.65vw,8px);min-width:0}
+.hero-monitor-metrics>div{
+  min-width:0;
+  min-height:50px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:7px clamp(5px,.8vw,9px);
+  overflow:hidden;
+}
+.hero-monitor-metrics b{font-size:clamp(13px,1.35vw,17px);line-height:1.05}
+.hero-monitor-metrics small{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:clamp(5px,.48vw,6px);
+  letter-spacing:.055em;
+  line-height:1.35;
+}
+.hero-monitor-chart{
+  min-height:52px;
+  height:100%;
+  margin:0;
+  padding:7px 9px 0;
+  gap:clamp(3px,.55vw,7px);
+  border-radius:5px 5px 0 0;
+  overflow:hidden;
+}
+.hero-monitor-chart i{min-width:0;max-height:100%}
+.hero-monitor-lines{min-height:4px;gap:7px;margin:0;overflow:hidden}
+.hero-monitor-lines i{min-width:0}
+.hero-monitor-side{gap:clamp(12px,1.5vw,17px);padding:14px 6px}
+.hero-monitor-side b{flex:none}
+.hero-monitor-side i{flex:none}
+.hero-monitor-base{pointer-events:none}
+@keyframes hero-monitor-jelly{
+  0%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(0) scale(1,1)}
+  18%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(-7px) scale(1.035,.955)}
+  37%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(-10px) scale(.975,1.04)}
+  56%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(-5px) scale(1.02,.985)}
+  76%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(-8px) scale(.992,1.015)}
+  100%{transform:rotateY(-17deg) rotateX(7deg) rotateZ(-7deg) translateY(0) scale(1,1)}
+}
+@media(hover:hover) and (pointer:fine){
+ .hero-monitor:hover{
+  animation:hero-monitor-jelly .78s cubic-bezier(.2,.9,.25,1.35) both;
+  box-shadow:0 42px 76px rgba(58,46,34,.25),0 0 0 1px rgba(239,106,33,.13),inset 0 0 0 1px rgba(25,25,25,.1);
+  filter:drop-shadow(0 10px 16px rgba(239,106,33,.11));
+ }
+}
+:root[data-theme="dark"] .hero-monitor:hover{
+ box-shadow:0 42px 76px rgba(0,0,0,.38),0 0 0 1px rgba(255,138,69,.2),inset 0 0 0 1px rgba(25,25,25,.1);
+}
+@media(max-width:850px){
+ .hero-monitor{aspect-ratio:1.2}
+ .hero-monitor-main{gap:8px;padding:13px 13px}
+ .hero-monitor-chart{min-height:45px}
+}
+@media(max-width:600px){
+ .hero-monitor{height:auto;min-height:0;aspect-ratio:1.12}
+ .hero-monitor-body{height:auto;min-height:0;grid-template-columns:33px minmax(0,1fr)}
+ .hero-monitor-main{display:grid;grid-template-rows:auto auto auto minmax(32px,1fr) auto;gap:6px;padding:10px 8px}
+ .hero-monitor-main>span{font-size:5px;letter-spacing:.08em}
+ .hero-monitor-main>strong{font-size:clamp(15px,4vw,21px);line-height:1.02;margin:0}
+ .hero-monitor-metrics{gap:3px}
+ .hero-monitor-metrics>div{min-height:37px;padding:4px 3px}
+ .hero-monitor-metrics b{font-size:clamp(10px,2.9vw,12px)}
+ .hero-monitor-metrics small{font-size:4px;letter-spacing:0}
+ .hero-monitor-chart{height:100%;min-height:30px;padding:4px 4px 0;gap:3px}
+ .hero-monitor-lines{gap:4px}
+ .hero-monitor-lines i{height:3px}
+ .hero-monitor-side{gap:9px;padding:8px 3px}
+ .hero-monitor-side b{width:18px;height:18px}
+ .hero-monitor-side i{width:10px;height:10px}
+}
+@media(max-width:380px){
+ .hero-monitor{left:7%;width:77%;top:19%;aspect-ratio:1.08}
+ .hero-monitor-main{gap:5px;padding:8px 6px}
+ .hero-monitor-main>strong{font-size:14px}
+ .hero-monitor-chart{min-height:24px}
+ .hero-monitor-side{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-monitor:hover{animation:none!important}
+ .hero-monitor{transition:none!important}
+}
