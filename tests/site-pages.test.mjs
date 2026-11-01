@@ -44,7 +44,7 @@ test("theme control is initialized and has an accessible label", () => {
 
 test("reference-driven visual system is present across SKOL", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(source, /Меньше хаоса\./);
+  assert.match(source, /Система координации операций и логики/);
   assert.match(source, /hero-monitor/);
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
