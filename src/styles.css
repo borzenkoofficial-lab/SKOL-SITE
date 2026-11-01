@@ -1764,3 +1764,62 @@ img,svg,video{max-width:100%}
  .home-folder-cover,.home-folder-screen,.home-folder-details,.home-folder-details-inner,.home-pillar-trigger,.home-pillar-details,.home-pillar-details p,.home-pillar-letter,.home-pillar-arrow,.home-method-step,.home-final-folder{transition:none!important}
  .home-method-step:hover{animation:none!important;transform:none!important}
 }
+
+
+/* SKOL home / cinematic 3D motion layer */
+.platform-hero .platform-hero-copy>.eyebrow,
+.platform-hero .skol-expansion,
+.platform-hero .platform-lead,
+.platform-hero .hero-actions,
+.platform-hero .hero-product-shortcut{animation:skol-copy-enter .85s var(--ease) both}
+.platform-hero .skol-expansion{animation-delay:.08s}
+.platform-hero .platform-lead{animation-delay:.16s}
+.platform-hero .hero-actions{animation-delay:.23s}
+.platform-hero .hero-product-shortcut{animation-delay:.3s}
+@keyframes skol-copy-enter{from{opacity:0;transform:translate3d(0,22px,0);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}
+.hero-visual{--tilt-x:0deg;--tilt-y:0deg;--pointer-x:0px;--pointer-y:0px;--scroll-depth:0px;transform-style:preserve-3d}
+.hero-monitor{transform:rotateY(calc(-17deg + var(--tilt-y))) rotateX(calc(7deg + var(--tilt-x))) rotateZ(-7deg) translate3d(var(--pointer-x),calc(var(--pointer-y) + var(--scroll-depth)),0);transition:transform .42s cubic-bezier(.2,.7,.2,1),box-shadow .4s;will-change:transform;animation:monitor-hover 8s ease-in-out infinite}
+@keyframes monitor-hover{0%,100%{translate:0 0}50%{translate:0 -9px}}
+.hero-back-panel{transform:translate3d(calc(var(--pointer-x)*-.45),calc(var(--pointer-y)*-.5),-30px) rotateY(-17deg) rotateZ(4deg);transition:transform .55s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.hero-mini-device{transform:translate3d(calc(var(--pointer-x)*-.7),calc(var(--pointer-y)*-.65),35px) rotateY(14deg) rotateZ(10deg);transition:transform .5s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.hero-floor{transform:translate3d(calc(var(--pointer-x)*-.18),calc(var(--pointer-y)*-.12),-60px) rotateX(62deg) rotateZ(-22deg) skewX(-5deg);transition:transform .65s cubic-bezier(.2,.7,.2,1)}
+.hero-scene-halo{transform:translate3d(calc(var(--pointer-x)*.35),calc(var(--pointer-y)*.35),-90px);transition:transform .6s}
+.hero-floating-card{will-change:transform;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.hero-float-top{animation:float-card-a 7s ease-in-out infinite}
+.hero-float-right{animation:float-card-b 8s ease-in-out infinite}
+@keyframes float-card-a{0%,100%{transform:translate3d(0,0,35px) rotate(-1deg)}50%{transform:translate3d(0,-13px,35px) rotate(1deg)}}
+@keyframes float-card-b{0%,100%{transform:translate3d(0,0,50px) rotate(1deg)}50%{transform:translate3d(0,11px,50px) rotate(-1deg)}}
+.hero-particle-field{position:absolute;z-index:7;inset:0;overflow:hidden;pointer-events:none;transform:translateZ(70px)}
+.hero-particle{position:absolute;left:var(--x);top:var(--y);width:3px;height:3px;border-radius:50%;background:#f28a4b;opacity:0;box-shadow:0 0 12px 2px rgba(239,106,33,.42);animation:particle-drift var(--duration) ease-in-out var(--delay) infinite}
+.hero-particle:nth-child(3n){width:5px;height:5px;background:#fff;box-shadow:0 0 13px 3px rgba(255,255,255,.85)}
+.hero-particle:nth-child(4n){width:2px;height:2px}
+@keyframes particle-drift{0%{opacity:0;transform:translate3d(0,20px,0) scale(.5)}18%{opacity:.8}72%{opacity:.55}100%{opacity:0;transform:translate3d(16px,-55px,0) scale(1.25)}}
+.hero-orange-route{animation:route-breathe 5s ease-in-out infinite}
+@keyframes route-breathe{0%,100%{filter:drop-shadow(0 5px 6px rgba(239,106,33,.18));opacity:.8}50%{filter:drop-shadow(0 7px 13px rgba(239,106,33,.42));opacity:1}}
+.hero-monitor-chart i{transform-origin:bottom;animation:chart-rise 1.1s var(--ease) both}
+.hero-monitor-chart i:nth-child(2n){animation-delay:.08s}.hero-monitor-chart i:nth-child(3n){animation-delay:.16s}
+@keyframes chart-rise{from{transform:scaleY(.12);opacity:.25}to{transform:scaleY(1);opacity:1}}
+.hero-visual-note{transition:transform .3s,color .3s}
+.hero-visual:hover .hero-visual-note{transform:translateX(-5px);color:var(--accent)}
+.home-folder-screen,.home-folder-backplate{transform-style:preserve-3d}
+.home-product-folder:hover .home-folder-visual{filter:drop-shadow(0 24px 30px rgba(47,37,27,.16))}
+.home-product-folder .home-folder-visual{transition:filter .45s,transform .6s var(--ease)}
+.home-product-folder:hover .home-folder-visual{transform:translate3d(0,-7px,22px) rotateY(-4deg)}
+.home-pillar-folder{transform-style:preserve-3d;transition:transform .45s var(--ease),box-shadow .45s}
+.home-pillar-folder:hover{transform:perspective(900px) rotateX(2deg) translateY(-5px);box-shadow:0 18px 38px rgba(45,36,28,.09)}
+@media(max-width:900px){
+ .hero-visual{transform:none!important}
+ .hero-monitor{animation:none;transform:rotateY(-12deg) rotateX(4deg) rotateZ(-5deg)}
+ .hero-back-panel,.hero-mini-device,.hero-floor,.hero-scene-halo{transform:none}
+ .hero-particle-field{opacity:.55}
+}
+@media(max-width:600px){
+ .hero-monitor{transform:rotateY(-7deg) rotateX(2deg) rotateZ(-3deg)}
+ .hero-particle-field{opacity:.3}
+ .hero-floating-card{animation-duration:10s}
+}
+@media(prefers-reduced-motion:reduce){
+ .platform-hero .platform-hero-copy>.eyebrow,.platform-hero .skol-expansion,.platform-hero .platform-lead,.platform-hero .hero-actions,.platform-hero .hero-product-shortcut,
+ .hero-monitor,.hero-floating-card,.hero-particle,.hero-orange-route,.hero-monitor-chart i{animation:none!important;transition:none!important}
+ .hero-monitor,.hero-back-panel,.hero-mini-device,.hero-floor,.hero-scene-halo{transform:none!important}
+}
