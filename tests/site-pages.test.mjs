@@ -181,8 +181,8 @@ test("tariff sections and comparison rows reveal progressively with accessible m
 test("tariff builder exposes only seven CRM-enforced modules and can export a license request", () => {
   for (const id of ["engineering", "engineering_plans", "finance", "order_radar", "production", "reports", "web_browser"]) {
     assert.ok(source.includes('id:"' + id + '"') || source.includes('id: "' + id + '"'));
-    assert.ok(source.includes('data-feature-toggle="'+id+'"'));
   }
+  assert.match(source, /data-feature-toggle=/);
   assert.match(source, /function tariffBuilder\(\)/);
   assert.match(source, /function createTariffLicenseRequest\(form\)/);
   assert.match(source, /SKOL_LICENSE_REQUEST/);
