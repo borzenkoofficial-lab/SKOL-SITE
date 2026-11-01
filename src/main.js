@@ -1,5 +1,5 @@
 import "./styles.css";
-const VERSION = "1.24.0";
+const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
 /* Access IDs mirror EDITION_FEATURES in struktura-crm-source/src/license-core.cjs. */
 const tariffFeatures = [
@@ -210,6 +210,7 @@ function setupTariffSelection(){
       const match=plans.find(item=>sameFeatures([...item.featureIds].sort(),selected));
       if(match){activePlanId=match.id;plan=match}
     }
+    document.documentElement.dataset.tariffPlan=activePlanId;
     const name=plan?plan.name:"Индивидуальная конфигурация";
     const description=plan?plan.desc:"Набор модулей будет зафиксирован в заявке и подписанной лицензии.";
     const price=plan&&plan.price!==null?new Intl.NumberFormat("ru-RU").format(plan.price)+" ₽":"По запросу";
