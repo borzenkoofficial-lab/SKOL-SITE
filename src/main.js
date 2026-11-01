@@ -64,7 +64,7 @@ function createTariffLicenseRequest(form){
     catalogVersion:1,
     product:"SKOL_CRM",
     planId:plan?plan.id:"CUSTOM",
-    planName:plan?plan.title:"Индивидуальная конфигурация",
+    planName:plan?(plan.name||plan.title):"Индивидуальная конфигурация",
     features,
     seatCount:Number(data.get("seats")||1),
     customer:{name:String(data.get("name")||"").trim(),contact:String(data.get("contact")||"").trim()},
