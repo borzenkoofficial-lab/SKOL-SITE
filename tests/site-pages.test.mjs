@@ -39,7 +39,7 @@ test("visual system provides accessible light and dark themes", () => {
 });
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
-  assert.match(source, /setupTheme\(\);setupCatalogFolders\(\);setupMotion\(\)/);
+  assert.match(source, /setupTheme\(\);setupCatalogFolders\(\);setupHomeInteractions\(\);setupMotion\(\)/);
 });
 
 test("reference-driven visual system is present across SKOL", () => {
@@ -124,4 +124,31 @@ test("hero scene stacks on mobile without absolute overlap", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /"monitor monitor"[\s\S]*"panel panel"[\s\S]*"float-top float-right"/);
   assert.match(styles, /\.hero-mini-device\{display:none\}/);
+});
+
+test("homepage after hero is a five-chapter product story", () => {
+  for (const marker of ["home-products","home-story","home-pillars","home-method","home-final"]) assert.ok(source.includes(marker));
+  for (const heading of ["Программы, которые","Сначала понять","Четыре буквы","От запроса","Давайте найдём"]) assert.ok(source.includes(heading));
+});
+test("homepage product and acronym cards are accessible interactive folders", () => {
+  assert.match(source, /data-home-folder/);
+  assert.match(source, /function setupHomeInteractions\(\)/);
+  assert.match(source, /setupHomeInteractions\(\)/);
+  assert.match(source, /aria-controls="home-crm-folder-details"/);
+  for (const id of ["home-pillar-s","home-pillar-k","home-pillar-o","home-pillar-l"]) assert.ok(source.includes(id));
+});
+test("homepage motion system supports scroll reveal, hover and reduced motion", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(source, /\.home-reveal/);
+  assert.match(styles, /\.home-reveal\.is-visible/);
+  assert.match(styles, /@keyframes home-card-jelly/);
+  assert.match(styles, /\.home-pillar-folder:hover/);
+  assert.match(styles, /\.home-product-folder:hover/);
+  assert.match(styles, /prefers-reduced-motion:reduce/);
+});
+test("homepage sections have dedicated responsive layouts", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /@media\(max-width:850px\)[\s\S]*\.home-story-grid/);
+  assert.match(styles, /@media\(max-width:600px\)[\s\S]*\.home-method-track/);
+  assert.match(styles, /@media\(max-width:380px\)[\s\S]*\.home-pillar-trigger/);
 });
