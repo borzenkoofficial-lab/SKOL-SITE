@@ -160,3 +160,20 @@ test("homepage sections have dedicated responsive layouts", () => {
   assert.match(styles, /@media\(max-width:600px\)[\s\S]*\.home-method-track/);
   assert.match(styles, /@media\(max-width:380px\)[\s\S]*\.home-pillar-trigger/);
 });
+
+test("tariff selection synchronizes cards, request form and comparison matrix", () => {
+  assert.match(source, /function setupTariffSelection\(\)/);
+  assert.match(source, /data-tariff-plan/);
+  assert.match(source, /tariff-selected-status/);
+  assert.match(source, /data-plan-col/);
+  assert.match(source, /setupTariffSelection\(\)/);
+});
+test("tariff sections and comparison rows reveal progressively with accessible motion fallback", () => {
+  assert.match(source, /tariff-revealed/);
+  assert.match(source, /IntersectionObserver/);
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.comparison-section:not\(\.tariff-revealed\)/);
+  assert.match(styles, /\.tariff-card-3d\.is-selected/);
+  assert.match(styles, /prefers-reduced-motion:reduce/);
+  assert.match(styles, /:root\[data-theme="dark"\] \.tariff-request/);
+});
