@@ -52,9 +52,17 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
-test("license page no longer renders animated particle canvas", () => {
-  assert.match(source, /function setupParticles\(\)\{\}/);
+test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
+  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+  assert.match(source, /function setupTariffMotion\(\)/);
+  assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
+});
+test("tariff page includes the 3D edition scene, interactive cards and request flow", () => {
+  for (const token of ["tariff-hero-scene", "tariff-scene-core", "tariff-card-3d", "data-tariff-card", "comparison-table", "tariff-form"]) assert.ok(source.includes(token));
+  assert.match(source, /setupTariffMotion\(\)/);
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  for (const token of [".tariff-hero-scene", ".tariff-scene-orbit", ".tariff-card-orb", ".tariff-particle-field", "prefers-reduced-motion"]) assert.ok(styles.includes(token));
 });
 
 test("catalogue product is presented as an accessible interactive folder", () => {
