@@ -110,3 +110,18 @@ test("hero dashboard mockup has jelly hover and reduced-motion behavior", () => 
   assert.match(styles, /animation:hero-monitor-jelly/);
   assert.match(styles, /\.hero-monitor:hover\{animation:none!important\}/);
 });
+
+test("hero scene places dashboard and supporting elements into distinct layout areas", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /grid-template-areas:[\s\S]*"monitor panel"[\s\S]*"monitor float-top"[\s\S]*"float-right device"[\s\S]*"note note"/);
+  assert.match(styles, /\.hero-monitor\s*\{[\s\S]*grid-area:monitor/);
+  assert.match(styles, /\.hero-back-panel\s*\{[\s\S]*grid-area:panel/);
+  assert.match(styles, /\.hero-float-top\s*\{grid-area:float-top/);
+  assert.match(styles, /\.hero-float-right\s*\{grid-area:float-right/);
+  assert.match(styles, /@media\(max-width:600px\)/);
+});
+test("hero scene stacks on mobile without absolute overlap", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /"monitor monitor"[\s\S]*"panel panel"[\s\S]*"float-top float-right"/);
+  assert.match(styles, /\.hero-mini-device\{display:none\}/);
+});
