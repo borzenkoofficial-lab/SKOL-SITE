@@ -34,7 +34,7 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(source, /theme-toggle/);
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /:root\[data-theme="dark"\]/);
-  assert.match(styles, /--bg:#f5f3ef/);
+  assert.match(styles, /--canvas:#f5f2ed/);
   assert.match(styles, /prefers-reduced-motion/);
 });
 test("theme control is initialized and has an accessible label", () => {
