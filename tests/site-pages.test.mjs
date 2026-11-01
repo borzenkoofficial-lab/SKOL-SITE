@@ -34,10 +34,25 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(source, /theme-toggle/);
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /:root\[data-theme="dark"\]/);
-  assert.match(styles, /--bg:#f5f3ef/);
+  assert.match(styles, /--canvas:#f5f2ed/);
   assert.match(styles, /prefers-reduced-motion/);
 });
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /setupTheme\(\);setupMotion\(\)/);
+});
+
+test("reference-driven visual system is present across SKOL", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(source, /Меньше хаоса\./);
+  assert.match(source, /hero-monitor/);
+  assert.match(source, /site-header/);
+  assert.match(styles, /--accent:#ef6a21/);
+  assert.match(styles, /\.hero-visual/);
+  assert.match(styles, /\.site-header/);
+  assert.match(styles, /@media\(max-width:600px\)/);
+});
+test("license page no longer renders animated particle canvas", () => {
+  assert.match(source, /function setupParticles\(\)\{\}/);
+  assert.match(source, /key-visual-plate/);
 });
