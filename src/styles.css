@@ -423,7 +423,7 @@ img,svg,video{max-width:100%}
 .key-orbit-a{width:90%;height:46%}
 .key-orbit-b{width:73%;height:75%;transform:rotate(55deg)}
 .tariff-cards{padding-top:90px;padding-bottom:95px;background:var(--canvas)}
-.tariff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:35px}
+.tariff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:13px;margin-top:35px}
 .tariff-card{display:flex;flex-direction:column;min-height:490px;padding:27px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:0 10px 30px rgba(54,42,30,.045)}
 .tariff-card.red{border-color:rgba(239,106,33,.45);box-shadow:0 15px 35px rgba(239,106,33,.08)}
 .tariff-card.dark{background:#262422;color:#fff;border-color:#262422}
@@ -445,8 +445,8 @@ img,svg,video{max-width:100%}
 .tariff-card-bottom .button{width:100%}
 .comparison-section{padding-top:85px;padding-bottom:95px;background:var(--surface)}
 .comparison-section>h2{margin:38px 0;font-size:clamp(38px,5vw,65px);line-height:.98;letter-spacing:-.08em}
-.comparison-table{border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.comparison-row{display:grid;grid-template-columns:1fr repeat(3,105px);align-items:center;gap:10px;padding:16px 19px;border-bottom:1px solid var(--line)}
+.comparison-table{border:1px solid var(--line);border-radius:14px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+.comparison-row{display:grid;grid-template-columns:minmax(170px,1.8fr) repeat(var(--plan-count,3),minmax(70px,1fr));width:max(100%,var(--comparison-min-width,420px));align-items:center;gap:10px;padding:16px 19px;border-bottom:1px solid var(--line)}
 .comparison-row:last-child{border-bottom:0}
 .comparison-row>span{font-size:10px;color:var(--muted)}
 .comparison-row>b{text-align:center;font-size:11px}
@@ -740,7 +740,7 @@ img,svg,video{max-width:100%}
  .tariff-card h2{margin-top:24px;font-size:37px}
  .tariff-card>p{min-height:unset}
  .comparison-section>h2,.install-steps>h2,.activation-flow>h2{font-size:39px}
- .comparison-row{grid-template-columns:1fr repeat(3,48px);gap:4px;padding:13px 10px}
+ .comparison-row{grid-template-columns:minmax(0,1.7fr) repeat(var(--plan-count,3),minmax(35px,.6fr));width:max(100%,var(--comparison-min-width-mobile,300px));gap:4px;padding:13px 10px}
  .comparison-row>span{font-size:8px}
  .comparison-row>b{font-size:9px}
  .comparison-head>span,.comparison-head>b{font-size:6px}
@@ -1993,14 +1993,14 @@ img,svg,video{max-width:100%}
 .builder-summary .button{width:100%;justify-content:center}
 .builder-text-link{display:block;margin-top:13px;text-align:center;color:var(--muted);font-size:9px;text-decoration:none}
 .builder-text-link:hover{color:var(--accent-strong)}
-.comparison-section .comparison-row{grid-template-columns:minmax(170px,1.8fr) repeat(3,minmax(70px,1fr))}
-.comparison-section .comparison-head{grid-template-columns:minmax(170px,1.8fr) repeat(3,minmax(70px,1fr))}
+.comparison-section .comparison-row{grid-template-columns:minmax(170px,1.8fr) repeat(var(--plan-count,3),minmax(70px,1fr))}
+.comparison-section .comparison-head{grid-template-columns:minmax(170px,1.8fr) repeat(var(--plan-count,3),minmax(70px,1fr))}
 :root[data-theme="dark"] .tariff-builder{background:var(--canvas-deep)}
 :root[data-theme="dark"] .builder-module,:root[data-theme="dark"] .builder-summary,:root[data-theme="dark"] .builder-counter{background:var(--surface);border-color:var(--line)}
 :root[data-theme="dark"] .builder-module-copy b,:root[data-theme="dark"] .builder-summary h3,:root[data-theme="dark"] .builder-summary li{color:var(--ink)}
 :root[data-theme="dark"] .builder-module-copy small,:root[data-theme="dark"] .builder-summary>p,:root[data-theme="dark"] .builder-summary-line{color:var(--muted)}
 @media(max-width:900px){.tariff-builder-grid{grid-template-columns:1fr}.builder-summary{position:relative;top:auto}.builder-module-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.tariff-builder{padding-top:65px;padding-bottom:70px}.tariff-builder-heading{align-items:flex-start;flex-direction:column;margin-bottom:24px}.builder-counter{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left}.builder-module-list{grid-template-columns:1fr;gap:8px}.builder-module{min-height:unset;padding:15px}.builder-summary{padding:19px}.tariff-price{font-size:15px}.comparison-section .comparison-row,.comparison-section .comparison-head{grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(35px,.6fr));gap:4px;padding:13px 8px}.comparison-section .comparison-row>span{font-size:8px}}
+@media(max-width:600px){.tariff-builder{padding-top:65px;padding-bottom:70px}.tariff-builder-heading{align-items:flex-start;flex-direction:column;margin-bottom:24px}.builder-counter{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left}.builder-module-list{grid-template-columns:1fr;gap:8px}.builder-module{min-height:unset;padding:15px}.builder-summary{padding:19px}.tariff-price{font-size:15px}.comparison-section .comparison-row,.comparison-section .comparison-head{grid-template-columns:minmax(0,1.7fr) repeat(var(--plan-count,3),minmax(35px,.6fr));width:max(100%,var(--comparison-min-width-mobile,300px));gap:4px;padding:13px 8px}.comparison-section .comparison-row>span{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.builder-module,.builder-module:hover,.builder-module>i{transition:none!important;transform:none!important;animation:none!important}}
 
  
