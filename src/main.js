@@ -167,19 +167,44 @@ function tariffs(){
   return '<main class="inner-page tariffs-page"><section class="inner-hero tariff-hero section-pad"><div class="section-kicker"><span>СКОЛ / ЛИЦЕНЗИИ</span><span>PRESETS + CUSTOM / ACCESS SYSTEM</span></div><div class="tariff-hero-grid"><div class="tariff-hero-copy"><p class="eyebrow">КОНФИГУРАЦИЯ РАБОЧЕЙ СИСТЕМЫ</p><h1>Выберите свой<br><em>уровень управления.</em></h1><p class="tariff-hero-lead">Выберите готовый тариф или соберите собственный набор модулей. Состав лицензии фиксируется в подписанном ключе и проверяется CRM локально.</p><a class="button button-red" href="#tariff-cards">Сравнить возможности <span>↓</span></a><div class="tariff-hero-meta"><span><i class="live-dot"></i> ЛОКАЛЬНАЯ ЛИЦЕНЗИЯ</span><span>WINDOWS / DESKTOP</span><span>PRESETS + CUSTOM</span></div></div><div class="tariff-hero-scene" aria-label="Объёмная визуализация лицензий СКОЛ"><div class="tariff-scene-grid"></div><div class="tariff-scene-orbit orbit-one"></div><div class="tariff-scene-orbit orbit-two"></div><div class="tariff-scene-core"><span>SKOL</span><strong>CRM</strong><i>LICENSE / V2</i></div><div class="tariff-scene-chip chip-start"><small>01 / BASE</small><b>START</b></div><div class="tariff-scene-chip chip-pro"><small>02 / ADVANCED</small><b>PRO</b></div><div class="tariff-scene-chip chip-business"><small>03 / FULL</small><b>BUSINESS</b></div><div class="tariff-scene-coordinates">55°45′N<br>37°37′E</div></div></div></section>'+keyField()+'<section class="tariff-cards section-pad" id="tariff-cards"><div class="section-kicker"><span>01 / ГОТОВЫЕ ТАРИФЫ</span><span>ВЫБЕРИТЕ СТАРТОВУЮ КОНФИГУРАЦИЮ</span></div><div class="tariff-intro-row"><h2>Готовые планы.<br><em>Без лишних функций.</em></h2><p>Каждый тариф состоит из базового рабочего пространства и конкретных модулей. Состав и цены управляются через локальный License Manager.</p></div><div class="tariff-grid">'+plans.map((p,i)=>'<article class="tariff-card tariff-card-3d '+p.color+'" id="'+p.id.toLowerCase()+'" data-tariff-card style="--card-index:'+i+'"><div class="tariff-card-top"><span>0'+(i+1)+' / '+p.id+' EDITION</span><b>'+(i===0?'◌':i===1?'◈':'✳')+'</b></div><div class="tariff-card-orb tariff-orb-'+p.id.toLowerCase()+'"><i></i><i></i><i></i><span>'+String(i+1).padStart(2,"0")+'</span></div><div class="tariff-card-heading"><h2>'+p.id+'</h2><span>'+String(p.title||p.name||"CUSTOM PLAN").toUpperCase()+'</span></div><h3>'+p.title+'</h3><div class="tariff-price">'+priceLabel(p)+'</div><p>'+p.desc+'</p><div class="tariff-divider"></div><span class="list-label">СОСТАВ ЛИЦЕНЗИИ</span><ul>'+p.features.map(feature=>'<li><i>↗</i>'+feature+'</li>').join("")+'</ul><div class="tariff-card-bottom"><span>'+p.note+'</span><a class="button '+(p.color==="red"?"button-red":p.color==="dark"?"button-light":"button-outline")+'" href="#tariff-builder" data-plan="'+p.id+'">Выбрать '+p.id+' <b>↗</b></a></div><div class="tariff-card-index">SKOL / 0'+(i+1)+'</div></article>').join("")+'</div></section>'+tariffBuilder()+'<section class="comparison-section section-pad"><div class="section-kicker"><span>03 / МАТРИЦА ДОСТУПА</span><span>СОСТАВ ТАРИФОВ</span></div><h2>Модули<br><em>по уровням доступа.</em></h2><div class="comparison-table" id="tariff-comparison" aria-label="Сравнение возможностей тарифов"><div class="comparison-row comparison-head"><span>ВОЗМОЖНОСТЬ</span>'+plans.map(plan=>'<b>'+plan.id+'</b>').join("")+'</div>'+comparisonRows.map(row=>'<div class="comparison-row" data-comparison-row><span>'+row.label+'</span>'+plans.map(plan=>{const enabled=row.base||plan.featureIds.includes(row.id);return '<b data-plan-col="'+plan.id+'" class="'+(enabled?"yes":"no")+'">'+(enabled?"✓":"—")+'</b>'}).join("")+'</div>').join("")+'</div><p class="comparison-note">Сравнение строится по реальному каталогу модулей СКОЛ CRM. Функции без отдельной проверки в приложении не предлагаются как самостоятельные платные опции.</p></section><section class="tariff-request section-pad" id="tariff-request"><div class="section-kicker"><span>04 / ПОДКЛЮЧЕНИЕ</span><span>ЗАПРОС ЛИЦЕНЗИИ</span></div><div class="tariff-request-grid"><div><span class="eyebrow">NEXT STEP / ACTIVATION</span><h2>Определились<br><em>с конфигурацией?</em></h2><p>Оставьте контакт и выбранный состав. Заявку можно передать менеджеру как JSON и импортировать в License Manager. Ключ подписывается локально закрытым ключом владельца продукта.</p><a class="text-link" href="/activation">Посмотреть процесс офлайн-активации ↗</a></div><form class="contact-form tariff-form" id="tariff-form"><div class="tariff-form-top"><span>LICENSE REQUEST</span><b><i class="live-dot"></i> READY</b></div><p class="tariff-selected-status" id="tariff-selected-status" aria-live="polite">Выберите готовый тариф или соберите свою конфигурацию</p><label>Выбранный тариф<select name="plan" id="plan-select">'+plans.map(plan=>'<option value="'+plan.id+'">'+plan.name+'</option>').join("")+'<option value="CUSTOM">Индивидуальная конфигурация</option></select></label><label>Имя<input name="name" placeholder="Ваше имя" required maxlength="80"></label><label>Контакт для связи<input name="contact" placeholder="Телефон, Telegram или email" required maxlength="120"></label><label>Количество компьютеров<input name="seats" type="number" min="1" max="50" value="1" required></label><button class="button button-red" type="submit">Подготовить заявку менеджеру ↗</button><p class="form-hint">Форма не отправляет данные на сервер. Она готовит текст и JSON-заявку для передачи менеджеру.</p></form></div></section>'+contact()+'</main>';
 }
 function toast(text){let el=document.querySelector(".site-toast");if(!el){el=document.createElement("div");el.className="site-toast";document.body.appendChild(el)}el.textContent=text;el.classList.add("show");clearTimeout(el.timer);el.timer=setTimeout(()=>el.classList.remove("show"),3000)}
-async function copyText(text){try{await navigator.clipboard.writeText(text);toast("Текст обращения скопирован.")}catch(e){const a=document.createElement("textarea");a.value=text;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();const ok=document.execCommand("copy");a.remove();toast(ok?"Текст обращения скопирован.":"Не удалось скопировать текст.")}}
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    toast("Текст обращения скопирован.");
+    return true;
+  }catch{
+    let copied=false;
+    const area=document.createElement("textarea");
+    area.value=text;
+    area.setAttribute("readonly","");
+    area.style.position="fixed";
+    area.style.opacity="0";
+    area.style.pointerEvents="none";
+    try{
+      document.body.appendChild(area);
+      area.select();
+      copied=typeof document.execCommand==="function"&&document.execCommand("copy");
+    }catch{
+      copied=false;
+    }finally{
+      area.remove();
+    }
+    toast(copied?"Текст обращения скопирован.":"Не удалось скопировать текст.");
+    return copied;
+  }
+}
 function setupForms(){
   document.querySelectorAll("#contact-form,#tariff-form").forEach(form=>form.addEventListener("submit",async event=>{
     event.preventDefault();
     const data=new FormData(form);
-    let message=["Обращение по программе СКОЛ",...Array.from(data.entries()).map(([key,value])=>key+": "+String(value).trim())].join("\\n");
+    let message=["Обращение по программе СКОЛ",...Array.from(data.entries()).map(([key,value])=>key+": "+String(value).trim())].join("\n");
     if(form.id==="tariff-form"){
       const request=createTariffLicenseRequest(form);
-      message+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"+JSON.stringify(request,null,2);
+      message+="\n\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\n"+JSON.stringify(request,null,2);
     }
-    await copyText(message);
+    const copied=await copyText(message);
     const hint=form.querySelector(".form-hint");
-    if(hint)hint.textContent=form.id==="tariff-form"?"Текст обращения и структура выбранной лицензии скопированы. Для импорта также можно скачать JSON выше.":"Текст скопирован. Передайте его менеджеру по согласованному каналу связи.";
+    if(hint)hint.textContent=copied?(form.id==="tariff-form"?"Текст обращения и структура выбранной лицензии скопированы. Для импорта также можно скачать JSON выше.":"Текст скопирован. Передайте его менеджеру по согласованному каналу связи."):"Не удалось скопировать текст автоматически. Проверьте разрешение на буфер обмена и повторите попытку.";
   }));
   document.querySelectorAll("[data-plan]").forEach(button=>button.addEventListener("click",()=>{const select=document.querySelector("#plan-select");if(select)select.value=button.dataset.plan}));
 }
@@ -189,13 +214,14 @@ function setupDemo(){const el=document.querySelector("#demo-content");if(!el)ret
 function setupTheme(){const root=document.documentElement,button=document.querySelector(".theme-toggle"),label=button?.querySelector(".theme-toggle-label"),icon=button?.querySelector(".theme-toggle-icon");let saved="light";try{saved=localStorage.getItem("skol-theme")==="dark"?"dark":"light"}catch{}function apply(theme){const dark=theme==="dark";root.dataset.theme=dark?"dark":"light";if(button){button.setAttribute("aria-pressed",String(dark));button.setAttribute("aria-label",dark?"Включить светлую тему":"Включить тёмную тему")}if(label)label.textContent=dark?"Тёмная тема":"Светлая тема";if(icon)icon.textContent=dark?"☼":"◐";const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=dark?"#20201e":"#f5f2ed";try{localStorage.setItem("skol-theme",dark?"dark":"light")}catch{}}apply(saved);button?.addEventListener("click",()=>apply(root.dataset.theme==="dark"?"light":"dark"))}
 function setupMotion(){
   const curtain=document.querySelector(".page-transition");
+  const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.querySelectorAll('a[href^="/"]').forEach(a=>a.addEventListener("click",event=>{
     const href=a.getAttribute("href");
     if(!href||href.startsWith("/#")||href.includes("#")||a.target==="_blank"||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
     const next=new URL(href,location.origin);
     if(next.pathname===location.pathname)return;
     event.preventDefault();
-    if(curtain){
+    if(curtain&&!reducedMotion){
       curtain.classList.remove("enter");
       curtain.classList.add("leave");
       setTimeout(()=>location.assign(next.href),420);
