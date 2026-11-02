@@ -300,3 +300,11 @@ test("public tariff text is escaped and bounded before HTML rendering", () => {
   assert.match(source, /escapeHtml\(p\.note\)/);
   assert.match(source, /escapeHtml\(plan\.name\)/);
 });
+
+ 
+test("demo controls expose pressed state and feedback toast is announced", () => {
+  assert.match(source, /aria-pressed="true" aria-controls="demo-content"/);
+  assert.match(source, /aria-pressed="false" aria-controls="demo-content"/);
+  assert.match(source, /x\.setAttribute\("aria-pressed",String\(active\)\)/);
+  assert.match(source, /aria-live","polite"/);
+});
