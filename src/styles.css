@@ -1998,3 +1998,8 @@ img,svg,video{max-width:100%}
 @media(max-width:900px){.tariff-builder-grid{grid-template-columns:1fr}.builder-summary{position:relative;top:auto}.builder-module-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.tariff-builder{padding-top:65px;padding-bottom:70px}.tariff-builder-heading{align-items:flex-start;flex-direction:column;margin-bottom:24px}.builder-counter{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left}.builder-module-list{grid-template-columns:1fr;gap:8px}.builder-module{min-height:unset;padding:15px}.builder-summary{padding:19px}.tariff-price{font-size:15px}.comparison-section .comparison-row,.comparison-section .comparison-head{grid-template-columns:minmax(125px,1.7fr) repeat(3,minmax(48px,.6fr))}.comparison-section .comparison-row>span{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.builder-module,.builder-module:hover,.builder-module>i{transition:none!important;transform:none!important;animation:none!important}}
+
+ 
+/* Keyboard focus for the existing mobile navigation controls. */
+.menu-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mobile-menu a:focus-visible{color:var(--accent-strong);outline:2px solid var(--accent);outline-offset:2px}
