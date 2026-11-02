@@ -503,3 +503,54 @@ test("tariff config fetch has a five-second timeout and keeps fallback plans unt
   assert.match(source, /SKOL tariff config fallback/);
   assert.match(source, /from "\.\/tariff-config\.js"/);
 });
+
+test("client tariff builder presents base modules, grouped options and ready-made presets", () => {
+  const start = source.indexOf("function tariffBuilder(){");
+  const end = source.indexOf("\n\nconst path =", start);
+  const builder = source.slice(start, end);
+  for (const marker of [
+    'id:"engineering"',
+    'id:"management"',
+    'id:"production"',
+    'id:"sources"',
+    'data-builder-preset=',
+    'data-builder-reset',
+    'data-feature-toggle=',
+    'Клиенты · Заявки · Объекты · Задачи',
+    'builder-feature-summary',
+    'builder-plan-description'
+  ]) assert.ok(builder.includes(marker), "Tariff builder missing: " + marker);
+  assert.match(builder, /plans\.map\(\(plan,index\)=>.*data-builder-preset/);
+  assert.match(builder, /Дополнительные возможности/);
+});
+
+test("customer tariff builder keeps module selection, presets and plan cards synchronized", () => {
+  const start = source.indexOf("function setupTariffSelection(){");
+  const end = source.indexOf("\nfunction setPageMeta()", start);
+  const setup = source.slice(start, end);
+  assert.match(setup, /presetButtons\.forEach\(button=>button\.addEventListener\("click",\(\)=>selectPlan\(button\.dataset\.builderPreset\)\)\)/);
+  assert.match(setup, /toggles\.forEach\(input=>input\.addEventListener\("change",\(\)=>\{activePlanId="CUSTOM";render\(\)\}\)\)/);
+  assert.match(setup, /cards\.forEach\(card=>\{[\s\S]*classList\.toggle\("is-selected",active\)/);
+  assert.match(setup, /presetButtons\.forEach\(button=>\{[\s\S]*setAttribute\("aria-pressed",String\(active\)\)/);
+  assert.match(setup, /progressRing\.style\.setProperty\("--progress",progress\+"%"\)/);
+  assert.match(setup, /data-group-count/);
+});
+
+test("computer count is selected inside the builder and synchronized with the CRM request form", () => {
+  assert.match(source, /id="builder-seats" min="1" max="50"/);
+  assert.match(source, /data-seat-step="-1"/);
+  assert.match(source, /data-seat-step="1"/);
+  assert.match(source, /builderSeats\?\.addEventListener\("input",\(\)=>\{syncSeats\(builderSeats\.value,builderSeats\);render\(\)\}\)/);
+  assert.match(source, /seatsField\?\.addEventListener\("input",\(\)=>\{syncSeats\(seatsField\.value,seatsField\);render\(\)\}\)/);
+  assert.match(source, /field\.max=String\(maxDevices\)/);
+  assert.match(source, /seatCount:Number\(data\.get\("seats"\)\|\|1\)/);
+});
+
+test("tariff configurator motion respects responsive layouts and reduced-motion preferences", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.builder-progress-ring[^\n]*transition:background \.45s/);
+  assert.match(styles, /@keyframes builder-item-enter/);
+  assert.match(styles, /\.builder-module:has\(input:checked\)/);
+  assert.match(styles, /@media\(max-width:760px\)[\s\S]*\.builder-preset-list/);
+  assert.match(styles, /@media\(prefers-reduced-motion:reduce\)[\s\S]*\.builder-summary-track i/);
+});
