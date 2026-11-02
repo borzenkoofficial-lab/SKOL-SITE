@@ -210,3 +210,26 @@ test("tariff route waits for validated configuration before rendering the page",
   assert.match(source, /SKOL boot failed/);
   assert.match(source, /tariff-builder/);
 });
+
+ 
+test("download and activation routes keep their page renderers", () => {
+  assert.match(source, /function download\(\)/);
+  assert.match(source, /function activation\(\)/);
+  assert.match(source, /route==="download"\?download\(\):route==="activation"\?activation\(\)/);
+  assert.match(source, /const VERSION = "1\.25\.0"/);
+});
+
+test("mobile navigation exposes its controlled panel and accurate expanded label", () => {
+  assert.match(source, /aria-controls="mobile-menu"/);
+  assert.match(source, /<div class="mobile-menu" id="mobile-menu">/);
+  assert.match(source, /aria-label",open\?"Закрыть меню":"Открыть меню"/);
+  assert.match(source, /event\.key==="Escape"/);
+  assert.match(source, /menu\.contains\(event\.target\)\|\|mobile\.contains\(event\.target\)/);
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.menu-toggle:focus-visible/);
+  assert.match(styles, /\.mobile-menu a:focus-visible/);
+});
+
+test("tariff request downloads retain the object URL until the browser can start the download", () => {
+  assert.match(source, /link\.click\(\);[\s\S]*link\.remove\(\);[\s\S]*window\.setTimeout\(\(\)=>URL\.revokeObjectURL\(url\),1000\)/);
+});
