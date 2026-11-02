@@ -506,6 +506,7 @@ test("tariff config fetch has a five-second timeout and keeps fallback plans unt
 });
 
 test("client tariff builder presents base modules, grouped options and ready-made presets", () => {
+  assert.match(source, /href="#tariff-builder">Собрать свой тариф/);
   const start = source.indexOf("function tariffBuilder(){");
   const end = source.indexOf("\n\nconst path =", start);
   const builder = source.slice(start, end);
