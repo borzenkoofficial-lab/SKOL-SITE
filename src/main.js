@@ -1,7 +1,7 @@
 import "./styles.css";
 const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
-/* Access IDs mirror EDITION_FEATURES in struktura-crm-source/src/license-core.cjs. */
+/* Access IDs mirror FEATURE_CATALOG in struktura-crm-source/src/license-catalog.cjs; legacy-only IDs are intentionally excluded. */
 const tariffFeatures = [
   {id:"engineering",name:"Инженерный расчёт",description:"Расчёт стоимости, состава и трудоёмкости работ."},
   {id:"engineering_plans",name:"Инженерные планы",description:"Работа с инженерными планами и ведомостями."},
