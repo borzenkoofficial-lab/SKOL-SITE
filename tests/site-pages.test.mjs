@@ -296,7 +296,8 @@ test("dark theme page metadata uses readable color tokens", () => {
  
 test("public tariff text is escaped and bounded before HTML rendering", () => {
   assert.match(source, /function escapeHtml\(value\)/);
-  assert.match(source, /description\.length>240/);
+  const normalizer = readFileSync(new URL("../src/tariff-config.js", import.meta.url), "utf8");
+  assert.match(normalizer, /boundedString\(input\.description \?\? "", "description", 300/);
   assert.match(source, /escapeHtml\(p\.desc\)/);
   assert.match(source, /escapeHtml\(p\.note\)/);
   assert.match(source, /escapeHtml\(plan\.name\)/);
@@ -500,5 +501,5 @@ test("tariff config fetch has a five-second timeout and keeps fallback plans unt
   assert.match(source, /finally\{[\s\S]*window\.clearTimeout\(timeout\)/);
   assert.match(source, /const nextPlans=normalizePublicTariffConfig\(config,tariffFeatures\);[\s\S]*tariffConfig=config;[\s\S]*plans=nextPlans/);
   assert.match(source, /SKOL tariff config fallback/);
-  assert.match(source, /src\/tariff-config\.js/);
+  assert.match(source, /from "\.\/tariff-config\.js"/);
 });
