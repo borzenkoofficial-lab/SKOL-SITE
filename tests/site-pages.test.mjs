@@ -278,3 +278,9 @@ test("tariff comparison matrix can shrink inside narrow mobile viewports", () =>
   assert.match(styles, /\.comparison-section \.comparison-row,\.comparison-section \.comparison-head\{grid-template-columns:minmax\(0,1\.7fr\) repeat\(3,minmax\(35px,\.6fr\)\);gap:4px;padding:13px 8px\}/);
   assert.doesNotMatch(styles, /\.comparison-section \.comparison-row,\.comparison-section \.comparison-head\{grid-template-columns:minmax\(125px,1\.7fr\)/);
 });
+
+ 
+test("in-page scrolling respects reduced motion", () => {
+  assert.equal((source.match(/scrollIntoView\(\{behavior:window\.matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches\?"auto":"smooth"/g) || []).length, 2);
+  assert.doesNotMatch(source, /scrollIntoView\(\{behavior:"smooth"\}\)/);
+});
