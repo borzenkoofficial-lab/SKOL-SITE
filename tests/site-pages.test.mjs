@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { normalizePublicTariffConfig } from "../src/tariff-config.js";
 const source = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 test("catalogue and CRM detail routes are registered", () => {
@@ -436,4 +437,68 @@ test("website license request keeps the License Manager import contract", () => 
     "contact:",
     'message:""'
   ]) assert.ok(factory.includes(field), "Missing import contract field: " + field);
+});
+
+test("public tariff config normalizer accepts the current CRM config and preserves device caps", () => {
+  const config = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
+  const catalog = config.featureIds.map(id => ({ id, name: "Module " + id }));
+  const plans = normalizePublicTariffConfig(config, catalog);
+  assert.deepEqual(plans.map(plan => plan.id), ["START", "PRO", "BUSINESS"]);
+  assert.deepEqual(plans.map(plan => plan.maxDevices), [50, 50, 50]);
+  assert.equal(plans[2].featureIds.length, 7);
+  assert.ok(plans.every(plan => plan.enabled));
+});
+
+test("public tariff config normalizer sorts plans and excludes disabled plans", () => {
+  const config = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
+  config.plans[0].displayOrder = 3;
+  config.plans[1].displayOrder = 2;
+  config.plans[2].displayOrder = 1;
+  config.plans.push({
+    id: "HIDDEN", name: "Hidden", description: "", price: null,
+    maxDevices: 5, features: [], enabled: false, displayOrder: 4
+  });
+  const plans = normalizePublicTariffConfig(config, config.featureIds.map(id => ({ id, name: id })));
+  assert.deepEqual(plans.map(plan => plan.id), ["BUSINESS", "PRO", "START"]);
+  assert.ok(plans.every(plan => plan.id !== "HIDDEN"));
+});
+
+test("public tariff config normalizer rejects malformed, duplicated and unsupported tariff data", () => {
+  const baseline = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
+  const catalog = baseline.featureIds.map(id => ({ id, name: id }));
+  const cases = [
+    ["unknown top-level key", config => { config.injected = true; }],
+    ["unsupported schema", config => { config.schemaVersion = 2; }],
+    ["unknown feature catalogue entry", config => { config.featureIds[0] = "unsupported"; }],
+    ["unknown plan property", config => { config.plans[0].unexpected = "value"; }],
+    ["non-boolean enabled flag", config => { config.plans[0].enabled = "false"; }],
+    ["duplicate plan ID, including disabled plans", config => { config.plans.push({ ...config.plans[0], enabled: false }); }],
+    ["reserved custom plan ID", config => { config.plans[0].id = "CUSTOM"; }],
+    ["invalid plan name", config => { config.plans[0].name = " "; }],
+    ["unknown feature ID", config => { config.plans[0].features = ["not_real"]; }],
+    ["duplicate feature IDs", config => { config.plans[1].features.push(config.plans[1].features[0]); }],
+    ["device cap over 50", config => { config.plans[0].maxDevices = 51; }],
+    ["invalid display order", config => { config.plans[0].displayOrder = 1000; }],
+    ["fractional price", config => { config.plans[0].price = 12.5; }],
+    ["all plans disabled", config => { config.plans.forEach(plan => { plan.enabled = false; }); }]
+  ];
+  for (const [label, mutate] of cases) {
+    const config = structuredClone(baseline);
+    mutate(config);
+    assert.throws(
+      () => normalizePublicTariffConfig(config, catalog),
+      undefined,
+      "Expected invalid config to be rejected: " + label
+    );
+  }
+});
+
+test("tariff config fetch has a five-second timeout and keeps fallback plans until validation succeeds", () => {
+  assert.match(source, /new AbortController\(\)/);
+  assert.match(source, /window\.setTimeout\(\(\)=>controller\.abort\(\),5000\)/);
+  assert.match(source, /options\.signal=controller\.signal/);
+  assert.match(source, /finally\{[\s\S]*window\.clearTimeout\(timeout\)/);
+  assert.match(source, /const nextPlans=normalizePublicTariffConfig\(config,tariffFeatures\);[\s\S]*tariffConfig=config;[\s\S]*plans=nextPlans/);
+  assert.match(source, /SKOL tariff config fallback/);
+  assert.match(source, /src\/tariff-config\.js/);
 });
