@@ -239,3 +239,12 @@ test("homepage product mockup uses the same version constant as the download pag
   assert.ok(source.includes("DESKTOP '+VERSION+'"));
   assert.doesNotMatch(source, /DESKTOP 1\.24/);
 });
+
+ 
+test("business edition copy matches the published license feature matrix", () => {
+  assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
+  assert.doesNotMatch(source, /расширенная аналитика/);
+  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("LATEST NOTES"));
+  assert.doesNotMatch(source, /LATEST IN SOURCE/);
+});
