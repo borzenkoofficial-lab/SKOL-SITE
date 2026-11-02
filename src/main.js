@@ -1,4 +1,5 @@
 import "./styles.css";
+import { normalizePublicTariffConfig } from "./tariff-config.js";
 const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
 /* Access IDs mirror FEATURE_CATALOG in struktura-crm-source/src/license-catalog.cjs; legacy-only IDs are intentionally excluded. */
@@ -18,40 +19,27 @@ let plans = [
   {id:"BUSINESS",name:"BUSINESS",featureIds:["engineering","engineering_plans","finance","order_radar","production","reports","web_browser"],title:"Полный контур",desc:"Инструменты поиска заказов и полный набор доступных модулей СКОЛ CRM.",features:["Всё из START","Финансы и платежи","Производство и ПИ","Инженерный расчёт","Отчёты","Радар заказов","Инженерные планы","Встроенный браузер"],note:"Для компаний с несколькими направлениями",color:"dark",price:null,maxDevices:50}
 ];
 function applyTariffConfig(config){
-  const known=new Set(tariffFeatures.map(item=>item.id));
-  if(!config||config.format!=="SKOL_TARIFF_CONFIG"||config.schemaVersion!==1||config.catalogVersion!==1||config.product!=="SKOL_CRM"||config.currency!=="RUB"||!Array.isArray(config.plans)||!config.plans.length||config.plans.length>30)return false;
-  if(!Array.isArray(config.featureIds)||config.featureIds.slice().sort().join("|")!==[...known].sort().join("|"))return false;
-  const seen=new Set();
-  const mapped=config.plans.filter(item=>item.enabled!==false).map((item,index)=>{
-    const id=String(item.id||"").toUpperCase();
-    if(!/^[A-Z][A-Z0-9_-]{1,47}$/.test(id)||id==="CUSTOM"||seen.has(id)||!Array.isArray(item.features))throw new Error("Некорректный или зарезервированный ID либо состав тарифа.");
-    seen.add(id);
-    const featureIds=item.features.map(value=>String(value));
-    if(new Set(featureIds).size!==featureIds.length||featureIds.some(value=>!known.has(value)))throw new Error("В конфигурации найден неизвестный или повторяющийся модуль.");
-    const price=item.price===null||item.price===undefined?null:Number(item.price);
-    if(price!==null&&(!Number.isSafeInteger(price)||price<0||price>100000000))throw new Error("Некорректная цена в файле тарифов.");
-    const maxDevices=Number(item.maxDevices??50);
-    if(!Number.isSafeInteger(maxDevices)||maxDevices<1||maxDevices>50)throw new Error("Некорректный лимит компьютеров.");
-    const base=id==="START"?["Клиенты и заявки","Объекты и задачи","Рабочее пространство","Локальная база данных"]:["Всё из START"];
-    const featureNames=featureIds.map(featureId=>tariffFeatures.find(feature=>feature.id===featureId).name);
-    const color=id==="START"?"light":id==="BUSINESS"?"dark":"red";
-    const name=String(item.name||id).trim();
-    const description=String(item.description||"").trim();
-    if(!name||name.length>64||description.length>240)throw new Error("Слишком длинное или пустое название либо описание тарифа.");
-    return {id,name,featureIds,title:id==="START"?"Рабочая база":id==="PRO"?"Контроль экономики":id==="BUSINESS"?"Полный контур":name,desc:description,features:base.concat(featureNames),note:maxDevices<50?"До "+maxDevices+" компьютеров · "+(description||"условия согласуются с менеджером"):description||"Стоимость и условия согласуются с менеджером",color,price,maxDevices};
-  });
-  if(!mapped.length)throw new Error("В публичной конфигурации нет включённых тарифов.");
+  const nextPlans=normalizePublicTariffConfig(config,tariffFeatures);
   tariffConfig=config;
-  plans=mapped;
+  plans=nextPlans;
   return true;
 }
 async function loadTariffConfig(){
+  const controller=typeof AbortController==="function"?new AbortController():null;
+  const timeout=controller?window.setTimeout(()=>controller.abort(),5000):null;
   try{
-    const response=await fetch("/skol-tariff-config.json",{cache:"no-store"});
+    const options={cache:"no-store"};
+    if(controller)options.signal=controller.signal;
+    const response=await fetch("/skol-tariff-config.json",options);
     if(!response.ok)throw new Error("Файл тарифной конфигурации недоступен.");
     const config=await response.json();
-    if(!applyTariffConfig(config))throw new Error("Версия публичной конфигурации тарифов не поддерживается.");
-  }catch(error){console.warn("SKOL tariff config fallback:",error.message);}
+    applyTariffConfig(config);
+  }catch(error){
+    const reason=error?.name==="AbortError"?"Истекло время ожидания файла тарифов.":error?.message||"Неизвестная ошибка.";
+    console.warn("SKOL tariff config fallback:",reason);
+  }finally{
+    if(timeout!==null)window.clearTimeout(timeout);
+  }
 }
 function escapeHtml(value){
   const entities={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
@@ -83,7 +71,7 @@ function downloadTariffLicenseRequest(){
   const seatsField=form?.elements?.namedItem("seats");
   if(seatsField&&!seatsField.checkValidity()){
     seatsField.reportValidity();
-    toast("Укажите количество компьютеров от 1 до 50.");
+    toast("Для выбранного тарифа доступно от 1 до "+(seatsField.max||50)+" компьютеров.");
     return;
   }
   const request=createTariffLicenseRequest(form);
