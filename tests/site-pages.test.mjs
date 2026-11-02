@@ -359,3 +359,19 @@ test("major decorative software scenes expose meaningful image semantics", () =>
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
+
+test("page-level two-column layouts allow grid children to shrink without horizontal overflow", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  for (const selector of [
+    ".contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr)",
+    ".product-detail-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)",
+    ".product-summary{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)",
+    ".product-workflow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)",
+    ".product-tariff-summary{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)",
+    ".key-field{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)",
+    ".tariff-request-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr)",
+    ".download-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr)",
+    ".activation-details{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr)",
+    ".tariff-hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)"
+  ]) assert.ok(styles.includes(selector), "Missing minmax(0,…) layout guard: " + selector);
+});
