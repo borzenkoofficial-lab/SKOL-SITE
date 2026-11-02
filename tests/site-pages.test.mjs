@@ -271,3 +271,10 @@ test("dark theme typography and keyboard focus retain shared tokens", () => {
   assert.match(styles, /\.section-kicker\{[^}]*color:var\(--muted-2\)/);
   assert.match(styles, /:focus-visible/);
 });
+
+ 
+test("tariff comparison matrix can shrink inside narrow mobile viewports", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.comparison-section \.comparison-row,\.comparison-section \.comparison-head\{grid-template-columns:minmax\(0,1\.7fr\) repeat\(3,minmax\(35px,\.6fr\)\);gap:4px;padding:13px 8px\}/);
+  assert.doesNotMatch(styles, /\.comparison-section \.comparison-row,\.comparison-section \.comparison-head\{grid-template-columns:minmax\(125px,1\.7fr\)/);
+});
