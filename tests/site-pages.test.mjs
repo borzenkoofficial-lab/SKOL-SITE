@@ -284,3 +284,10 @@ test("in-page scrolling respects reduced motion", () => {
   assert.equal((source.match(/scrollIntoView\(\{behavior:window\.matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches\?"auto":"smooth"/g) || []).length, 2);
   assert.doesNotMatch(source, /scrollIntoView\(\{behavior:"smooth"\}\)/);
 });
+
+ 
+test("dark theme page metadata uses readable color tokens", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.form-hint\{margin:0;color:var\(--muted-2\)/);
+  assert.match(styles, /\.release-card ul\{display:grid;gap:8px;padding-left:18px;color:var\(--muted\)/);
+});
