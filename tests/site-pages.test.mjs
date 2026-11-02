@@ -291,3 +291,12 @@ test("dark theme page metadata uses readable color tokens", () => {
   assert.match(styles, /\.form-hint\{margin:0;color:var\(--muted-2\)/);
   assert.match(styles, /\.release-card ul\{display:grid;gap:8px;padding-left:18px;color:var\(--muted\)/);
 });
+
+ 
+test("public tariff text is escaped and bounded before HTML rendering", () => {
+  assert.match(source, /function escapeHtml\(value\)/);
+  assert.match(source, /description\.length>240/);
+  assert.match(source, /escapeHtml\(p\.desc\)/);
+  assert.match(source, /escapeHtml\(p\.note\)/);
+  assert.match(source, /escapeHtml\(plan\.name\)/);
+});
