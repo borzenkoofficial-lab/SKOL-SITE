@@ -363,7 +363,7 @@ async function boot(){
   const content=route==="catalog"?catalog():route==="product"?product():route==="tariffs"?tariffs():route==="download"?download():route==="activation"?activation():home();
   document.querySelector("#app").innerHTML='<div class="page-transition enter"></div><div class="scroll-progress"></div>'+header()+content+footer();
   setupTheme();setupCatalogFolders();setupHomeInteractions();setupMotion();setupDemo();setupForms();setupParticles();setupTariffMotion();setupTariffSelection();
-  document.querySelectorAll('a[href^="/#"]').forEach(a=>a.addEventListener("click",event=>{if(route==="home"){const target=document.getElementById(a.getAttribute("href").split("#")[1]);if(target){event.preventDefault();target.scrollIntoView({behavior:"smooth"})}}}));
-  if(location.hash)setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView({behavior:"smooth"}),160);
+  document.querySelectorAll('a[href^="/#"]').forEach(a=>a.addEventListener("click",event=>{if(route==="home"){const target=document.getElementById(a.getAttribute("href").split("#")[1]);if(target){event.preventDefault();target.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}}}));
+  if(location.hash)setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}),160);
 }
 boot().catch(error=>{console.error('SKOL boot failed:',error);const root=document.querySelector('#app');if(root)root.textContent='Не удалось загрузить страницу СКОЛ. Обновите страницу или обратитесь в поддержку.'});
