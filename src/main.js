@@ -293,6 +293,7 @@ function setupTariffSelection(){
   const cards=[...document.querySelectorAll("[data-tariff-card]")];
   const select=document.querySelector("#plan-select");
   const status=document.querySelector("#tariff-selected-status");
+  const seatsField=document.querySelector('#tariff-form [name="seats"]');
   const cols=[...document.querySelectorAll("[data-plan-col]")];
   const toggles=[...document.querySelectorAll("[data-feature-toggle]")];
   const summary=document.querySelector("#builder-feature-summary");
@@ -315,6 +316,8 @@ function setupTariffSelection(){
     const name=plan?plan.name:"Индивидуальная конфигурация";
     const description=plan?plan.desc:"Набор модулей будет зафиксирован в заявке и подписанной лицензии.";
     const price=plan&&plan.price!==null?new Intl.NumberFormat("ru-RU").format(plan.price)+" ₽":"По запросу";
+    const maxDevices=plan?.maxDevices??50;
+    if(seatsField)seatsField.max=String(maxDevices);
     const label=$("#builder-plan-name"),desc=$("#builder-plan-description"),priceNode=$("#builder-price"),count=$("#builder-count"),moduleCount=$("#builder-module-count");
     if(label)label.textContent=name;
     if(desc)desc.textContent=description;
@@ -338,7 +341,7 @@ function setupTariffSelection(){
       }
     }
     if(select)select.value=activePlanId;
-    if(status)status.textContent=plan?"Выбрана конфигурация: "+plan.id+" · "+selected.length+" дополнительных модулей":"Индивидуальная конфигурация · "+selected.length+" модулей выбрано";
+    if(status)status.textContent=plan?"Выбрана конфигурация: "+plan.id+" · "+selected.length+" дополнительных модулей · максимум "+maxDevices+" компьютеров":"Индивидуальная конфигурация · "+selected.length+" модулей выбрано · максимум "+maxDevices+" компьютеров";
     cards.forEach(card=>{
       const active=card.id===String(activePlanId).toLowerCase();
       card.classList.toggle("is-selected",active);
