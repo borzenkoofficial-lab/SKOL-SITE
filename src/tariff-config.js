@@ -30,7 +30,7 @@ function normalizeFeatures(value, knownIds) {
   return ids.sort();
 }
 
-function normalizePlan(input, index, knownIds, featureNames) {
+function normalizePlan(input, index, knownIds, featureNameMap) {
   if (!input || typeof input !== "object" || Array.isArray(input)) {
     throw new Error("Некорректная запись тарифа.");
   }
@@ -75,7 +75,7 @@ function normalizePlan(input, index, knownIds, featureNames) {
   const base = id === "START"
     ? ["Клиенты и заявки", "Объекты и задачи", "Рабочее пространство", "Локальная база данных"]
     : ["Всё из START"];
-  const featureNames = features.map((featureId) => featureNamesById(featureId, featureNames));
+  const featureLabels = features.map((featureId) => featureNamesById(featureId, featureNameMap));
   const color = id === "START" ? "light" : id === "BUSINESS" ? "dark" : "red";
   const title = id === "START" ? "Рабочая база"
     : id === "PRO" ? "Контроль экономики"
@@ -86,7 +86,7 @@ function normalizePlan(input, index, knownIds, featureNames) {
 
   return {
     id, name, featureIds: features, title, desc: description,
-    features: base.concat(featureNames), note, color, price,
+    features: base.concat(featureLabels), note, color, price,
     maxDevices, displayOrder, enabled
   };
 }
