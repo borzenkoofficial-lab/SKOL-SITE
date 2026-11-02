@@ -342,3 +342,20 @@ test("catalogue folder grids allow their text and artwork columns to shrink", ()
   assert.match(styles, /\.folder-reveal-inner\{[^}]*grid-template-columns:minmax\(0,1\.15fr\) minmax\(0,1fr\) auto/);
   assert.match(styles, /@media\(max-width:850px\)[\s\S]*\.folder-cover\{grid-template-columns:minmax\(0,1fr\) minmax\(0,1fr\)/);
 });
+
+test("tariff comparison columns follow the number of enabled plans and remain scrollable", () => {
+  assert.match(source, /--plan-count:'\+plans\.length\+';/);
+  assert.match(source, /--comparison-min-width:'\+Math\.max\(420,260\+plans\.length\*82\)\+'px/);
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.tariff-grid\{display:grid;grid-template-columns:repeat\(auto-fit,minmax\(min\(100%,300px\),1fr\)\)/);
+  assert.match(styles, /\.comparison-table\{[^}]*overflow-x:auto/);
+  assert.match(styles, /\.comparison-row\{[^}]*repeat\(var\(--plan-count,3\),minmax\(70px,1fr\)\)/);
+  assert.match(styles, /\.comparison-section \.comparison-head\{grid-template-columns:minmax\(170px,1\.8fr\) repeat\(var\(--plan-count,3\),minmax\(70px,1fr\)\)\}/);
+  assert.match(styles, /repeat\(var\(--plan-count,3\),minmax\(35px,\.6fr\)\)/);
+});
+
+test("major decorative software scenes expose meaningful image semantics", () => {
+  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+  assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
+  assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
+});
