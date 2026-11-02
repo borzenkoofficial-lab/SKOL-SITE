@@ -294,13 +294,39 @@ function setupTariffSelection(){
   const select=document.querySelector("#plan-select");
   const status=document.querySelector("#tariff-selected-status");
   const seatsField=document.querySelector('#tariff-form [name="seats"]');
+  const builderSeats=document.querySelector("#builder-seats");
   const cols=[...document.querySelectorAll("[data-plan-col]")];
   const toggles=[...document.querySelectorAll("[data-feature-toggle]")];
   const summary=document.querySelector("#builder-feature-summary");
   const download=document.querySelector("#downloadTariffRequest");
+  const presetButtons=[...document.querySelectorAll("[data-builder-preset]")];
+  const resetButtons=[...document.querySelectorAll("[data-builder-reset],[data-builder-reset-inline]")];
+  const progressRing=document.querySelector("#builder-progress-ring");
+  const progressFill=document.querySelector("#builder-progress-fill");
+  const countNode=$("#builder-count");
+  const moduleCount=$("#builder-module-count");
+  const selectedCount=$("#builder-selected-count");
+  const counterCaption=$("#builder-counter-caption");
+  const planType=$("#builder-plan-type");
+  const priceNote=$("#builder-price-note");
   let activePlanId=plans.some(plan=>plan.id==="START")?"START":plans[0]?.id||"CUSTOM";
+
   function featureIds(){return toggles.filter(input=>input.checked).map(input=>input.dataset.featureToggle).sort()}
   function sameFeatures(a,b){return a.length===b.length&&a.every((id,index)=>id===b[index])}
+  function syncSeats(value,source){
+    const normalized=String(value??"");
+    if(builderSeats&&source!==builderSeats)builderSeats.value=normalized;
+    if(seatsField&&source!==seatsField)seatsField.value=normalized;
+  }
+  function updateSeatLimit(maxDevices){
+    [builderSeats,seatsField].forEach(field=>{
+      if(!field)return;
+      field.max=String(maxDevices);
+      const value=Number(field.value);
+      if(field.value!==""&&Number.isFinite(value)&&value>maxDevices)field.value=String(maxDevices);
+    });
+    if(builderSeats&&seatsField)syncSeats(builderSeats.value,builderSeats);
+  }
   function render(){
     const selected=featureIds();
     let plan=plans.find(item=>item.id===activePlanId);
@@ -313,35 +339,51 @@ function setupTariffSelection(){
       if(match){activePlanId=match.id;plan=match}
     }
     document.documentElement.dataset.tariffPlan=activePlanId;
-    const name=plan?plan.name:"Индивидуальная конфигурация";
-    const description=plan?plan.desc:"Набор модулей будет зафиксирован в заявке и подписанной лицензии.";
+    const description=plan?plan.desc:"Вы собрали собственную конфигурацию. Выбранные модули будут зафиксированы в заявке и лицензии.";
     const price=plan&&plan.price!==null?new Intl.NumberFormat("ru-RU").format(plan.price)+" ₽":"По запросу";
     const maxDevices=plan?.maxDevices??50;
-    if(seatsField)seatsField.max=String(maxDevices);
-    const label=$("#builder-plan-name"),desc=$("#builder-plan-description"),priceNode=$("#builder-price"),count=$("#builder-count"),moduleCount=$("#builder-module-count");
-    if(label)label.textContent=name;
+    updateSeatLimit(maxDevices);
+    const seatCount=builderSeats?.value||seatsField?.value||"1";
+    const progress=tariffFeatures.length?Math.round(selected.length/tariffFeatures.length*100):0;
+    const label=$("#builder-plan-name"),desc=$("#builder-plan-description"),priceNode=$("#builder-price");
+    if(label)label.textContent=plan?plan.name:"CUSTOM";
     if(desc)desc.textContent=description;
     if(priceNode)priceNode.textContent=price;
-    if(count)count.textContent=selected.length+" / "+tariffFeatures.length;
-    if(moduleCount)moduleCount.textContent=String(selected.length);
+    if(countNode)countNode.textContent=selected.length+" / "+tariffFeatures.length;
+    if(moduleCount)moduleCount.textContent=selected.length+" / "+tariffFeatures.length;
+    if(selectedCount)selectedCount.textContent=String(selected.length);
+    if(progressRing)progressRing.style.setProperty("--progress",progress+"%");
+    if(progressFill)progressFill.style.width=progress+"%";
+    if(counterCaption)counterCaption.textContent=selected.length===0?"Базовый контур":selected.length===tariffFeatures.length?"Полный набор модулей":"Конфигурация собирается";
+    if(planType)planType.textContent=plan?"ГОТОВЫЙ НАБОР":"ИНДИВИДУАЛЬНО";
+    if(priceNote)priceNote.textContent=plan&&plan.price!==null
+      ?"Стоимость готового тарифа указана выше. Дополнительные условия и изменения подтвердит менеджер."
+      :"Автоматическая цена не рассчитывается. Менеджер подтвердит стоимость с учётом модулей и количества компьютеров.";
     if(summary){
       summary.replaceChildren();
       if(!selected.length){
         const li=document.createElement("li");
-        li.textContent="Базовые функции CRM";
+        li.className="builder-summary-empty";
+        li.textContent="Дополнительные модули не выбраны — используются базовые разделы";
         summary.append(li);
       }else{
         selected.forEach(id=>{
           const feature=tariffFeatures.find(item=>item.id===id);
           if(!feature)return;
           const li=document.createElement("li");
+          li.className="builder-summary-item";
           li.textContent=feature.name;
           summary.append(li);
         });
       }
     }
+    document.querySelectorAll("[data-group-count]").forEach(node=>{
+      const group=document.querySelector('[data-builder-group="'+node.dataset.groupCount+'"]');
+      const groupToggles=[...(group?.querySelectorAll("[data-feature-toggle]")||[])];
+      node.textContent=groupToggles.filter(input=>input.checked).length+" / "+groupToggles.length;
+    });
     if(select)select.value=activePlanId;
-    if(status)status.textContent=plan?"Выбрана конфигурация: "+plan.id+" · "+selected.length+" дополнительных модулей · максимум "+maxDevices+" компьютеров":"Индивидуальная конфигурация · "+selected.length+" модулей выбрано · максимум "+maxDevices+" компьютеров";
+    if(status)status.textContent=(plan?"Выбрана конфигурация: "+plan.id:"Индивидуальная конфигурация")+" · "+selected.length+" модулей · "+seatCount+" компьютеров из "+maxDevices;
     cards.forEach(card=>{
       const active=card.id===String(activePlanId).toLowerCase();
       card.classList.toggle("is-selected",active);
@@ -349,6 +391,11 @@ function setupTariffSelection(){
       if(link)link.setAttribute("aria-current",active?"true":"false");
     });
     cols.forEach(col=>col.classList.toggle("is-plan-active",col.dataset.planCol===activePlanId));
+    presetButtons.forEach(button=>{
+      const active=button.dataset.builderPreset===activePlanId;
+      button.classList.toggle("is-active",active);
+      button.setAttribute("aria-pressed",String(active));
+    });
   }
   function selectPlan(id){
     if(id==="CUSTOM"){activePlanId="CUSTOM";render();return}
@@ -361,7 +408,18 @@ function setupTariffSelection(){
   }
   document.querySelectorAll("[data-plan]").forEach(link=>link.addEventListener("click",()=>selectPlan(link.dataset.plan)));
   select?.addEventListener("change",()=>selectPlan(select.value));
+  presetButtons.forEach(button=>button.addEventListener("click",()=>selectPlan(button.dataset.builderPreset)));
+  resetButtons.forEach(button=>button.addEventListener("click",()=>selectPlan(plans.some(plan=>plan.id==="START")?"START":"CUSTOM")));
   toggles.forEach(input=>input.addEventListener("change",()=>{activePlanId="CUSTOM";render()}));
+  builderSeats?.addEventListener("input",()=>{syncSeats(builderSeats.value,builderSeats);render()});
+  seatsField?.addEventListener("input",()=>{syncSeats(seatsField.value,seatsField);render()});
+  document.querySelectorAll("[data-seat-step]").forEach(button=>button.addEventListener("click",()=>{
+    const current=Number(builderSeats?.value||seatsField?.value||1);
+    const max=Number(builderSeats?.max||seatsField?.max||50);
+    const next=Math.max(1,Math.min(max,current+Number(button.dataset.seatStep||0)));
+    syncSeats(next,builderSeats||seatsField);
+    render();
+  }));
   download?.addEventListener("click",downloadTariffLicenseRequest);
   const sections=[...document.querySelectorAll(".tariff-cards,.tariff-builder,.comparison-section,.tariff-request,[data-comparison-row]")];
   sections.filter(section=>section.hasAttribute("data-comparison-row")).forEach((row,index)=>row.style.setProperty("--row-index",index));
@@ -371,6 +429,7 @@ function setupTariffSelection(){
   }else sections.forEach(section=>section.classList.add("tariff-revealed"));
   selectPlan(activePlanId);
 }
+
 function setPageMeta(){const pages={home:["СКОЛ — платформа программных продуктов","Программные продукты СКОЛ для реальных задач бизнеса. Каталог, лицензии, обновления и поддержка."],catalog:["Каталог программ СКОЛ — программные продукты","Каталог программных продуктов СКОЛ. Сейчас доступна СКОЛ CRM — локальная система управления строительным бизнесом."],product:["СКОЛ CRM — возможности, модули и лицензии","Подробное описание СКОЛ CRM: клиенты, заявки, объекты, сметы, производство, финансы, поиск заказов и офлайн-лицензирование."],tariffs:["Тарифы СКОЛ CRM — START, PRO, BUSINESS","Сравнение возможностей и тарифов СКОЛ CRM. Подключение через менеджера, офлайн-ключи."],download:["Скачать СКОЛ CRM — версии и обновления","Страница загрузок СКОЛ CRM для Windows: версии, изменения, установка и обновления."],activation:["Активация СКОЛ CRM — офлайн-лицензия","Инструкция по Device ID и локальной активации СКОЛ CRM с цифровой подписью Ed25519."]};const meta=pages[route]||pages.home;document.title=meta[0];let description=document.querySelector('meta[name="description"]');if(description)description.content=meta[1];let canonical=document.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement("link");canonical.rel="canonical";document.head.appendChild(canonical)}canonical.href=location.origin+location.pathname;let ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=meta[0];let ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=meta[1]}
 async function boot(){
   setPageMeta();
