@@ -416,7 +416,8 @@ test("tariff cards have one source of truth for selection and queued pointer fra
 test("selected tariff applies its own computer limit to the request form", () => {
   assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \[name="seats"\]'\)/);
   assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
-  assert.match(source, /if\(seatsField\)seatsField\.max=String\(maxDevices\)/);
+  assert.match(source, /field\.max=String\(maxDevices\)/);
+  assert.match(source, /builderSeats\?\.addEventListener\("input"/);
   assert.match(source, /максимум "\+maxDevices\+" компьютеров/);
   assert.match(source, /seatsField&&!seatsField\.checkValidity\(\)/);
 });
@@ -521,7 +522,7 @@ test("client tariff builder presents base modules, grouped options and ready-mad
     'builder-plan-description'
   ]) assert.ok(builder.includes(marker), "Tariff builder missing: " + marker);
   assert.match(builder, /plans\.map\(\(plan,index\)=>.*data-builder-preset/);
-  assert.match(builder, /Дополнительные возможности/);
+  assert.match(builder, /ДОПОЛНИТЕЛЬНЫХ ВОЗМОЖНОСТЕЙ/);
 });
 
 test("customer tariff builder keeps module selection, presets and plan cards synchronized", () => {
