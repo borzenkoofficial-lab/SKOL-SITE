@@ -233,3 +233,9 @@ test("mobile navigation exposes its controlled panel and accurate expanded label
 test("tariff request downloads retain the object URL until the browser can start the download", () => {
   assert.match(source, /link\.click\(\);[\s\S]*link\.remove\(\);[\s\S]*window\.setTimeout\(\(\)=>URL\.revokeObjectURL\(url\),1000\)/);
 });
+
+ 
+test("homepage product mockup uses the same version constant as the download page", () => {
+  assert.match(source, /DESKTOP '\\+VERSION\\+'/);
+  assert.doesNotMatch(source, /DESKTOP 1\.24/);
+});
