@@ -317,3 +317,28 @@ test("catalogue and homepage label styles are theme-aware", () => {
   assert.ok(styles.includes(".release-heading>span{color:var(--muted-2)"));
   assert.ok(styles.includes(".home-method-step>small{display:block;margin-top:29px;color:var(--muted-2)"));
 });
+
+test("dark theme keeps activation, folder and tariff text readable on dark surfaces", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.activation-cta\{[^}]*background:var\(--surface-soft\)/);
+  assert.match(styles, /\.folder-cover-copy \.eyebrow\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /\.home-folder-kicker\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /\.home-folder-tags i\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /\.folder-art-caption\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /\.home-folder-art-label\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /:root\[data-theme="dark"\] \.folder-tab-state\{color:#8fc58c\}/);
+  assert.match(styles, /:root\[data-theme="dark"\] \.home-live-state\{color:#8fc58c\}/);
+  assert.match(styles, /\.tariff-hero-meta\{[^}]*color:var\(--muted\)/);
+  assert.match(styles, /\.tariff-form label\{color:var\(--ink\)\}/);
+  assert.match(styles, /:root\[data-theme="dark"\] \.tariff-form input/);
+  assert.match(styles, /:root\[data-theme="dark"\] \.tariff-form input::placeholder/);
+});
+
+test("catalogue folder grids allow their text and artwork columns to shrink", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.folder-cover\{[^}]*grid-template-columns:minmax\(0,\.82fr\) minmax\(0,1\.18fr\)/);
+  assert.match(styles, /\.folder-cover-copy\{[^}]*min-width:0/);
+  assert.match(styles, /\.folder-cover-art\{[^}]*min-width:0/);
+  assert.match(styles, /\.folder-reveal-inner\{[^}]*grid-template-columns:minmax\(0,1\.15fr\) minmax\(0,1fr\) auto/);
+  assert.match(styles, /@media\(max-width:850px\)[\s\S]*\.folder-cover\{grid-template-columns:minmax\(0,1fr\) minmax\(0,1fr\)/);
+});
