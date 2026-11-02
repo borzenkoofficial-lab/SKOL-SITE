@@ -248,3 +248,18 @@ test("business edition copy matches the published license feature matrix", () =>
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
+
+ 
+test("contact form text uses real line breaks and reports clipboard failures accurately", () => {
+  assert.match(source, /\.join\("\\n"\)/);
+  assert.match(source, /message\+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"/);
+  assert.match(source, /const copied=await copyText\(message\)/);
+  assert.match(source, /Не удалось скопировать текст автоматически/);
+  assert.match(source, /async function copyText\(text\)[\s\S]*return copied/);
+});
+
+test("page transitions do not impose a fixed delay when reduced motion is enabled", () => {
+  assert.match(source, /const reducedMotion=window\.matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches/);
+  assert.match(source, /if\(curtain&&!reducedMotion\)/);
+  assert.match(source, /setTimeout\(\(\)=>location\.assign\(next\.href\),420\)/);
+});
