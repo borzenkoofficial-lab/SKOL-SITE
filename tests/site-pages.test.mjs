@@ -308,3 +308,12 @@ test("demo controls expose pressed state and feedback toast is announced", () =>
   assert.match(source, /x\.setAttribute\("aria-pressed",String\(active\)\)/);
   assert.match(source, /aria-live","polite"/);
 });
+
+ 
+test("catalogue and homepage label styles are theme-aware", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.ok(styles.includes(".catalog-list-head>span{color:var(--muted-2)"));
+  assert.ok(styles.includes(".capability-card-top{display:flex;justify-content:space-between;color:var(--muted-2)"));
+  assert.ok(styles.includes(".release-heading>span{color:var(--muted-2)"));
+  assert.ok(styles.includes(".home-method-step>small{display:block;margin-top:29px;color:var(--muted-2)"));
+});
