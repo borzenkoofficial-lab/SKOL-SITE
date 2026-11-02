@@ -375,3 +375,36 @@ test("page-level two-column layouts allow grid children to shrink without horizo
     ".tariff-hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)"
   ]) assert.ok(styles.includes(selector), "Missing minmax(0,…) layout guard: " + selector);
 });
+
+test("tariff JSON export validates the computer count before creating the file", () => {
+  const start = source.indexOf("function downloadTariffLicenseRequest()");
+  const end = source.indexOf("\nfunction tariffBuilder()", start);
+  const handler = source.slice(start, end);
+  assert.match(handler, /const seatsField=form\?\.elements\?\.namedItem\("seats"\)/);
+  assert.match(handler, /if\(seatsField&&!seatsField\.checkValidity\(\)\)\{[\s\S]*seatsField\.reportValidity\(\)[\s\S]*return;/);
+  assert.doesNotMatch(handler, /form\.checkValidity\(\)/);
+  assert.match(handler, /createTariffLicenseRequest\(form\)/);
+});
+
+test("tariff feature checkboxes and the published tariff JSON use the same supported catalogue", () => {
+  const config = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
+  const sourceIds = [...source.matchAll(/\{id:"([^"]+)",name:/g)].map(match => match[1]).sort();
+  assert.deepEqual([...config.featureIds].sort(), sourceIds);
+  assert.equal(config.product, "SKOL_CRM");
+  assert.equal(config.catalogVersion, 1);
+  for (const plan of config.plans) {
+    assert.ok(Array.isArray(plan.features));
+    assert.equal(new Set(plan.features).size, plan.features.length);
+    for (const featureId of plan.features) assert.ok(config.featureIds.includes(featureId), "Unknown feature in " + plan.id + ": " + featureId);
+  }
+});
+
+test("tariff cards have one source of truth for selection and queued pointer frames are cancelled", () => {
+  const start = source.indexOf("function setupForms()");
+  const end = source.indexOf("\nfunction setupHomeInteractions()", start);
+  const formSetup = source.slice(start, end);
+  assert.doesNotMatch(formSetup, /querySelectorAll\("\[data-plan\]"\)/);
+  const heroLeaveCount = (source.match(/scene\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;/g) || []).length;
+  assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
+  assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
+});
