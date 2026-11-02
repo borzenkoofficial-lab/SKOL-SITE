@@ -408,3 +408,30 @@ test("tariff cards have one source of truth for selection and queued pointer fra
   assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
   assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
 });
+
+test("selected tariff applies its own computer limit to the request form", () => {
+  assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \\[name="seats"\\]'\)/);
+  assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
+  assert.match(source, /if\(seatsField\)seatsField\.max=String\(maxDevices\)/);
+  assert.match(source, /максимум "\+maxDevices\+" компьютеров/);
+  assert.match(source, /seatsField&&!seatsField\.checkValidity\(\)/);
+});
+
+test("website license request keeps the License Manager import contract", () => {
+  const start = source.indexOf("function createTariffLicenseRequest(");
+  const end = source.indexOf("\nfunction downloadTariffLicenseRequest()", start);
+  const factory = source.slice(start, end);
+  for (const field of [
+    'format:"SKOL_LICENSE_REQUEST"',
+    "schemaVersion:1",
+    "catalogVersion:1",
+    'product:"SKOL_CRM"',
+    "planId:",
+    "planName:",
+    "features,",
+    "seatCount:",
+    "customer:{name:",
+    "contact:",
+    'message:""'
+  ]) assert.ok(factory.includes(field), "Missing import contract field: " + field);
+});
