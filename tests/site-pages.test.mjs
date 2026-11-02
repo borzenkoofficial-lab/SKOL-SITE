@@ -418,7 +418,7 @@ test("selected tariff applies its own computer limit to the request form", () =>
   assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
   assert.match(source, /field\.max=String\(maxDevices\)/);
   assert.match(source, /builderSeats\?\.addEventListener\("input"/);
-  assert.match(source, /максимум "\+maxDevices\+" компьютеров/);
+  assert.match(source, /Для выбранного тарифа доступно от 1 до /);
   assert.match(source, /seatsField&&!seatsField\.checkValidity\(\)/);
 });
 
