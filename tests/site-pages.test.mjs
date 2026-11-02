@@ -388,7 +388,9 @@ test("tariff JSON export validates the computer count before creating the file",
 
 test("tariff feature checkboxes and the published tariff JSON use the same supported catalogue", () => {
   const config = JSON.parse(readFileSync(new URL("../public/skol-tariff-config.json", import.meta.url), "utf8"));
-  const sourceIds = [...source.matchAll(/\{id:"([^"]+)",name:/g)].map(match => match[1]).sort();
+  const catalogStart = source.indexOf("const tariffFeatures = [");
+  const catalogEnd = source.indexOf("\n];", catalogStart);
+  const sourceIds = [...source.slice(catalogStart, catalogEnd).matchAll(/\{id:"([^"]+)",name:/g)].map(match => match[1]).sort();
   assert.deepEqual([...config.featureIds].sort(), sourceIds);
   assert.equal(config.product, "SKOL_CRM");
   assert.equal(config.catalogVersion, 1);
@@ -410,7 +412,7 @@ test("tariff cards have one source of truth for selection and queued pointer fra
 });
 
 test("selected tariff applies its own computer limit to the request form", () => {
-  assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \\[name="seats"\\]'\)/);
+  assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \[name="seats"\]'\)/);
   assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
   assert.match(source, /if\(seatsField\)seatsField\.max=String\(maxDevices\)/);
   assert.match(source, /максимум "\+maxDevices\+" компьютеров/);
