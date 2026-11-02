@@ -263,3 +263,11 @@ test("page transitions do not impose a fixed delay when reduced motion is enable
   assert.match(source, /if\(curtain&&!reducedMotion\)/);
   assert.match(source, /setTimeout\(\(\)=>location\.assign\(next\.href\),420\)/);
 });
+
+ 
+test("dark theme typography and keyboard focus retain shared tokens", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(styles, /\.eyebrow\{[^}]*color:var\(--muted-2\)/);
+  assert.match(styles, /\.section-kicker\{[^}]*color:var\(--muted-2\)/);
+  assert.match(styles, /:focus-visible/);
+});
