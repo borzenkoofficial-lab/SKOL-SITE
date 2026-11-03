@@ -436,7 +436,20 @@ async function boot(){
   if(route==="tariffs")await loadTariffConfig();
   const content=route==="catalog"?catalog():route==="product"?product():route==="tariffs"?tariffs():route==="download"?download():route==="activation"?activation():home();
   document.querySelector("#app").innerHTML='<div class="page-transition enter"></div><div class="scroll-progress"></div>'+header()+content+footer();
-  setupTheme();setupCatalogFolders();setupHomeInteractions();setupMotion();setupDemo();setupForms();setupParticles();setupTariffMotion();setupTariffSelection();
+  const setupTasks=[
+    ["theme",setupTheme],
+    ["catalog folders",setupCatalogFolders],
+    ["home interactions",setupHomeInteractions],
+    ["motion",setupMotion],
+    ["demo",setupDemo],
+    ["forms",setupForms],
+    ["particles",setupParticles],
+    ["tariff motion",setupTariffMotion],
+    ["tariff selection",setupTariffSelection]
+  ];
+  for(const [name,setup] of setupTasks){
+    try{setup()}catch(error){console.error("SKOL setup failed ("+name+"):",error)}
+  }
   document.querySelectorAll('a[href^="/#"]').forEach(a=>a.addEventListener("click",event=>{if(route==="home"){const target=document.getElementById(a.getAttribute("href").split("#")[1]);if(target){event.preventDefault();target.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}}}));
   if(location.hash)setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}),160);
 }
