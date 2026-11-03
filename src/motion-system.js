@@ -9,8 +9,35 @@ export function initMotionSystem(root = document) {
   const finePointer = window.matchMedia(FINE_POINTER).matches;
 
   const revealTargets = root.querySelectorAll(
-    ".contact-grid, .footer-top, .footer-bottom, .comparison-table, .tariff-intro-row, .builder-controls, .builder-summary"
+    ".contact-grid, .footer-top, .footer-bottom, .comparison-table, .tariff-intro-row, .builder-controls, .builder-summary, .home-story-board, .home-product-folder, .home-pillar-folder, .home-product-footnote"
   );
+
+  // Staggered kinetic typography: preserve the original text and accessibility tree.
+  root.querySelectorAll(".skol-expansion > span").forEach((line, index) => {
+    line.classList.add("motion-type-line");
+    line.style.setProperty("--motion-line-index", String(index));
+  });
+
+  // Scroll-linked depth is applied with the independent CSS translate property,
+  // so existing transforms (3D hero, card hover and page transitions) remain intact.
+  const depthTargets = root.querySelectorAll(".hero-background-grid, .home-story-orbit, .tariff-builder-backdrop");
+  let scrollFrame = 0;
+  const updateDepth = () => {
+    const viewport = window.innerHeight || 1;
+    depthTargets.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      const offset = Math.max(-1, Math.min(1, (rect.top + rect.height / 2 - viewport / 2) / viewport));
+      element.style.setProperty("--motion-scroll-y", (offset * -22).toFixed(1) + "px");
+    });
+    scrollFrame = 0;
+  };
+  if (depthTargets.length && !reduced) {
+    updateDepth();
+    window.addEventListener("scroll", () => {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(updateDepth);
+    }, { passive: true });
+  }
 
   if (!reduced && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -31,7 +58,7 @@ export function initMotionSystem(root = document) {
   if (!finePointer || reduced) return;
 
   const surfaces = root.querySelectorAll(
-    ".button, .builder-preset, .builder-module, .folder-trigger, .home-folder-trigger, .home-pillar-trigger, .activation-step, .release-card, .side-card, .metric-card, .demo-panel"
+    ".button, .builder-preset, .builder-module, .folder-trigger, .home-folder-trigger, .home-pillar-trigger, .activation-step, .release-card, .side-card, .metric-card, .demo-panel, .home-product-folder, .home-pillar-folder, .home-story-board, .tariff-card"
   );
 
   surfaces.forEach((surface) => {
