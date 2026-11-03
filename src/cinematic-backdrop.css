@@ -1,14 +1,14 @@
-/* Global cinematic atmosphere: sits between the page canvas and app content. */
+/* Global cinematic atmosphere — overlay layer, because page sections have opaque canvas fills. */
 .skol-cinematic-backdrop {
   position: fixed;
-  z-index: 0;
+  z-index: 2;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: .92;
-  mix-blend-mode: multiply;
+  opacity: .78;
+  mix-blend-mode: soft-light;
 }
 #app {
   position: relative;
@@ -16,8 +16,8 @@
   isolation: isolate;
 }
 @media (max-width: 760px), (pointer: coarse) {
-  .skol-cinematic-backdrop { opacity: .58; }
+  .skol-cinematic-backdrop { opacity: .48; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .skol-cinematic-backdrop { opacity: .38; }
+  .skol-cinematic-backdrop { opacity: .32; }
 }
