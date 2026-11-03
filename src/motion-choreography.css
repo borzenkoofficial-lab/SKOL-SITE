@@ -1,0 +1,18 @@
+/* SKOL Motion Choreography: restrained 3D movement for the workflow scene */
+.home-story-board.story-choreography-ready .home-story-flow {
+  --story-tilt-x: 0deg; --story-tilt-y: 0deg; --story-camera-y: 0px;
+  transform: perspective(1100px) rotateX(var(--story-tilt-x)) rotateY(var(--story-tilt-y));
+  translate: 0 var(--story-camera-y);
+  transform-style: preserve-3d; transform-origin: 50% 48%;
+  transition: transform 180ms cubic-bezier(.2,.7,.2,1), translate 180ms cubic-bezier(.2,.7,.2,1);
+  will-change: transform, translate;
+}
+.home-story-board.story-choreography-ready .home-flow-node { transform: translateZ(9px); }
+.home-story-board.story-choreography-ready .home-flow-connector { transform: translateZ(4px); }
+@media (max-width: 760px), (hover: none), (pointer: coarse) {
+  .home-story-board.story-choreography-ready .home-story-flow { transform: none; translate: 0 var(--story-camera-y); will-change: translate; }
+  .home-story-board.story-choreography-ready .home-flow-node, .home-story-board.story-choreography-ready .home-flow-connector { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-story-board.story-choreography-ready .home-story-flow, .home-story-board.story-choreography-ready .home-flow-node, .home-story-board.story-choreography-ready .home-flow-connector { transform: none !important; translate: none !important; transition: none !important; will-change: auto !important; }
+}
