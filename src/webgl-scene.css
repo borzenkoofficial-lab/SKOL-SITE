@@ -13,7 +13,6 @@
   mix-blend-mode:screen;
   transition:opacity .6s ease;
 }
-.hero-visual > :not(.skol-webgl-scene) { position:relative; z-index:1; }
 .skol-webgl-scene.is-fallback { display:none; }
 @media (max-width:760px), (pointer:coarse) {
   .skol-webgl-scene { opacity:.45; mix-blend-mode:screen; }
