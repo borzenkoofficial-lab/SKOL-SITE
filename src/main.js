@@ -7,6 +7,8 @@ import "./motion-scenes.css";
 import { initMotionScenes } from "./motion-scenes.js";
 import "./motion-choreography.css";
 import { initMotionChoreography } from "./motion-choreography.js";
+import "./cinematic-backdrop.css";
+import { initCinematicBackdrop } from "./cinematic-backdrop.js";
 import { normalizePublicTariffConfig } from "./tariff-config.js";
 const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
@@ -453,6 +455,7 @@ async function boot(){
     ["WebGL scene",()=>initSkolWebGLScene(document)],
     ["motion scenes",()=>initMotionScenes(document)],
     ["motion choreography",()=>initMotionChoreography(document)],
+    ["cinematic backdrop",()=>initCinematicBackdrop(document)],
     ["demo",setupDemo],
     ["forms",setupForms],
     ["particles",setupParticles],
