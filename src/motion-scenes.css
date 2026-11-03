@@ -17,7 +17,7 @@
 .skol-blueprint-labels{font:700 8px/1 sans-serif;letter-spacing:2px;opacity:0;animation:skol-blueprint-fade-in .8s ease 1.5s forwards}
 .hero-visual .skol-blueprint-labels text{fill:currentColor}
 .home-story-board{position:relative;isolation:isolate}
-.skol-workflow-drawing{position:absolute;z-index:-1;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.skol-workflow-drawing{position:absolute;z-index:0;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .workflow-path{stroke:var(--accent);stroke-width:1.2;stroke-dasharray:900;stroke-dashoffset:900;opacity:.62;transition:stroke-dashoffset 1.8s cubic-bezier(.2,.7,.2,1)}
 .workflow-path-secondary{opacity:.28;transition-delay:.25s}
 .workflow-node-ring{stroke:var(--accent);stroke-width:1;opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.5);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
