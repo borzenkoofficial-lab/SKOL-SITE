@@ -41,23 +41,25 @@ test("visual system provides accessible light and dark themes", () => {
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","release status","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
   }
 });
 
 test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8") + readFileSync(new URL("../src/platform-refinement.css", import.meta.url), "utf8") + readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-monitor/);
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.doesNotMatch(source, /hero-monitor|hero-back-panel|hero-mini-device/);
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
-  assert.match(styles, /\.hero-visual/);
+  assert.match(styles, /\.hero-motion-stage/);
+  assert.doesNotMatch(styles, /\.hero-motion-stage\s*\{[^}]*perspective|\.hero-motion-stage\s*\{[^}]*translateZ/);
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
 test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-motion-stage"\)/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
@@ -90,8 +92,8 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
 
 test("SKOL brand acronym is expanded in the homepage hero", () => {
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+  assert.match(source, /class="cinematic-wordmark"/);
+  for (const line of ["data-letter=\"С\"","data-letter=\"К\"","data-letter=\"О\"","data-letter=\"Л\""]) assert.ok(source.includes(line));
 });
 
 test("desktop navigation has four accessible interactive product links", () => {
@@ -248,12 +250,21 @@ test("homepage product mockup uses the same version constant as the download pag
 test("business edition copy matches the published license feature matrix", () => {
   assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
   assert.doesNotMatch(source, /расширенная аналитика/);
-  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("Последние заметки<br><em>версии 1.24.0.</em>"));
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
 
  
+
+test("download page distinguishes source version from published installer availability", () => {
+  assert.match(source, /Версия исходного кода сама по себе не означает, что готовый установщик уже опубликован/);
+  assert.match(source, /id="release-status" role="status" aria-live="polite"/);
+  assert.match(source, /api\.github\.com\/repos\/borzenkoofficial-lab\/struktura-crm-source\/releases\?per_page=1/);
+  assert.match(source, /Публичных релизов пока нет/);
+  assert.match(source, /установочные файлы к нему не прикреплены/);
+});
+
 test("contact form text uses real line breaks and reports clipboard failures accurately", () => {
   assert.match(source, /\.join\("\\n"\)/);
   assert.match(source, /message\+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"/);
@@ -360,7 +371,7 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
 });
 
 test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+  assert.match(source, /class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ: продукты, процессы и решения объединены в единую систему" role="img"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
