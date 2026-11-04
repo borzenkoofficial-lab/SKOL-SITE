@@ -31,7 +31,8 @@ export function initCinematicHero(){
   };
   const pointerLeave=()=>{
     if(frame)cancelAnimationFrame(frame);frame=0;
-    ["--pointer-x-px","--pointer-y-px","--pointer-x-pct","--pointer-y-pct","--pointer-x-angle","--pointer-y-angle","--pointer-x-glow","--pointer-y-glow"].forEach(name=>hero.style.setProperty(name,"0px"));
+    ["--pointer-x-px","--pointer-y-px","--pointer-x-angle","--pointer-y-angle","--pointer-x-glow","--pointer-y-glow"].forEach(name=>hero.style.setProperty(name,"0px"));
+    ["--pointer-x-pct","--pointer-y-pct"].forEach(name=>hero.style.setProperty(name,"0%"));
     if(glow){glow.setAttribute("cx","720");glow.setAttribute("cy","450");}
     magnetic.forEach(el=>{el.style.setProperty("--mag-x","0px");el.style.setProperty("--mag-y","0px");});
   };
@@ -50,7 +51,9 @@ export function initCinematicHero(){
     if(scrollFrame)return;
     scrollFrame=requestAnimationFrame(()=>{
       const rect=hero.getBoundingClientRect(),range=Math.max(1,hero.offsetHeight-window.innerHeight);
-      hero.style.setProperty("--hero-scroll",Math.min(1,Math.max(0,-rect.top/range)).toFixed(3));
+      const progress=Math.min(1,Math.max(0,-rect.top/range));
+      hero.style.setProperty("--hero-scroll",progress.toFixed(3));
+      hero.style.setProperty("--hero-scroll-y",(-progress*28).toFixed(1)+"px");
       scrollFrame=0;
     });
   };
