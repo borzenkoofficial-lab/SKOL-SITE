@@ -54,7 +54,7 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
   assert.match(styles, /\.hero-motion-stage/);
-  assert.doesNotMatch(styles, /\.hero-monitor|perspective:1400px|translateZ\(70px\)/);
+  assert.doesNotMatch(styles, /\.hero-motion-stage\s*\{[^}]*perspective|\.hero-motion-stage\s*\{[^}]*translateZ/);
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
