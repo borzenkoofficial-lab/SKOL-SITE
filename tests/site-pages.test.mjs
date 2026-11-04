@@ -21,6 +21,19 @@ test("CRM page documents product modules and tiers", () => {
 test("CRM page discloses offline licensing limitations", () => {
   for (const phrase of ["Ed25519", "Device ID", "удалённо отозвать", "updatesUntil", "выполняется вручную"]) assert.ok(source.includes(phrase));
 });
+test("public SEO discovery files and structured software metadata cover every product route", () => {
+  const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
+  const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+  assert.match(robots, /Sitemap: https:\/\/skol-site\.vercel\.app\/sitemap\.xml/);
+  for (const route of ["/","/catalog","/products/skol-crm","/tariffs","/download","/activation"]) {
+    assert.ok(sitemap.includes("https://skol-site.vercel.app" + route), "Missing sitemap route: " + route);
+  }
+  assert.match(html, /application\/ld\+json/);
+  assert.match(html, /"@type": "SoftwareApplication"/);
+  assert.match(html, /"name": "СКОЛ CRM"/);
+  assert.match(html, /"applicationCategory": "BusinessApplication"/);
+});
+
 test("page metadata is set per route and base HTML remains Russian", () => {
   assert.match(source, /function setPageMeta\(\)/);
   assert.match(source, /Каталог программ СКОЛ/);
