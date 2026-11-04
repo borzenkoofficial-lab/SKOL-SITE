@@ -68,6 +68,21 @@ test("download page distinguishes source version from a published installer", ()
   assert.ok(source.includes('const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases"'));
 });
 
+test("functional microcopy and touch controls meet the accessibility baseline", () => {
+  const stability = readFileSync(new URL("../src/visual-stability.css", import.meta.url), "utf8");
+  assert.match(stability, /\.contact-form label\s*\{\s*font-size:\s*11px/);
+  assert.match(stability, /\.form-hint,\s*\.download-warning\s*\{\s*font-size:\s*11px/);
+  assert.match(stability, /:where\(a, button, input, textarea, select, \[tabindex\]\):focus-visible/);
+  assert.match(stability, /@media \(pointer: coarse\)[\s\S]*min-height: 44px/);
+  assert.match(stability, /@media \(prefers-reduced-motion: reduce\)[\s\S]*scroll-behavior: auto/);
+});
+
+test("download instructions do not assume an installer is already published", () => {
+  assert.match(source, /Проверьте наличие установщика СКОЛ CRM/);
+  assert.match(source, /Если в релизе доступен SKOL-Setup\.exe, скачайте его/);
+  assert.match(source, /Последние изменения<br><em>в CRM · 1\.24\.0\./);
+});
+
 test("reference-driven visual system is present across SKOL", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(source, /Система координации операций и логики/);
