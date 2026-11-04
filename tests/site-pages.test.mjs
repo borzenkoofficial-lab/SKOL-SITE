@@ -113,8 +113,8 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
-test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+test("active tariff motion stays scoped and inactive homepage particle initializer is absent", () => {
+  assert.doesNotMatch(source, /function setupParticles\(/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
