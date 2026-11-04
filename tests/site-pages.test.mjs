@@ -56,6 +56,11 @@ test("active boot pipeline initializes the single motion system without the remo
   assert.doesNotMatch(source, /\["particles",setupParticles\]/);
 });
 
+test("interactive CRM preview announces tab content updates to assistive technology", () => {
+  assert.match(source, /id="demo-content" aria-live="polite" aria-atomic="true"/);
+  assert.match(source, /aria-controls="demo-content"/);
+});
+
 test("illustrative CRM dashboard values are visibly identified as demo data", () => {
   for (const label of ["ДЕМО / РАБОЧЕЕ ПРОСТРАНСТВО","ДЕМО / ОБЗОР РАБОЧЕГО ПРОСТРАНСТВА","ДЕМО-СЦЕНАРИЙ / ДАННЫЕ ПРИМЕРНЫЕ"]) {
     assert.ok(source.includes(label), "Missing demo disclosure: " + label);
