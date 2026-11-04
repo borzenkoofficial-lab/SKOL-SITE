@@ -371,7 +371,7 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
 });
 
 test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+  assert.match(source, /class="hero-motion-stage" role="img" aria-label="Схема связей платформы СКОЛ"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
