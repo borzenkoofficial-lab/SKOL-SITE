@@ -117,7 +117,28 @@ function mock(){return '<div class="product-stage" id="product-demo"><div class=
 function home(){return `<main class="page-home platform-home">
 <section class="platform-hero section-pad"><div class="hero-background-grid"></div><div class="platform-hero-top"><span class="hero-top-label"><i class="status-dot"></i> ПРОГРАММНЫЕ ПРОДУКТЫ СКОЛ</span><span>01 / DIGITAL WORKSPACE</span></div>
 <div class="hero-main"><div class="platform-hero-copy"><p class="eyebrow">РАСШИФРОВКА БРЕНДА СКОЛ</p><h1 class="skol-expansion" aria-label="Система координации операций и логики"><span><i>С</i>истема</span><span><i>К</i>оординации</span><span><i>О</i>пераций</span><span><i>Л</i>огики.</span></h1><p class="platform-lead">Создаём программные инструменты, которые связывают рабочие процессы, данные и решения в единую систему.</p><div class="hero-actions"><a class="button button-orange" href="/catalog">Выбрать продукт <span>↗</span></a><a class="hero-text-link" href="/#about">Как устроена платформа <span>→</span></a></div><a class="hero-product-shortcut" href="/products/skol-crm"><span class="shortcut-icon">S</span><span><small>ПЕРВЫЙ ПРОДУКТ СКОЛ</small><b>СКОЛ CRM <i>·</i> Windows</b></span><span class="shortcut-arrow">↗</span></a></div>
-<div class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"><div class="hero-scene-halo"></div><div class="hero-floor"><span>SKOL / SOFTWARE ECOSYSTEM</span><i></i></div><div class="hero-back-panel"><span>PRODUCTS</span><b>01—∞</b><small>TOOLS<br>THAT WORK</small></div><div class="hero-monitor"><div class="hero-monitor-top"><span class="monitor-dots"><i></i><i></i><i></i></span><b>СКОЛ <i>/</i> WORKSPACE</b><small>LOCAL</small></div><div class="hero-monitor-body"><aside class="hero-monitor-side"><b>S</b><i></i><i></i><i></i><i></i><small>СКОЛ</small></aside><div class="hero-monitor-main"><span>РАБОЧЕЕ ПРОСТРАНСТВО / ОБЗОР</span><strong>Работа<br>под контролем.</strong><div class="hero-monitor-metrics"><div><b>18</b><small>ЗАЯВКИ</small></div><div><b>07</b><small>ОБЪЕКТЫ</small></div><div><b>24</b><small>ЗАДАЧИ</small></div></div><div class="hero-monitor-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="hero-monitor-lines"><i></i><i></i><i></i></div></div></div><div class="hero-monitor-base"></div></div><div class="hero-floating-card hero-float-top"><span class="float-icon">⌘</span><div><b>Все процессы</b><small>В одном пространстве</small></div></div><div class="hero-floating-card hero-float-right"><span class="float-icon">↗</span><div><b>Локальная работа</b><small>Данные на вашем ПК</small></div></div><div class="hero-mini-device"><span>СКОЛ</span><b>CRM</b><i></i><small>WINDOWS APP</small></div><div class="hero-orange-route"><i></i><i></i><i></i></div><div class="hero-visual-note">PRODUCT 001 <span>·</span> REAL SOFTWARE</div></div></div>
+<div class="hero-motion-stage" aria-label="Схема связей платформы СКОЛ">
+<div class="hero-motion-head"><span>SKOL / SYSTEM MAP</span><span><i></i> PLATFORM 001</span></div>
+<div class="hero-system-core"><span class="hero-core-ring hero-core-ring-one"></span><span class="hero-core-ring hero-core-ring-two"></span><span class="hero-core-mark">С<span>К</span>ОЛ</span><small>ЕДИНАЯ ЛОГИКА</small></div>
+<svg class="hero-system-lines" viewBox="0 0 620 460" fill="none" aria-hidden="true">
+<path class="system-line system-line-a" d="M310 230 L145 105 L58 105"/>
+<path class="system-line system-line-b" d="M310 230 L475 105 L562 105"/>
+<path class="system-line system-line-c" d="M310 230 L145 355 L58 355"/>
+<path class="system-line system-line-d" d="M310 230 L475 355 L562 355"/>
+<circle class="system-node system-node-a" cx="145" cy="105" r="5"/>
+<circle class="system-node system-node-b" cx="475" cy="105" r="5"/>
+<circle class="system-node system-node-c" cx="145" cy="355" r="5"/>
+<circle class="system-node system-node-d" cx="475" cy="355" r="5"/>
+<circle class="system-pulse" cx="310" cy="230" r="8"/>
+</svg>
+<div class="hero-system-card hero-system-card-a"><span class="system-card-index">01 / INTAKE</span><b>Заявки</b><small>Входящие обращения</small><i class="system-card-dot"></i></div>
+<div class="hero-system-card hero-system-card-b"><span class="system-card-index">02 / OBJECTS</span><b>Объекты</b><small>Работа и исполнение</small><i class="system-card-dot"></i></div>
+<div class="hero-system-card hero-system-card-c"><span class="system-card-index">03 / FINANCE</span><b>Расчёты</b><small>Сметы и экономика</small><i class="system-card-dot"></i></div>
+<div class="hero-system-card hero-system-card-d"><span class="system-card-index">04 / TEAM</span><b>Команда</b><small>Люди и задачи</small><i class="system-card-dot"></i></div>
+<div class="hero-motion-caption"><span>ОТДЕЛЬНЫЕ ПРОЦЕССЫ</span><i></i><b>ОДНА СИСТЕМА</b></div>
+<div class="hero-motion-index">FIG. 001 <span>·</span> SYSTEM CONNECTIONS</div>
+</div>
+</div>
 <div class="hero-bottom-metrics"><div><strong>01</strong><span>Продукт доступен<br>в каталоге</span></div><div><strong>10 / 11</strong><span>Windows<br>desktop</span></div><div><strong>LOCAL</strong><span>Локальные данные<br>и работа офлайн</span></div><div class="hero-scroll-note">SCROLL TO EXPLORE <span>↓</span></div></div></section>
 
 <section class="home-products section-pad" id="products">
