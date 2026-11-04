@@ -1,4 +1,5 @@
 import "./styles.css";
+import "./visual-stability.css";
 import "./motion-system.css";
 import { initMotionSystem } from "./motion-system.js";
 import "./webgl-scene.css";
@@ -452,13 +453,10 @@ async function boot(){
     ["home interactions",setupHomeInteractions],
     ["motion",setupMotion],
     ["motion system",()=>initMotionSystem(document)],
-    ["WebGL scene",()=>initSkolWebGLScene(document)],
     ["motion scenes",()=>initMotionScenes(document)],
     ["motion choreography",()=>initMotionChoreography(document)],
-    ["cinematic backdrop",()=>initCinematicBackdrop(document)],
     ["demo",setupDemo],
     ["forms",setupForms],
-    ["particles",setupParticles],
     ["tariff motion",setupTariffMotion],
     ["tariff selection",setupTariffSelection]
   ];
