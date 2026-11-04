@@ -248,12 +248,21 @@ test("homepage product mockup uses the same version constant as the download pag
 test("business edition copy matches the published license feature matrix", () => {
   assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
   assert.doesNotMatch(source, /расширенная аналитика/);
-  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("Последние заметки<br><em>версии 1.24.0.</em>"));
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
 
  
+
+test("download page distinguishes source version from published installer availability", () => {
+  assert.match(source, /версия исходного кода сама по себе не означает, что готовый установщик уже опубликован/);
+  assert.match(source, /id="release-status" role="status" aria-live="polite"/);
+  assert.match(source, /api\.github\.com\/repos\/borzenkoofficial-lab\/struktura-crm-source\/releases\?per_page=1/);
+  assert.match(source, /Публичных релизов пока нет/);
+  assert.match(source, /установочные файлы к нему не прикреплены/);
+});
+
 test("contact form text uses real line breaks and reports clipboard failures accurately", () => {
   assert.match(source, /\.join\("\\n"\)/);
   assert.match(source, /message\+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"/);
