@@ -1,6 +1,6 @@
 .cinematic-hero{--pointer-x:0;--pointer-y:0;--hero-scroll:0;position:relative;isolation:isolate;min-height:min(940px,calc(100svh - 76px));overflow:hidden;padding-top:28px;padding-bottom:26px;background:#20201e;color:#f5f2ed;border-bottom:1px solid rgba(245,242,237,.16)}
 .cinematic-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at calc(50% + var(--pointer-x-pct,0%)) calc(48% + var(--pointer-y-pct,0%)),rgba(139,54,50,.18),transparent 38%),linear-gradient(115deg,rgba(255,255,255,.025),transparent 40%);pointer-events:none}
-.cinematic-blueprint{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:.38;mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);transform:translate3d(var(--pointer-x-px,0px),var(--pointer-y-px,0px),0)}
+.cinematic-blueprint{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:.38;mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);transform:translate3d(var(--pointer-x-px,0px),calc(var(--pointer-y-px,0px) + var(--hero-scroll-y,0px)),0)}
 .blueprint-svg{width:100%;height:100%;min-height:700px;color:rgba(245,242,237,.22)}
 .blueprint-guides{stroke-width:.8}.blueprint-draw{stroke-dasharray:1800;stroke-dashoffset:1800;animation:blueprint-draw 2.2s cubic-bezier(.22,.7,.2,1) .2s forwards}.blueprint-dimensions{opacity:.6}
 .blueprint-cursor-glow{opacity:.8;transition:cx .28s ease-out,cy .28s ease-out}
