@@ -261,3 +261,17 @@
     transform: none !important;
   }
 }
+
+
+/* The warm orange brand fill is paired with dark text for WCAG-safe CTA contrast. */
+.button-orange,
+.button-red {
+  color: #171717;
+}
+.button-orange:hover,
+.button-red:hover {
+  color: #171717;
+}
+::selection {
+  color: #171717;
+}
