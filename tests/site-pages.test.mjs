@@ -62,7 +62,7 @@ test("illustrative CRM dashboard values are visibly identified as demo data", ()
 test("download page distinguishes source version from a published installer", () => {
   assert.match(source, /Проверить публикации/);
   assert.match(source, /относится к исходному коду и сама по себе не подтверждает наличие установщика/);
-  assert.match(source, /const RELEASES = "https:\\/\\/github\\.com\\/borzenkoofficial-lab\\/struktura-crm-source\\/releases"/);
+  assert.ok(source.includes('const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases"'));
 });
 
 test("reference-driven visual system is present across SKOL", () => {
