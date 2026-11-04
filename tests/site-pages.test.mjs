@@ -47,9 +47,10 @@ test("theme control is initialized and has an accessible label", () => {
 });
 
 test("active boot pipeline initializes the single motion system without the removed particle initializer", () => {
-  for (const setup of ["theme","catalog folders","home interactions","motion","motion system","demo","forms","tariff motion","tariff selection"]) {
-    assert.ok(source.includes('[ "' + setup + '",setup') || source.includes('["' + setup + '",setup'), "Missing boot task: " + setup);
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
+    assert.ok(source.includes('["' + setup + '",setup'), "Missing boot task: " + setup);
   }
+  assert.match(source, /\["motion system",\(\)=>initMotionSystem\(document\)\]/);
   assert.doesNotMatch(source, /\["particles",setupParticles\]/);
 });
 
