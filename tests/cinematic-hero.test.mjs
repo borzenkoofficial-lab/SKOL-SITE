@@ -6,7 +6,7 @@ const motion=readFileSync(new URL("../src/cinematic-hero.js",import.meta.url),"u
 const css=readFileSync(new URL("../src/cinematic-hero.css",import.meta.url),"utf8");
 
 test("homepage hero uses the cinematic SKOL wordmark and product architecture diagram",()=>{
-  assert.match(main,/class="cinematic-hero section-pad"/);
+  assert.match(main,/class="platform-hero cinematic-hero section-pad"/);
   assert.match(main,/data-cinematic-wordmark/);
   assert.match(main,/Создаём инструменты\.<br><em>Меняем подход к работе\.<\/em>/);
   assert.match(main,/class="cinematic-hero-diagram"/);
