@@ -46,6 +46,25 @@ test("theme control is initialized and has an accessible label", () => {
   }
 });
 
+test("active boot pipeline initializes the single motion system without the removed particle initializer", () => {
+  for (const setup of ["theme","catalog folders","home interactions","motion","motion system","demo","forms","tariff motion","tariff selection"]) {
+    assert.ok(source.includes('[ "' + setup + '",setup') || source.includes('["' + setup + '",setup'), "Missing boot task: " + setup);
+  }
+  assert.doesNotMatch(source, /\["particles",setupParticles\]/);
+});
+
+test("illustrative CRM dashboard values are visibly identified as demo data", () => {
+  for (const label of ["ДЕМО / РАБОЧЕЕ ПРОСТРАНСТВО","ДЕМО / ОБЗОР РАБОЧЕГО ПРОСТРАНСТВА","ДЕМО-СЦЕНАРИЙ / ДАННЫЕ ПРИМЕРНЫЕ"]) {
+    assert.ok(source.includes(label), "Missing demo disclosure: " + label);
+  }
+});
+
+test("download page distinguishes source version from a published installer", () => {
+  assert.match(source, /Проверить публикации/);
+  assert.match(source, /относится к исходному коду и сама по себе не подтверждает наличие установщика/);
+  assert.match(source, /const RELEASES = "https:\\/\\/github\\.com\\/borzenkoofficial-lab\\/struktura-crm-source\\/releases"/);
+});
+
 test("reference-driven visual system is present across SKOL", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(source, /Система координации операций и логики/);
