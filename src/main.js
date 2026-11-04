@@ -145,7 +145,7 @@ function home(){return `<main class="page-home platform-home">
 <div class="cinematic-hero-top"><span class="hero-top-label"><i class="status-dot"></i> SKOL / DIGITAL SYSTEMS</span><span class="cinematic-top-code">PLATFORM 001 <i>—</i> MOSCOW / EST. IN LOGIC</span><span class="cinematic-top-index">01—04</span></div>
 <div class="cinematic-hero-body">
   <div class="cinematic-hero-kicker"><span>ARCHITECTURE OF WORK</span><span>СИСТЕМЫ / ИНСТРУМЕНТЫ / РЕШЕНИЯ</span></div>
-  <div class="cinematic-wordmark" aria-label="СКОЛ" data-cinematic-wordmark>
+  <div class="cinematic-wordmark" aria-label="Система координации операций и логики" data-cinematic-wordmark>
     <span class="wordmark-letter" data-letter="С">С</span><span class="wordmark-letter" data-letter="К">К</span><span class="wordmark-letter" data-letter="О">О</span><span class="wordmark-letter" data-letter="Л">Л</span>
     <svg class="wordmark-overline" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20H1000"/></svg>
   </div>
