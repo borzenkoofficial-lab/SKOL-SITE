@@ -21,6 +21,19 @@ test("CRM page documents product modules and tiers", () => {
 test("CRM page discloses offline licensing limitations", () => {
   for (const phrase of ["Ed25519", "Device ID", "удалённо отозвать", "updatesUntil", "выполняется вручную"]) assert.ok(source.includes(phrase));
 });
+test("public SEO discovery files and structured software metadata cover every product route", () => {
+  const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
+  const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+  assert.match(robots, /Sitemap: https:\/\/skol-site\.vercel\.app\/sitemap\.xml/);
+  for (const route of ["/","/catalog","/products/skol-crm","/tariffs","/download","/activation"]) {
+    assert.ok(sitemap.includes("https://skol-site.vercel.app" + route), "Missing sitemap route: " + route);
+  }
+  assert.match(html, /application\/ld\+json/);
+  assert.match(html, /"@type": "SoftwareApplication"/);
+  assert.match(html, /"name": "СКОЛ CRM"/);
+  assert.match(html, /"applicationCategory": "BusinessApplication"/);
+});
+
 test("page metadata is set per route and base HTML remains Russian", () => {
   assert.match(source, /function setPageMeta\(\)/);
   assert.match(source, /Каталог программ СКОЛ/);
@@ -41,9 +54,53 @@ test("visual system provides accessible light and dark themes", () => {
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
   }
+  assert.match(source, /\["motion system",\(\)=>initMotionSystem\(document\)\]/);
+  assert.doesNotMatch(source, /\["particles",setupParticles\]/);
+});
+
+test("active boot pipeline initializes the single motion system without the removed particle initializer", () => {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
+    assert.ok(source.includes('["' + setup + '",setup'), "Missing boot task: " + setup);
+  }
+  assert.match(source, /\["motion system",\(\)=>initMotionSystem\(document\)\]/);
+  assert.doesNotMatch(source, /\["particles",setupParticles\]/);
+});
+
+test("interactive CRM preview announces tab content updates to assistive technology", () => {
+  assert.match(source, /id="demo-content" aria-live="polite" aria-atomic="true"/);
+  assert.match(source, /aria-controls="demo-content"/);
+});
+
+test("illustrative CRM dashboard values are visibly identified as demo data", () => {
+  for (const label of ["ДЕМО / РАБОЧЕЕ ПРОСТРАНСТВО","ДЕМО / ОБЗОР РАБОЧЕГО ПРОСТРАНСТВА","ДЕМО-СЦЕНАРИЙ / ДАННЫЕ ПРИМЕРНЫЕ"]) {
+    assert.ok(source.includes(label), "Missing demo disclosure: " + label);
+  }
+});
+
+test("download page distinguishes source version from a published installer", () => {
+  assert.match(source, /Проверить публикации/);
+  assert.match(source, /относится к исходному коду и сама по себе не подтверждает наличие установщика/);
+  assert.ok(source.includes('const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases"'));
+});
+
+test("functional microcopy and touch controls meet the accessibility baseline", () => {
+  const stability = readFileSync(new URL("../src/visual-stability.css", import.meta.url), "utf8");
+  assert.match(stability, /\.contact-form label\s*\{\s*font-size:\s*11px/);
+  assert.match(stability, /\.form-hint,\s*\.download-warning\s*\{\s*font-size:\s*11px/);
+  assert.match(stability, /:where\(a, button, input, textarea, select, \[tabindex\]\):focus-visible/);
+  assert.match(stability, /\.button-orange,\s*\.button-red\s*\{\s*color:\s*#171717/);
+  assert.match(stability, /::selection\s*\{\s*color:\s*#171717/);
+  assert.match(stability, /@media \(pointer: coarse\)[\s\S]*min-height: 44px/);
+  assert.match(stability, /@media \(prefers-reduced-motion: reduce\)[\s\S]*scroll-behavior: auto/);
+});
+
+test("download instructions do not assume an installer is already published", () => {
+  assert.match(source, /Проверьте наличие установщика СКОЛ CRM/);
+  assert.match(source, /Если в релизе доступен SKOL-Setup\.exe, скачайте его/);
+  assert.match(source, /Последние изменения<br><em>в CRM · 1\.24\.0\./);
 });
 
 test("reference-driven visual system is present across SKOL", () => {
@@ -56,8 +113,8 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
-test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+test("active tariff motion stays scoped and inactive homepage particle initializer is absent", () => {
+  assert.doesNotMatch(source, /function setupParticles\(/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
@@ -248,7 +305,7 @@ test("homepage product mockup uses the same version constant as the download pag
 test("business edition copy matches the published license feature matrix", () => {
   assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
   assert.doesNotMatch(source, /расширенная аналитика/);
-  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("Последние изменения<br><em>в CRM · 1.24.0.</em>"));
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
@@ -412,7 +469,7 @@ test("tariff cards have one source of truth for selection and queued pointer fra
   const formSetup = source.slice(start, end);
   assert.doesNotMatch(formSetup, /querySelectorAll\("\[data-plan\]"\)/);
   const heroLeaveCount = (source.match(/scene\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;/g) || []).length;
-  assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
+  assert.equal(heroLeaveCount, 1, "Only the active tariff hero should own a scene tilt loop");
   assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
 });
 

@@ -194,3 +194,84 @@
     transition: none !important;
   }
 }
+
+
+/* Accessibility pass: keep editorial micro-labels, but make functional copy readable. */
+.contact-form label {
+  font-size: 11px;
+}
+.form-hint,
+.download-warning {
+  font-size: 11px;
+  line-height: 1.65;
+}
+.footer-links > span,
+.download-facts span,
+.release-card-head,
+.comparison-row > span,
+.comparison-row > b {
+  font-size: 10px;
+}
+.footer-bottom {
+  font-size: 10px;
+}
+.hero-product-shortcut small,
+.hero-floating-card small {
+  font-size: 9px;
+}
+.hero-bottom-metrics span {
+  font-size: 10px;
+  line-height: 1.5;
+}
+.release-card ul,
+.steps-grid p,
+.activation-step p {
+  font-size: 11px;
+  line-height: 1.7;
+}
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 3px;
+}
+@media (pointer: coarse) {
+  .button,
+  .theme-toggle,
+  .menu-toggle,
+  .demo-tab,
+  .folder-trigger,
+  .home-folder-trigger,
+  .home-pillar-trigger {
+    min-height: 44px;
+  }
+}
+@media (max-width: 760px) {
+  .hero-bottom-metrics span {
+    font-size: 9px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .page-transition,
+  .page-transition.enter,
+  .page-transition.leave {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* The warm orange brand fill is paired with dark text for WCAG-safe CTA contrast. */
+.button-orange,
+.button-red {
+  color: #171717;
+}
+.button-orange:hover,
+.button-red:hover {
+  color: #171717;
+}
+::selection {
+  color: #171717;
+}
