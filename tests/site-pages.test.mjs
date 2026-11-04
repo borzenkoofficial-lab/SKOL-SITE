@@ -469,7 +469,7 @@ test("tariff cards have one source of truth for selection and queued pointer fra
   const formSetup = source.slice(start, end);
   assert.doesNotMatch(formSetup, /querySelectorAll\("\[data-plan\]"\)/);
   const heroLeaveCount = (source.match(/scene\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;/g) || []).length;
-  assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
+  assert.equal(heroLeaveCount, 1, "Only the active tariff hero should own a scene tilt loop");
   assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
 });
 
