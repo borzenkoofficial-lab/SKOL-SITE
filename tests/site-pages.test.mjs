@@ -47,9 +47,9 @@ test("theme control is initialized and has an accessible label", () => {
 });
 
 test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8") + readFileSync(new URL("../src/platform-refinement.css", import.meta.url), "utf8");
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8") + readFileSync(new URL("../src/platform-refinement.css", import.meta.url), "utf8") + readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-motion-stage/);
+  assert.match(source, /cinematic-hero-diagram/);
   assert.doesNotMatch(source, /hero-monitor|hero-back-panel|hero-mini-device/);
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
@@ -92,8 +92,8 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
 
 test("SKOL brand acronym is expanded in the homepage hero", () => {
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+  assert.match(source, /class="cinematic-wordmark"/);
+  for (const line of ["data-letter=\"С\"","data-letter=\"К\"","data-letter=\"О\"","data-letter=\"Л\""]) assert.ok(source.includes(line));
 });
 
 test("desktop navigation has four accessible interactive product links", () => {
