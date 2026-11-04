@@ -158,3 +158,238 @@
   .hero-floating-card { animation: none !important; }
   .hero-product-shortcut { transition: none !important; }
 }
+
+
+/* HERO / 2D system map — typography and motion replace the previous 3D mockup. */
+.hero-main {
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: clamp(30px, 5vw, 82px);
+}
+.platform-hero-copy { max-width: 640px; }
+.platform-hero-copy h1.skol-expansion {
+  font-size: clamp(58px, 6.3vw, 98px);
+  line-height: .94;
+  letter-spacing: -.08em;
+}
+.hero-motion-stage {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  min-height: 550px;
+  margin: 8px auto 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(61, 53, 44, .14);
+  border-radius: 4px;
+  background:
+    linear-gradient(rgba(78, 69, 58, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78, 69, 58, .055) 1px, transparent 1px),
+    rgba(255,255,255,.32);
+  background-size: 32px 32px;
+}
+.hero-motion-stage:before,
+.hero-motion-stage:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.hero-motion-stage:before {
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(239,106,33,.11), transparent 34%);
+}
+.hero-motion-stage:after {
+  top: 50%;
+  left: 7%;
+  right: 7%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(90,78,65,.17), transparent);
+}
+.hero-motion-head {
+  position: absolute;
+  top: 19px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #898176;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+.hero-motion-head > span:last-child { display:flex; align-items:center; gap:8px; }
+.hero-motion-head i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #6b9a65; box-shadow: 0 0 0 4px rgba(107,154,101,.12);
+}
+.hero-system-lines {
+  position: absolute;
+  inset: 8% 3%;
+  width: 94%;
+  height: 84%;
+  overflow: visible;
+}
+.system-line {
+  stroke: rgba(117,105,91,.48);
+  stroke-width: 1.15;
+  stroke-dasharray: 5 7;
+  animation: system-line-flow 13s linear infinite;
+}
+.system-line-b { animation-delay: -3s; }
+.system-line-c { animation-delay: -6s; }
+.system-line-d { animation-delay: -9s; }
+.system-node {
+  fill: #f4f0e9;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.system-pulse {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: system-core-pulse 3.2s ease-in-out infinite;
+}
+.hero-system-core {
+  position: absolute;
+  z-index: 2;
+  left: 50%; top: 50%;
+  width: 158px; height: 158px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transform: translate(-50%,-50%);
+  border: 1px solid rgba(239,106,33,.5);
+  border-radius: 50%;
+  background: rgba(250,247,241,.94);
+  box-shadow: 0 0 0 12px rgba(239,106,33,.045), 0 18px 50px rgba(63,49,34,.09);
+}
+.hero-core-ring {
+  position: absolute; inset: -12px;
+  border: 1px solid rgba(239,106,33,.22);
+  border-radius: 50%;
+  animation: system-ring 8s linear infinite;
+}
+.hero-core-ring-two { inset: -24px; border-style: dashed; animation-direction: reverse; animation-duration: 18s; }
+.hero-core-mark {
+  color: #27231f; font-size: 30px; font-weight: 900;
+  letter-spacing: -.1em; line-height: 1;
+}
+.hero-core-mark span { color: var(--accent); }
+.hero-system-core small {
+  margin-top: 9px; color: #8b8176;
+  font-size: 7px; font-weight: 800; letter-spacing: .18em;
+}
+.hero-system-card {
+  position: absolute;
+  z-index: 3;
+  width: 174px;
+  min-height: 82px;
+  padding: 13px 15px;
+  border: 1px solid rgba(62,53,43,.13);
+  background: rgba(250,248,244,.94);
+  box-shadow: 0 12px 28px rgba(52,42,31,.055);
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.hero-system-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(239,106,33,.5);
+  box-shadow: 0 18px 35px rgba(52,42,31,.1);
+}
+.hero-system-card-a { left: 5%; top: 20%; }
+.hero-system-card-b { right: 5%; top: 20%; }
+.hero-system-card-c { left: 5%; bottom: 20%; }
+.hero-system-card-d { right: 5%; bottom: 20%; }
+.system-card-index {
+  display: block; margin-bottom: 8px;
+  color: #9a8f82; font-size: 7px; font-weight: 800; letter-spacing: .13em;
+}
+.hero-system-card b { display:block; color:#28231f; font-size:15px; letter-spacing:-.04em; }
+.hero-system-card small { display:block; margin-top:4px; color:#82796e; font-size:8px; }
+.system-card-dot {
+  position:absolute; top:14px; right:14px;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 0 4px rgba(239,106,33,.1);
+}
+.hero-motion-caption {
+  position: absolute; left: 50%; bottom: 55px;
+  display:flex; align-items:center; gap:11px;
+  transform:translateX(-50%);
+  white-space:nowrap; color:#9a9085;
+  font-size:7px; font-weight:800; letter-spacing:.15em;
+}
+.hero-motion-caption i { width:34px; height:1px; background:var(--accent); }
+.hero-motion-caption b { color:#51483e; }
+.hero-motion-index {
+  position:absolute; left:22px; bottom:19px;
+  color:#a1978c; font-size:7px; font-weight:800; letter-spacing:.16em;
+}
+.hero-motion-index span { color:var(--accent); }
+@keyframes system-line-flow { to { stroke-dashoffset: -96; } }
+@keyframes system-core-pulse {
+  0%,100% { opacity:.8; transform:scale(.8); }
+  50% { opacity:1; transform:scale(1.55); }
+}
+@keyframes system-ring { to { transform:rotate(360deg); } }
+
+@media (max-width: 1100px) {
+  .hero-main { grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); gap:24px; }
+  .hero-motion-stage { min-height:490px; }
+  .hero-system-card { width:150px; }
+}
+@media (max-width: 850px) {
+  .hero-main { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .platform-hero-copy { max-width:760px; }
+  .platform-hero-copy h1.skol-expansion { font-size:clamp(52px,9vw,82px); }
+  .hero-motion-stage { width:min(100%,720px); min-height:480px; margin:8px auto 0; }
+}
+@media (max-width: 600px) {
+  .hero-motion-stage { min-height:390px; background-size:24px 24px; }
+  .hero-motion-head { top:14px; left:14px; right:14px; font-size:6px; }
+  .hero-system-core { width:112px; height:112px; }
+  .hero-core-mark { font-size:24px; }
+  .hero-core-ring { inset:-8px; }
+  .hero-core-ring-two { inset:-16px; }
+  .hero-system-card { width:126px; min-height:70px; padding:10px; }
+  .hero-system-card-a { left:3%; top:18%; }
+  .hero-system-card-b { right:3%; top:18%; }
+  .hero-system-card-c { left:3%; bottom:19%; }
+  .hero-system-card-d { right:3%; bottom:19%; }
+  .system-card-index { margin-bottom:6px; font-size:6px; }
+  .hero-system-card b { font-size:12px; }
+  .hero-system-card small { font-size:7px; }
+  .system-card-dot { top:11px; right:10px; width:5px; height:5px; }
+  .hero-motion-caption { bottom:40px; font-size:6px; gap:7px; }
+  .hero-motion-caption i { width:18px; }
+  .hero-motion-index { left:14px; bottom:13px; font-size:6px; }
+}
+@media (max-width: 380px) {
+  .hero-motion-stage { min-height:350px; }
+  .hero-system-card { width:112px; }
+  .hero-system-card small { max-width:95px; }
+  .hero-motion-caption { gap:5px; letter-spacing:.08em; }
+}
+:root[data-theme="dark"] .hero-motion-stage {
+  border-color: rgba(255,255,255,.14);
+  background:
+    linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px),
+    rgba(25,24,23,.5);
+  background-size:32px 32px;
+}
+:root[data-theme="dark"] .hero-motion-stage:after { background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent); }
+:root[data-theme="dark"] .hero-system-core { background:rgba(35,32,29,.96); }
+:root[data-theme="dark"] .hero-core-mark,
+:root[data-theme="dark"] .hero-system-card b { color:#f4f0e9; }
+:root[data-theme="dark"] .hero-system-card {
+  border-color:rgba(255,255,255,.14);
+  background:rgba(37,34,31,.95);
+}
+:root[data-theme="dark"] .hero-system-card small,
+:root[data-theme="dark"] .hero-motion-caption { color:#b6aa9d; }
+:root[data-theme="dark"] .hero-motion-caption b { color:#f1e9df; }
+:root[data-theme="dark"] .hero-motion-head,
+:root[data-theme="dark"] .hero-motion-index { color:#a69a8e; }
+@media (prefers-reduced-motion: reduce) {
+  .system-line, .system-pulse, .hero-core-ring { animation:none !important; }
+  .hero-system-card { transition:none !important; }
+}
