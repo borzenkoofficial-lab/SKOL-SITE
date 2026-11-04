@@ -17,18 +17,21 @@ export function initCinematicHero(){
     py=(event.clientY-rect.top)/Math.max(1,rect.height)-.5;
     if(frame)return;
     frame=requestAnimationFrame(()=>{
-      hero.style.setProperty("--pointer-x",(px*2).toFixed(3));
-      hero.style.setProperty("--pointer-y",(py*2).toFixed(3));
-      hero.style.setProperty("--pointer-rx",(px*4).toFixed(2)+"deg");
-      hero.style.setProperty("--pointer-ry",(py*3).toFixed(2)+"deg");
+      hero.style.setProperty("--pointer-x-px",(px*7).toFixed(2)+"px");
+      hero.style.setProperty("--pointer-y-px",(py*5).toFixed(2)+"px");
+      hero.style.setProperty("--pointer-x-pct",(px*8).toFixed(2)+"%");
+      hero.style.setProperty("--pointer-y-pct",(py*8).toFixed(2)+"%");
+      hero.style.setProperty("--pointer-x-angle",(px*1.4).toFixed(2)+"deg");
+      hero.style.setProperty("--pointer-y-angle",(py*-1).toFixed(2)+"deg");
+      hero.style.setProperty("--pointer-x-glow",(px*90).toFixed(1)+"px");
+      hero.style.setProperty("--pointer-y-glow",(py*90).toFixed(1)+"px");
       if(glow){const r=hero.getBoundingClientRect();glow.setAttribute("cx",String((px+.5)*r.width*1440/Math.max(1,r.width)));glow.setAttribute("cy",String((py+.5)*r.height*900/Math.max(1,r.height)));}
       frame=0;
     });
   };
   const pointerLeave=()=>{
     if(frame)cancelAnimationFrame(frame);frame=0;
-    hero.style.setProperty("--pointer-x","0");hero.style.setProperty("--pointer-y","0");
-    hero.style.setProperty("--pointer-rx","0deg");hero.style.setProperty("--pointer-ry","0deg");
+    ["--pointer-x-px","--pointer-y-px","--pointer-x-pct","--pointer-y-pct","--pointer-x-angle","--pointer-y-angle","--pointer-x-glow","--pointer-y-glow"].forEach(name=>hero.style.setProperty(name,"0px"));
     if(glow){glow.setAttribute("cx","720");glow.setAttribute("cy","450");}
     magnetic.forEach(el=>{el.style.setProperty("--mag-x","0px");el.style.setProperty("--mag-y","0px");});
   };
