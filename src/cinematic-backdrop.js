@@ -61,8 +61,8 @@ export function initCinematicBackdrop(root = document) {
 
     // Broad, soft light sources — the composition follows the pointer subtly.
     const glow = ctx.createRadialGradient(px, py, 0, px, py, Math.max(width, height) * .62);
-    glow.addColorStop(0, "rgba(231,105,48,.105)");
-    glow.addColorStop(.28, "rgba(195,124,82,.045)");
+    glow.addColorStop(0, "rgba(231,105,48,.19)");
+    glow.addColorStop(.28, "rgba(195,124,82,.085)");
     glow.addColorStop(1, "rgba(195,124,82,0)");
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, width, height);
@@ -70,7 +70,7 @@ export function initCinematicBackdrop(root = document) {
     const ambientX = width * (.78 + Math.sin(state.time * .00012) * .055);
     const ambientY = height * (.28 + Math.cos(state.time * .0001) * .06) - state.scroll * .035;
     const ambient = ctx.createRadialGradient(ambientX, ambientY, 0, ambientX, ambientY, Math.max(width, height) * .48);
-    ambient.addColorStop(0, "rgba(225,151,104,.055)");
+    ambient.addColorStop(0, "rgba(225,151,104,.12)");
     ambient.addColorStop(1, "rgba(225,151,104,0)");
     ctx.fillStyle = ambient;
     ctx.fillRect(0, 0, width, height);
@@ -82,12 +82,12 @@ export function initCinematicBackdrop(root = document) {
     ctx.lineWidth = 1;
     for (let x = (width % spacing) - spacing; x < width + spacing; x += spacing) {
       const fade = 1 - Math.abs(x - width / 2) / (width * .72);
-      ctx.strokeStyle = "rgba(132,112,94," + (Math.max(0, fade) * .045) + ")";
+      ctx.strokeStyle = "rgba(132,112,94," + (Math.max(0, fade) * .085) + ")";
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
     }
     for (let y = ((height % spacing) - spacing + (state.scroll * .12 % spacing)); y < height + spacing; y += spacing) {
       const fade = 1 - Math.abs(y - height / 2) / (height * .82);
-      ctx.strokeStyle = "rgba(132,112,94," + (Math.max(0, fade) * .035) + ")";
+      ctx.strokeStyle = "rgba(132,112,94," + (Math.max(0, fade) * .065) + ")";
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
     }
     ctx.restore();
@@ -102,7 +102,7 @@ export function initCinematicBackdrop(root = document) {
       const dx = x - px, dy = y - py;
       const distance = Math.sqrt(dx * dx + dy * dy);
       const proximity = clamp(1 - distance / 260, 0, 1);
-      const alpha = .12 + proximity * .32;
+      const alpha = .2 + proximity * .48;
       ctx.fillStyle = "rgba(211,112,66," + alpha + ")";
       ctx.beginPath(); ctx.arc(x, y, particle.radius + proximity * .7, 0, Math.PI * 2); ctx.fill();
 
@@ -112,7 +112,7 @@ export function initCinematicBackdrop(root = document) {
         const ny = next.y + Math.cos(state.time * .0002 + next.phase) * 10 - drift * (next.y + 20);
         const distance2 = Math.hypot(nx - x, ny - y);
         if (distance2 < 190) {
-          ctx.strokeStyle = "rgba(178,123,91," + ((1 - distance2 / 190) * .075) + ")";
+          ctx.strokeStyle = "rgba(178,123,91," + ((1 - distance2 / 190) * .14) + ")";
           ctx.lineWidth = .7;
           ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(nx, ny); ctx.stroke();
         }
@@ -125,10 +125,10 @@ export function initCinematicBackdrop(root = document) {
       ripple.life += delta / 1050;
       const progress = clamp(ripple.life, 0, 1);
       const radius = 12 + progress * Math.min(width, height) * .22;
-      ctx.strokeStyle = "rgba(226,112,59," + ((1 - progress) * .24) + ")";
+      ctx.strokeStyle = "rgba(226,112,59," + ((1 - progress) * .38) + ")";
       ctx.lineWidth = 1.2 - progress * .55;
       ctx.beginPath(); ctx.arc(ripple.x, ripple.y, radius, 0, Math.PI * 2); ctx.stroke();
-      ctx.strokeStyle = "rgba(226,112,59," + ((1 - progress) * .09) + ")";
+      ctx.strokeStyle = "rgba(226,112,59," + ((1 - progress) * .17) + ")";
       ctx.beginPath(); ctx.arc(ripple.x, ripple.y, radius * .72, 0, Math.PI * 2); ctx.stroke();
     });
   };
