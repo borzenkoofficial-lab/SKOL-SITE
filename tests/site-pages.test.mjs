@@ -41,7 +41,7 @@ test("visual system provides accessible light and dark themes", () => {
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","motion system","demo","forms","release status","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
   }
 });
@@ -256,7 +256,7 @@ test("business edition copy matches the published license feature matrix", () =>
  
 
 test("download page distinguishes source version from published installer availability", () => {
-  assert.match(source, /версия исходного кода сама по себе не означает, что готовый установщик уже опубликован/);
+  assert.match(source, /Версия исходного кода сама по себе не означает, что готовый установщик уже опубликован/);
   assert.match(source, /id="release-status" role="status" aria-live="polite"/);
   assert.match(source, /api\.github\.com\/repos\/borzenkoofficial-lab\/struktura-crm-source\/releases\?per_page=1/);
   assert.match(source, /Публичных релизов пока нет/);
