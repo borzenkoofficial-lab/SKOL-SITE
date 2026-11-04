@@ -73,6 +73,8 @@ test("functional microcopy and touch controls meet the accessibility baseline", 
   assert.match(stability, /\.contact-form label\s*\{\s*font-size:\s*11px/);
   assert.match(stability, /\.form-hint,\s*\.download-warning\s*\{\s*font-size:\s*11px/);
   assert.match(stability, /:where\(a, button, input, textarea, select, \[tabindex\]\):focus-visible/);
+  assert.match(stability, /\.button-orange,\s*\.button-red\s*\{\s*color:\s*#171717/);
+  assert.match(stability, /::selection\s*\{\s*color:\s*#171717/);
   assert.match(stability, /@media \(pointer: coarse\)[\s\S]*min-height: 44px/);
   assert.match(stability, /@media \(prefers-reduced-motion: reduce\)[\s\S]*scroll-behavior: auto/);
 });
