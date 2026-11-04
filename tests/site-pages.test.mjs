@@ -47,18 +47,19 @@ test("theme control is initialized and has an accessible label", () => {
 });
 
 test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8") + readFileSync(new URL("../src/platform-refinement.css", import.meta.url), "utf8");
   assert.match(source, /Система координации операций и логики/);
   assert.match(source, /hero-motion-stage/);
   assert.doesNotMatch(source, /hero-monitor|hero-back-panel|hero-mini-device/);
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
-  assert.match(styles, /\.hero-visual/);
+  assert.match(styles, /\.hero-motion-stage/);
+  assert.doesNotMatch(styles, /\.hero-monitor|perspective:1400px|translateZ\(70px\)/);
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
 test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-motion-stage"\)/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
