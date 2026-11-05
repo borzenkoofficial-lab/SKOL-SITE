@@ -35,7 +35,7 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(source, /theme-toggle/);
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /:root\[data-theme="dark"\]/);
-  assert.match(styles, /--canvas:#f5f2ed/);
+  assert.match(styles, /--canvas:#ffffff/);
   assert.match(styles, /prefers-reduced-motion/);
 });
 test("theme control is initialized and has an accessible label", () => {
@@ -51,7 +51,7 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(source, /Система координации операций и логики/);
   assert.match(source, /hero-monitor/);
   assert.match(source, /site-header/);
-  assert.match(styles, /--accent:#ef6a21/);
+  assert.match(styles, /--accent:#a8e500/);
   assert.match(styles, /\.hero-visual/);
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
@@ -104,7 +104,7 @@ test("navigation hover uses a jelly animation, glow and accessible focus state",
   assert.match(styles, /@keyframes nav-jelly/);
   assert.match(styles, /\.desktop-nav a:hover/);
   assert.match(styles, /\.desktop-nav a:focus-visible/);
-  assert.match(styles, /box-shadow:0 0 8px rgba\(239,106,33/);
+  assert.match(styles, /box-shadow:0 0 8px rgba\(168,229,0/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
 });
 
