@@ -45,7 +45,7 @@ test("SKOL brand palette is white and lime across document, controls and both th
   assert.match(styles, /--accent:#a8e500/);
   assert.match(styles, /--accent:#b8ff00/);
   assert.match(styles, /--ink:#202b3b/);
-  assert.doesNotMatch(styles, /#ef6a21|#dc5510|rgba\\(239,106,33/);
+  assert.ok(!styles.includes("#ef6a21") && !styles.includes("#dc5510") && !styles.includes("rgba(239,106,33"));
   assert.match(source, /dark\?"#0b1019":"#ffffff"/);
 });
 
