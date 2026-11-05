@@ -24,7 +24,7 @@
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(230px circle at var(--motion-x) var(--motion-y), rgba(255,255,255,.34), rgba(239,106,33,.075) 42%, transparent 74%);
+  background: radial-gradient(230px circle at var(--motion-x) var(--motion-y), rgba(255,255,255,.34), rgba(177,239,33,.075) 42%, transparent 74%);
   transition: opacity .28s ease;
 }
 .motion-surface.motion-hovering > .motion-spotlight { opacity: 1; }
@@ -71,7 +71,7 @@
 }
 .motion-surface > .motion-spotlight {
   background: radial-gradient(260px circle at var(--motion-x) var(--motion-y),
-    rgba(255,255,255,.28), rgba(239,106,33,.10) 38%, transparent 72%);
+    rgba(255,255,255,.28), rgba(177,239,33,.10) 38%, transparent 72%);
 }
 @keyframes motion-type-enter {
   0% { clip-path: inset(0 0 100% 0); transform: translate3d(0, 18px, 0); opacity: .3; }
