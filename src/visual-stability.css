@@ -32,7 +32,7 @@
 }
 .hero-floor {
   opacity: .42;
-  box-shadow: 0 24px 44px rgba(75,61,46,.08);
+  box-shadow: 0 24px 44px rgba(51,61,70,.08);
 }
 .hero-monitor {
   top: 15%;
@@ -40,7 +40,7 @@
   width: 76%;
   height: 62%;
   transform: rotateY(-9deg) rotateX(3deg) rotateZ(-3deg);
-  box-shadow: 0 22px 44px rgba(58,46,34,.15), inset 0 0 0 1px rgba(25,25,25,.08);
+  box-shadow: 0 22px 44px rgba(39,46,53,.15), inset 0 0 0 1px rgba(25,25,25,.08);
 }
 .hero-back-panel {
   top: 17%;
@@ -48,7 +48,7 @@
   width: 16%;
   height: 54%;
   transform: rotateY(-10deg) rotateZ(2deg);
-  box-shadow: 10px 17px 28px rgba(143,71,34,.14);
+  box-shadow: 10px 17px 28px rgba(113,149,28,.14);
 }
 .hero-floating-card,
 .hero-mini-device,
@@ -68,7 +68,7 @@
 .motion-surface > .motion-spotlight {
   opacity: 0;
   background: radial-gradient(190px circle at var(--motion-x) var(--motion-y),
-    rgba(239,106,33,.12), rgba(239,106,33,.045) 38%, transparent 72%);
+    rgba(177,239,33,.12), rgba(177,239,33,.045) 38%, transparent 72%);
   transition: opacity .2s ease;
 }
 .motion-surface.motion-hovering > .motion-spotlight {
