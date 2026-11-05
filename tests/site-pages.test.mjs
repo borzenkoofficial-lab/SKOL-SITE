@@ -38,6 +38,17 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(styles, /--canvas:#ffffff/);
   assert.match(styles, /prefers-reduced-motion/);
 });
+test("SKOL brand palette is white and lime across document, controls and both themes", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(html, /name="theme-color" content="#ffffff"/);
+  assert.match(styles, /--canvas:#ffffff/);
+  assert.match(styles, /--accent:#a8e500/);
+  assert.match(styles, /--accent:#b8ff00/);
+  assert.match(styles, /--ink:#202b3b/);
+  assert.doesNotMatch(styles, /#ef6a21|#dc5510|rgba\\(239,106,33/);
+  assert.match(source, /dark\?"#0b1019":"#ffffff"/);
+});
+
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
