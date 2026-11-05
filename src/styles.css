@@ -791,7 +791,7 @@ img,svg,video{max-width:100%}
 }
 :root[data-theme="dark"]{
  color-scheme:dark;
- --canvas:#0b1019;--canvas-deep:#111827;--surface:#1b2432;--surface-soft:#222d3c;--ink:#f4f7fb;--muted:#9aa7b8;--muted-2:#748195;--line:rgba(255,255,255,.12);--accent:#a8e500;--accent-strong:#a8e500;--accent-soft:rgba(168,229,0,.12);--nav-surface:rgba(17,24,39,.94);--shadow:rgba(0,0,0,.22);--shadow-strong:rgba(0,0,0,.32);--footer:#070b12;--footer-ink:#f4f7fb;
+ --canvas:#0b1019;--canvas-deep:#111827;--surface:#1b2432;--surface-soft:#222d3c;--ink:#f4f7fb;--muted:#9aa7b8;--muted-2:#748195;--line:rgba(255,255,255,.12);--accent:#b8ff00;--accent-strong:#a8e500;--accent-soft:rgba(168,229,0,.12);--nav-surface:rgba(17,24,39,.94);--shadow:rgba(0,0,0,.22);--shadow-strong:rgba(0,0,0,.32);--footer:#070b12;--footer-ink:#f4f7fb;
 }
 :root[data-theme="dark"] body,:root[data-theme="dark"] html{background:var(--canvas);color:var(--ink)}
 :root[data-theme="dark"] .platform-hero{background:var(--canvas);color:var(--ink)}
