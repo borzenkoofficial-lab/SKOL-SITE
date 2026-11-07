@@ -1,0 +1,7 @@
+/* Focused layout and release-status hardening for SKOL pages. */
+.platform-hero,.platform-hero *{min-width:0}
+.platform-hero{overflow:clip}
+.download-warning{max-width:68ch;overflow-wrap:anywhere}
+.download-panel .download-version{align-items:center}
+#release-status{min-height:2.8em;line-height:1.65}
+#release-status[role="status"]{padding-left:14px;border-left:2px solid var(--accent)}
