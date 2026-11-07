@@ -1,4 +1,5 @@
-import "./styles.css";\nimport "./skol-home.css";
+import "./styles.css";
+import "./skol-home.css";
 import "./visual-stability.css";
 import "./motion-system.css";
 import { initMotionSystem } from "./motion-system.js";
