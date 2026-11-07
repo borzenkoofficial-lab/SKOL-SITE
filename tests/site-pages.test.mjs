@@ -46,15 +46,16 @@ test("theme control is initialized and has an accessible label", () => {
   }
 });
 
-test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-monitor/);
-  assert.match(source, /site-header/);
-  assert.match(styles, /--accent:#ef6a21/);
-  assert.match(styles, /\.hero-visual/);
-  assert.match(styles, /\.site-header/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("homepage uses the approved experimental industrial art direction", () => {
+  const styles = readFileSync(new URL("../src/skol-home.css", import.meta.url), "utf8");
+  assert.match(source, /Сложные<br>процессы\.<br><em>Под контролем\.<\/em>/);
+  assert.match(source, /skol-system-visual/);
+  assert.match(source, /skol-wires/);
+  assert.match(source, /site-header-home/);
+  assert.match(styles, /--skol-lime:#a8e500/);
+  assert.match(styles, /\.skol-system-visual/);
+  assert.match(styles, /prefers-reduced-motion:reduce/);
+  assert.doesNotMatch(source, /hero-monitor/);
 });
 test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
   assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
@@ -123,48 +124,33 @@ test("hero dashboard mockup has jelly hover and reduced-motion behavior", () => 
   assert.match(styles, /\.hero-monitor:hover\{animation:none!important\}/);
 });
 
-test("hero scene places dashboard and supporting elements into distinct layout areas", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /grid-template-areas:[\s\S]*"monitor panel"[\s\S]*"monitor float-top"[\s\S]*"float-right device"[\s\S]*"note note"/);
-  assert.match(styles, /\.hero-monitor\s*\{[\s\S]*grid-area:monitor/);
-  assert.match(styles, /\.hero-back-panel\s*\{[\s\S]*grid-area:panel/);
-  assert.match(styles, /\.hero-float-top\s*\{grid-area:float-top/);
-  assert.match(styles, /\.hero-float-right\s*\{grid-area:float-right/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("homepage system diagram is responsive and uses lightweight SVG", () => {
+  const styles = readFileSync(new URL("../src/skol-home.css", import.meta.url), "utf8");
+  assert.match(source, /<svg viewBox="0 0 620 470"/);
+  assert.match(source, /skol-node-active/);
+  assert.match(styles, /\.skol-system-visual svg/);
+  assert.match(styles, /@media\(max-width:760px\)/);
+  assert.match(styles, /@media\(max-width:480px\)/);
 });
-test("hero scene stacks on mobile without absolute overlap", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /"monitor monitor"[\s\S]*"panel panel"[\s\S]*"float-top float-right"/);
-  assert.match(styles, /\.hero-mini-device\{display:none\}/);
+test("homepage presents a product system, principles and engineering approach", () => {
+  for (const marker of ["skol-products","skol-method","skol-principles","skol-platform","skol-final"]) assert.ok(source.includes(marker));
+  for (const heading of ["Сложные","Под контролем","Не набор функций","Понятная технология"]) assert.ok(source.includes(heading));
 });
-
-test("homepage after hero is a five-chapter product story", () => {
-  for (const marker of ["home-products","home-story","home-pillars","home-method","home-final"]) assert.ok(source.includes(marker));
-  for (const heading of ["Программы, которые","Сначала понять","Четыре буквы","От запроса","Давайте найдём"]) assert.ok(source.includes(heading));
-});
-test("homepage product and acronym cards are accessible interactive folders", () => {
-  assert.match(source, /data-home-folder/);
-  assert.match(source, /function setupHomeInteractions\(\)/);
-  assert.match(source, /setupHomeInteractions\(\)/);
-  assert.match(source, /aria-controls="home-crm-folder-details"/);
-  for (const id of ["home-pillar-s","home-pillar-k","home-pillar-o","home-pillar-l"]) assert.ok(source.includes(id));
-});
-test("homepage motion system supports scroll reveal, hover and reduced motion", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+test("homepage motion is scoped, reduced-motion aware and avoids 3D rendering", () => {
+  const styles = readFileSync(new URL("../src/skol-home.css", import.meta.url), "utf8");
   assert.match(source, /\.home-reveal/);
   assert.match(styles, /\.home-reveal\.is-visible/);
-  assert.match(styles, /@keyframes home-card-jelly/);
-  assert.match(styles, /\.home-pillar-folder:hover/);
-  assert.match(styles, /\.home-product-folder:hover/);
+  assert.match(styles, /@keyframes skol-wire-draw/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
+  assert.match(source, /if\(!scene\|\|document\.querySelector\("\.skol-home"\)\)return/);
 });
 test("homepage sections have dedicated responsive layouts", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /@media\(max-width:850px\)[\s\S]*\.home-story-grid/);
-  assert.match(styles, /@media\(max-width:600px\)[\s\S]*\.home-method-track/);
-  assert.match(styles, /@media\(max-width:380px\)[\s\S]*\.home-pillar-trigger/);
+  const styles = readFileSync(new URL("../src/skol-home.css", import.meta.url), "utf8");
+  assert.match(styles, /@media\(max-width:1050px\)/);
+  assert.match(styles, /@media\(max-width:760px\)/);
+  assert.match(styles, /@media\(max-width:480px\)/);
+  assert.match(styles, /grid-template-columns:1fr/);
 });
-
 test("tariff selection synchronizes cards, request form and comparison matrix", () => {
   assert.match(source, /function setupTariffSelection\(\)/);
   assert.match(source, /dataset\.tariffPlan/);
@@ -359,12 +345,12 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
   assert.match(styles, /repeat\(var\(--plan-count,3\),minmax\(35px,\.6fr\)\)/);
 });
 
-test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+test("homepage system diagram and CRM product schematic expose meaningful semantics", () => {
+  assert.match(source, /class="skol-system-visual" role="img" aria-label="Схема связей между информацией, процессами, управлением и экономикой"/);
+  assert.match(source, /class="skol-product-graphic" aria-label="Схема продуктовых модулей СКОЛ CRM"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
-
 test("page-level two-column layouts allow grid children to shrink without horizontal overflow", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   for (const selector of [
