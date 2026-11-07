@@ -169,12 +169,12 @@ function home(){return `<main class="page-home skol-home">
 
 <section class="skol-section skol-method section-pad home-reveal" id="about">
   <div class="skol-section-top"><span>03 / DESIGN PRINCIPLES</span><span>СИСТЕМА КООРДИНАЦИИ ОПЕРАЦИЙ И ЛОГИКИ</span></div>
-  <div class="skol-method-heading"><p class="skol-kicker">ПОДХОД СКОЛ</p><h2>Сначала понять связи.<br><em>Затем строить систему.</em></h2><p>В реальной работе задачи, люди, сроки и данные влияют друг на друга. Программный инструмент должен делать эти связи понятными, а не добавлять ещё один слой сложности.</p></div>
+  <div class="skol-method-heading"><p class="skol-kicker">Система координации операций и логики</p><h2>Сначала понять связи.<br><em>Затем строить систему.</em></h2><p>В реальной работе задачи, люди, сроки и данные влияют друг на друга. Программный инструмент должен делать эти связи понятными, а не добавлять ещё один слой сложности.</p></div>
   <div class="skol-principles">
-    <article><span>01 / STRUCTURE</span><b>Система</b><p>Связываем информацию и рабочие сценарии в понятную структуру.</p><i>С</i></article>
-    <article><span>02 / COORDINATION</span><b>Координация</b><p>Помогаем видеть связи между людьми, этапами и действиями.</p><i>К</i></article>
-    <article><span>03 / OPERATIONS</span><b>Операции</b><p>Учитываем реальные ежедневные процессы, а не абстрактные сценарии.</p><i>О</i></article>
-    <article><span>04 / LOGIC</span><b>Логика</b><p>Делаем правила и состояния продукта предсказуемыми.</p><i>Л</i></article>
+    <article><span>01 / STRUCTURE</span><b><i>С</i>истема</b><p>Связываем информацию и рабочие сценарии в понятную структуру.</p><i>С</i></article>
+    <article><span>02 / COORDINATION</span><b><i>К</i>оординация</b><p>Помогаем видеть связи между людьми, этапами и действиями.</p><i>К</i></article>
+    <article><span>03 / OPERATIONS</span><b><i>О</i>перации</b><p>Учитываем реальные ежедневные процессы, а не абстрактные сценарии.</p><i>О</i></article>
+    <article><span>04 / LOGIC</span><b><i>Л</i>огика</b><p>Делаем правила и состояния продукта предсказуемыми.</p><i>Л</i></article>
   </div>
 </section>
 
