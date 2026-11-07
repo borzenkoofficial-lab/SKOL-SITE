@@ -86,3 +86,9 @@ body:before{display:none}
 :root[data-theme="dark"] .contact-form input,:root[data-theme="dark"] .contact-form textarea,:root[data-theme="dark"] .contact-form select{background:#0b1019;border-color:rgba(255,255,255,.2);color:#f8fafc}
 :root[data-theme="dark"] .catalog-product-card:hover,:root[data-theme="dark"] .catalog-folder:hover,:root[data-theme="dark"] .home-product-folder:hover,:root[data-theme="dark"] .home-pillar-folder:hover{box-shadow:0 16px 40px rgba(0,0,0,.24)}
 @media(prefers-reduced-motion:reduce){.cinematic-hero,.cinematic-hero *,.cinematic-hero *:before,.cinematic-hero *:after{scroll-behavior:auto!important;animation:none!important;transition:none!important;transform:none!important}}
+
+:root[data-theme="dark"] .inner-hero h1,:root[data-theme="dark"] .catalog-heading h1,:root[data-theme="dark"] .product-heading h1,:root[data-theme="dark"] .product-detail-hero h1,:root[data-theme="dark"] .tariff-hero h1{color:#f8fafc}
+:root[data-theme="dark"] .inner-hero em,:root[data-theme="dark"] .catalog-heading em,:root[data-theme="dark"] .product-heading em,:root[data-theme="dark"] .product-detail-hero em,:root[data-theme="dark"] .tariff-hero em{color:#c5f35a}
+:root[data-theme="dark"] .section-kicker,:root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .home-section-top{color:#aeb9c8}
+:root[data-theme="dark"] .home-story-board,:root[data-theme="dark"] .home-story-board *{color:#f8fafc}
+:root[data-theme="dark"] .home-story-board .home-flow-connector{border-color:rgba(255,255,255,.2)}
