@@ -1,6 +1,7 @@
 import "./styles.css";
 import "./visual-stability.css";
 import "./motion-system.css";
+import "./platform-refinement.css";
 import "./cinematic-hero.css";
 import "./architectural-system.css";
 import { initCinematicHero } from "./cinematic-hero.js";
@@ -266,6 +267,26 @@ async function copyText(text){
     return copied;
   }
 }
+function setupReleaseStatus(){
+  const status=document.querySelector("#release-status");
+  if(!status)return;
+  const controller=typeof AbortController==="function"?new AbortController():null;
+  const timeout=controller?window.setTimeout(()=>controller.abort(),4500):null;
+  const options={headers:{Accept:"application/vnd.github+json"},cache:"no-store"};
+  if(controller)options.signal=controller.signal;
+  fetch("https://api.github.com/repos/borzenkoofficial-lab/struktura-crm-source/releases?per_page=1",options)
+    .then(response=>{if(!response.ok)throw new Error("GitHub Releases недоступен");return response.json()})
+    .then(releases=>{
+      if(!Array.isArray(releases))throw new Error("Некорректный ответ GitHub Releases");
+      const release=releases.find(item=>!item.draft&&!item.prerelease);
+      if(!release){status.textContent="Публичных релизов пока нет. Готовый установщик ещё не опубликован.";return}
+      const assets=Array.isArray(release.assets)?release.assets:[];
+      if(!assets.length){status.textContent="Опубликован релиз "+release.tag_name+", но установочные файлы к нему не прикреплены.";return}
+      status.textContent="Опубликован релиз "+release.tag_name+". Файлов в публикации: "+assets.length+". Перед установкой проверьте состав сборки.";
+    })
+    .catch(()=>{status.textContent="Не удалось автоматически проверить GitHub Releases. Откройте страницу релизов и убедитесь, что установочный файл опубликован."})
+    .finally(()=>{if(timeout!==null)window.clearTimeout(timeout)});
+}
 function setupForms(){
   document.querySelectorAll("#contact-form,#tariff-form").forEach(form=>form.addEventListener("submit",async event=>{
     event.preventDefault();
@@ -504,6 +525,7 @@ async function boot(){
     ["motion system",()=>initMotionSystem(document)],
     ["demo",setupDemo],
     ["forms",setupForms],
+    ["release status",setupReleaseStatus],
     ["tariff motion",setupTariffMotion],
     ["tariff selection",setupTariffSelection]
   ];
