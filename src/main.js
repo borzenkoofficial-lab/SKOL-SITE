@@ -1,6 +1,9 @@
 import "./styles.css";
 import "./visual-stability.css";
 import "./motion-system.css";
+import "./cinematic-hero.css";
+import "./architectural-system.css";
+import { initCinematicHero } from "./cinematic-hero.js";
 import { initMotionSystem } from "./motion-system.js";
 import { normalizePublicTariffConfig } from "./tariff-config.js";
 const VERSION = "1.25.0";
@@ -114,12 +117,66 @@ function footer(){return '<footer class="footer"><div class="footer-top"><div cl
 function contact(){return '<section class="contact-section section-pad" id="contact"><div class="section-kicker"><span>06 / СВЯЗЬ</span><span>ОБРАТНАЯ СВЯЗЬ</span></div><div class="contact-grid"><div><p class="eyebrow">ЕСТЬ ВОПРОС ПО СКОЛ?</p><h2>Давайте обсудим<br><em>вашу задачу.</em></h2><p class="muted">Оставьте тему обращения. Сайт подготовит текст сообщения для отправки по согласованному каналу связи.</p></div><form class="contact-form" id="contact-form"><label>Как к вам обращаться<input name="name" placeholder="Ваше имя" required maxlength="80"></label><label>Контакт для ответа<input name="contact" placeholder="Телефон, Telegram или email" required maxlength="120"></label><label>Тема обращения<select name="topic"><option>Хочу купить СКОЛ</option><option>Консультация по тарифам</option><option>Установка и активация</option><option>Сотрудничество</option><option>Техническая поддержка</option></select></label><label>Сообщение<textarea name="message" placeholder="Опишите задачу или вопрос" rows="3" maxlength="1200"></textarea></label><button class="button button-red" type="submit">Скопировать обращение ↗</button><p class="form-hint">Форма пока не отправляет данные на сервер — она подготовит текст обращения для копирования.</p></form></div></section>'}
 function mock(){return '<div class="product-stage" id="product-demo"><div class="stage-meta"><span><i class="live-dot"></i> ИНТЕРФЕЙС СКОЛ</span><span>01 — 04 / ПРЕВЬЮ</span></div><div class="app-window"><div class="app-topbar"><div class="window-dots"><i></i><i></i><i></i></div><span class="app-title">СКОЛ <b>/</b> Рабочее пространство</span><span class="app-top-right">ЛОКАЛЬНЫЙ РЕЖИМ <i></i></span></div><div class="app-layout"><aside class="app-sidebar"><div class="app-mini-logo">С</div><div class="app-side-group"><span>РАБОТА</span><b class="side-active">▦ <small>Обзор</small></b><b>◫ <small>Заявки</small></b><b>⌂ <small>Объекты</small></b><b>◷ <small>Задачи</small></b></div><div class="app-side-group"><span>УПРАВЛЕНИЕ</span><b>▤ <small>Сметы</small></b><b>⌁ <small>Производство</small></b><b>◈ <small>Финансы</small></b></div><div class="sidebar-bottom">СКОЛ <small>DESKTOP '+VERSION+'</small></div></aside><div class="app-main"><div class="app-heading"><div><small>РАБОЧЕЕ ПРОСТРАНСТВО</small><h3 id="demo-title">Общая картина работы</h3></div><span class="app-avatar">С</span></div><div class="demo-tabs"><button class="demo-tab active" data-demo="overview" aria-pressed="true" aria-controls="demo-content">Обзор</button><button class="demo-tab" data-demo="objects" aria-pressed="false" aria-controls="demo-content">Объекты</button><button class="demo-tab" data-demo="estimates" aria-pressed="false" aria-controls="demo-content">Сметы</button><button class="demo-tab" data-demo="finance" aria-pressed="false" aria-controls="demo-content">Финансы</button></div><div id="demo-content"><div class="metric-row"><div class="metric-card"><span>АКТИВНЫЕ ЗАЯВКИ</span><strong>18</strong><small>В работе</small></div><div class="metric-card"><span>ОБЪЕКТЫ</span><strong>07</strong><small>Текущие проекты</small></div><div class="metric-card"><span>ЗАДАЧИ НА НЕДЕЛЮ</span><strong>24</strong><small>Планирование</small></div></div><div class="demo-lower"><div class="demo-panel"><div class="panel-title">Последние заявки <span>Все заявки ↗</span></div><div class="demo-line"><i>01</i><div><b>Демонтаж помещения</b><small>Москва · Коммерческий объект</small></div><em>В РАБОТЕ</em></div><div class="demo-line"><i>02</i><div><b>Подготовка объекта</b><small>Московская область</small></div><em>НОВАЯ</em></div><div class="demo-line"><i>03</i><div><b>Комплексная отделка</b><small>Москва · Частный заказ</small></div><em>РАСЧЁТ</em></div></div><div class="demo-panel demo-chart"><div class="panel-title">Динамика работы <span>30 дней</span></div><div class="chart-bars">'+[35,52,43,70,58,84,66,100,77,91].map(x=>'<i style="--h:'+x+'%"></i>').join("")+'</div><div class="chart-labels"><span>01</span><span>10</span><span>20</span><span>30</span></div></div></div></div></div></div><div class="stage-caption"><span>01 — ИНТЕРФЕЙС</span><span>Демонстрационный макет · данные условные</span><span>СКОЛ / DESKTOP</span></div><div class="floating-chip chip-a"><b>⌘</b><span>Всё в одной системе<small>От заявки до результата</small></span></div><div class="floating-chip chip-b"><b>◉</b><span>Без обязательного облака<small>Локальная база данных</small></span></div></div>'}
 function home(){return `<main class="page-home platform-home">
-<section class="platform-hero section-pad"><div class="hero-background-grid"></div><div class="platform-hero-top"><span class="hero-top-label"><i class="status-dot"></i> ПРОГРАММНЫЕ ПРОДУКТЫ СКОЛ</span><span>01 / DIGITAL WORKSPACE</span></div>
-<div class="hero-main"><div class="platform-hero-copy"><p class="eyebrow">РАСШИФРОВКА БРЕНДА СКОЛ</p><h1 class="skol-expansion" aria-label="Система координации операций и логики"><span><i>С</i>истема</span><span><i>К</i>оординации</span><span><i>О</i>пераций</span><span><i>Л</i>огики.</span></h1><p class="platform-lead">Создаём программные инструменты, которые связывают рабочие процессы, данные и решения в единую систему.</p><div class="hero-actions"><a class="button button-orange" href="/catalog">Выбрать продукт <span>↗</span></a><a class="hero-text-link" href="/#about">Как устроена платформа <span>→</span></a></div><a class="hero-product-shortcut" href="/products/skol-crm"><span class="shortcut-icon">S</span><span><small>ПЕРВЫЙ ПРОДУКТ СКОЛ</small><b>СКОЛ CRM <i>·</i> Windows</b></span><span class="shortcut-arrow">↗</span></a></div>
-<div class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"><div class="hero-scene-halo"></div><div class="hero-floor"><span>SKOL / SOFTWARE ECOSYSTEM</span><i></i></div><div class="hero-back-panel"><span>PRODUCTS</span><b>01—∞</b><small>TOOLS<br>THAT WORK</small></div><div class="hero-monitor"><div class="hero-monitor-top"><span class="monitor-dots"><i></i><i></i><i></i></span><b>СКОЛ <i>/</i> WORKSPACE</b><small>LOCAL</small></div><div class="hero-monitor-body"><aside class="hero-monitor-side"><b>S</b><i></i><i></i><i></i><i></i><small>СКОЛ</small></aside><div class="hero-monitor-main"><span>РАБОЧЕЕ ПРОСТРАНСТВО / ОБЗОР</span><strong>Работа<br>под контролем.</strong><div class="hero-monitor-metrics"><div><b>18</b><small>ЗАЯВКИ</small></div><div><b>07</b><small>ОБЪЕКТЫ</small></div><div><b>24</b><small>ЗАДАЧИ</small></div></div><div class="hero-monitor-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="hero-monitor-lines"><i></i><i></i><i></i></div></div></div><div class="hero-monitor-base"></div></div><div class="hero-floating-card hero-float-top"><span class="float-icon">⌘</span><div><b>Все процессы</b><small>В одном пространстве</small></div></div><div class="hero-floating-card hero-float-right"><span class="float-icon">↗</span><div><b>Локальная работа</b><small>Данные на вашем ПК</small></div></div><div class="hero-mini-device"><span>СКОЛ</span><b>CRM</b><i></i><small>WINDOWS APP</small></div><div class="hero-orange-route"><i></i><i></i><i></i></div><div class="hero-visual-note">PRODUCT 001 <span>·</span> REAL SOFTWARE</div></div></div>
-<div class="hero-bottom-metrics"><div><strong>01</strong><span>Продукт доступен<br>в каталоге</span></div><div><strong>10 / 11</strong><span>Windows<br>desktop</span></div><div><strong>LOCAL</strong><span>Локальные данные<br>и работа офлайн</span></div><div class="hero-scroll-note">SCROLL TO EXPLORE <span>↓</span></div></div></section>
+<section class="platform-hero cinematic-hero section-pad" id="cinematic-hero">
+<div class="cinematic-blueprint" aria-hidden="true">
+  <svg class="blueprint-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="blueprint-grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="currentColor" stroke-width=".7" opacity=".42"/></pattern>
+      <pattern id="blueprint-grid-major" width="240" height="240" patternUnits="userSpaceOnUse"><path d="M240 0H0V240" fill="none" stroke="currentColor" stroke-width="1" opacity=".55"/></pattern>
+      <radialGradient id="blueprint-focus"><stop stop-color="#a8e500" stop-opacity=".2"/><stop offset="1" stop-color="#a8e500" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#blueprint-grid)"/>
+    <rect width="1440" height="900" fill="url(#blueprint-grid-major)"/>
+    <g class="blueprint-guides" fill="none" stroke="currentColor">
+      <path d="M720 0V900M0 450H1440" stroke-dasharray="3 9"/>
+      <path d="M90 160H1350M90 740H1350" opacity=".55"/>
+      <path d="M180 110V790M1260 110V790" opacity=".35"/>
+      <circle cx="720" cy="450" r="260" stroke-dasharray="2 12"/>
+      <circle cx="720" cy="450" r="360" stroke-dasharray="1 18" opacity=".55"/>
+      <path class="blueprint-draw" d="M90 450H1350M720 110V790M180 160L1260 740M1260 160L180 740"/>
+      <path d="M90 145v30m-15 -15h30M1350 145v30m-15 -15h30M90 725v30m-15 -15h30M1350 725v30m-15 -15h30"/>
+    </g>
+    <g class="blueprint-dimensions" fill="currentColor" font-family="monospace" font-size="10" letter-spacing="2">
+      <text x="96" y="138">X / 001</text><text x="1270" y="138">Y / 024</text><text x="96" y="765">Z / 360</text><text x="1270" y="765">SKL—SYS</text>
+    </g>
+    <circle class="blueprint-cursor-glow" cx="720" cy="450" r="190" fill="url(#blueprint-focus)"/>
+  </svg>
+</div>
+<div class="cinematic-hero-top"><span class="hero-top-label"><i class="status-dot"></i> SKOL / DIGITAL SYSTEMS</span><span class="cinematic-top-code">PLATFORM 001 <i>—</i> DIGITAL SYSTEMS / 2026</span><span class="cinematic-top-index">01—04</span></div>
+<div class="cinematic-hero-body">
+  <div class="cinematic-hero-kicker"><span>ARCHITECTURE OF WORK</span><span>SOFTWARE / SYSTEMS / CONTROL</span></div>
+  <div class="cinematic-wordmark" aria-label="Система координации операций и логики" data-cinematic-wordmark>
+    <span class="wordmark-letter" data-letter="С">С</span><span class="wordmark-letter" data-letter="К">К</span><span class="wordmark-letter" data-letter="О">О</span><span class="wordmark-letter" data-letter="Л">Л</span>
+    <svg class="wordmark-overline" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20H1000"/></svg>
+  </div>
+  <div class="cinematic-hero-lower">
+    <div class="cinematic-hero-statement"><p class="eyebrow">СИСТЕМА КООРДИНАЦИИ ОПЕРАЦИЙ И ЛОГИКИ</p><h1>Программные продукты.<br><em>Связанные процессы.</em></h1><p class="cinematic-hero-description">Инструменты СКОЛ объединяют рабочие процессы, данные и решения в единой цифровой системе.</p>
+      <div class="hero-actions cinematic-actions"><a class="button button-orange magnetic-control" href="/catalog"><span>Открыть каталог</span><i aria-hidden="true">↗</i></a><a class="hero-text-link magnetic-control" href="/catalog"><span>Наши решения</span><i aria-hidden="true">→</i></a></div>
+    </div>
+    <div class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ: продукты, процессы и решения объединены в единую систему" role="img">
+      <div class="diagram-heading"><span>FIG. 001 / SYSTEM ARCHITECTURE</span><span><i></i> LIVE SCHEMATIC</span></div>
+      <svg class="diagram-svg" viewBox="0 0 620 390" fill="none" aria-hidden="true">
+        <path class="diagram-path path-a" d="M310 195L110 80H24M310 195L510 80H596M310 195L110 310H24M310 195L510 310H596"/>
+        <path class="diagram-path path-b" d="M110 80V30M510 80V30M110 310V360M510 310V360"/>
+        <circle class="diagram-node" cx="110" cy="80" r="5"/><circle class="diagram-node" cx="510" cy="80" r="5"/><circle class="diagram-node" cx="110" cy="310" r="5"/><circle class="diagram-node" cx="510" cy="310" r="5"/>
+        <circle class="diagram-core" cx="310" cy="195" r="52"/><circle class="diagram-core-inner" cx="310" cy="195" r="35"/>
+        <path class="diagram-crosshair" d="M310 116V274M231 195H389"/>
+        <path class="diagram-sweep" d="M310 143A52 52 0 0 1 362 195"/>
+      </svg>
+      <div class="diagram-core-label"><b>СКОЛ</b><small>ONE SYSTEM</small></div>
+      <a class="diagram-module module-a" href="/catalog"><small>01 / PRODUCT</small><b>Продукты</b><i>↗</i></a>
+      <a class="diagram-module module-b" href="/#about"><small>02 / PLATFORM</small><b>Платформа</b><i>↗</i></a>
+      <a class="diagram-module module-c" href="/products/skol-crm"><small>03 / SOFTWARE</small><b>СКОЛ CRM</b><i>↗</i></a>
+      <a class="diagram-module module-d" href="/download"><small>04 / RELEASE</small><b>Обновления</b><i>↗</i></a>
+      <div class="diagram-footnote">SYSTEMS BUILT FOR REAL WORK <span>SKOL / SOFTWARE / 2026</span></div>
+    </div>
+  </div>
+</div>
+<div class="cinematic-hero-footer"><div class="hero-footer-index"><b>001</b><span>THE SKOL PLATFORM</span></div><div class="hero-footer-directions"><span>SOFTWARE PRODUCTS</span><i></i><span>CONNECTED WORKFLOWS</span><i></i><span>LOCAL SOFTWARE</span></div><a class="hero-scroll-link" href="#products"><span>SCROLL TO EXPLORE</span><b>↓</b></a></div>
+<div class="cinematic-coordinate coordinate-a">SKOL / 001<br>SOFTWARE</div><div class="cinematic-coordinate coordinate-b">SYSTEM / 2026</div>
+</section>
 
-<section class="home-products section-pad" id="products">
+<section class="home-products<section class="home-products section-pad" id="products">
 <div class="home-section-top"><span>02 / DIGITAL PRODUCTS</span><span>КАТАЛОГ ПРОГРАММ СКОЛ</span></div>
 <div class="home-heading-row home-reveal"><div><p class="eyebrow">ОДНА ПЛАТФОРМА — РАЗНЫЕ ИНСТРУМЕНТЫ</p><h2>Программы, которые<br><em>собирают работу.</em></h2></div><div class="home-heading-aside"><span class="home-index-stamp">01 <i>/</i> 01</span><p>Каждый продукт решает конкретную задачу. У него есть собственное назначение, понятные возможности и отдельный путь развития.</p></div></div>
 <article class="home-product-folder home-reveal" data-home-folder>
@@ -290,7 +347,6 @@ function setupMotion(){
     });
   },{passive:true});
 }
-function setupParticles(){const scene=document.querySelector(".hero-visual");if(!scene)return;const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;const monitor=scene.querySelector(".hero-monitor");if(!reduced){const layer=document.createElement("div");layer.className="hero-particle-field";layer.setAttribute("aria-hidden","true");for(let i=0;i<22;i++){const p=document.createElement("i");p.className="hero-particle";p.style.setProperty("--x",(6+(i*37)%88)+"%");p.style.setProperty("--y",(5+(i*53)%88)+"%");p.style.setProperty("--delay",-(i%9)*.7+"s");p.style.setProperty("--duration",7+(i%6)*1.3+"s");layer.appendChild(p)}scene.appendChild(layer);let frame=0;scene.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{scene.style.setProperty("--tilt-x",(-y*5).toFixed(2)+"deg");scene.style.setProperty("--tilt-y",(x*7).toFixed(2)+"deg");scene.style.setProperty("--pointer-x",(x*22).toFixed(1)+"px");scene.style.setProperty("--pointer-y",(y*18).toFixed(1)+"px")})});scene.addEventListener("pointerleave",()=>{if(frame)cancelAnimationFrame(frame);frame=0;scene.style.setProperty("--tilt-x","0deg");scene.style.setProperty("--tilt-y","0deg");scene.style.setProperty("--pointer-x","0px");scene.style.setProperty("--pointer-y","0px")});let ticking=false;window.addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const r=scene.getBoundingClientRect(),progress=Math.max(-1,Math.min(1,(window.innerHeight*.5-(r.top+r.height*.5))/window.innerHeight));scene.style.setProperty("--scroll-depth",(progress*18).toFixed(1)+"px");ticking=false})},{passive:true})}if(monitor)monitor.setAttribute("aria-label","Объёмная демонстрация интерфейса СКОЛ CRM");}
 function setupTariffMotion(){const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;const scene=document.querySelector(".tariff-hero-scene");const cards=[...document.querySelectorAll("[data-tariff-card]")];if(!reduced&&scene){const field=document.createElement("div");field.className="tariff-particle-field";field.setAttribute("aria-hidden","true");for(let i=0;i<24;i++){const dot=document.createElement("i");dot.style.setProperty("--x",(4+(i*41)%92)+"%");dot.style.setProperty("--y",(5+(i*29)%88)+"%");dot.style.setProperty("--delay",-(i%11)*.8+"s");dot.style.setProperty("--duration",(7+(i%7)*1.2)+"s");field.appendChild(dot)}scene.appendChild(field);let frame=0;scene.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{scene.style.setProperty("--scene-x",(-y*7).toFixed(2)+"deg");scene.style.setProperty("--scene-y",(x*9).toFixed(2)+"deg")})});scene.addEventListener("pointerleave",()=>{if(frame)cancelAnimationFrame(frame);frame=0;scene.style.setProperty("--scene-x","0deg");scene.style.setProperty("--scene-y","0deg")})}if(!reduced&&cards.length){cards.forEach(card=>{let frame=0;card.addEventListener("pointermove",e=>{if(e.pointerType==="touch"||window.innerWidth<760)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{card.style.transform="perspective(1100px) rotateX("+(-y*5).toFixed(2)+"deg) rotateY("+(x*6).toFixed(2)+"deg) translateY(-5px)";card.style.setProperty("--glow-x",(x+0.5)*100+"%");card.style.setProperty("--glow-y",(y+0.5)*100+"%")})});card.addEventListener("pointerleave",()=>{if(frame)cancelAnimationFrame(frame);frame=0;card.style.transform="";card.style.setProperty("--glow-x","50%");card.style.setProperty("--glow-y","0%")})});if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-in-view");io.unobserve(entry.target)}}),{threshold:.18});cards.forEach(card=>io.observe(card))}else cards.forEach(card=>card.classList.add("is-in-view"))}} 
 function setupTariffSelection(){
   const cards=[...document.querySelectorAll("[data-tariff-card]")];
@@ -443,6 +499,7 @@ async function boot(){
     ["theme",setupTheme],
     ["catalog folders",setupCatalogFolders],
     ["home interactions",setupHomeInteractions],
+    ["cinematic hero",initCinematicHero],
     ["motion",setupMotion],
     ["motion system",()=>initMotionSystem(document)],
     ["demo",setupDemo],
