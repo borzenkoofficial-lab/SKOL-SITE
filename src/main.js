@@ -143,10 +143,10 @@ function home(){return `<main class="page-home skol-home">
   <div class="skol-hero-bottom"><span>01 / SOFTWARE PRODUCTS</span><span>02 / PRODUCT THINKING</span><span>03 / ENGINEERING</span><a href="#products">SCROLL TO EXPLORE ↓</a></div>
 </section>
 
-<section class="skol-section skol-products section-pad" id="products">
+<section class="skol-section skol-products section-pad home-reveal" id="products">
   <div class="skol-section-top"><span>02 / PRODUCT SYSTEM</span><span>ДОСТУПНЫЕ ПРОДУКТЫ</span></div>
   <div class="skol-section-heading"><div><p class="skol-kicker">ИНСТРУМЕНТЫ ДЛЯ КОНКРЕТНЫХ ЗАДАЧ</p><h2>Не набор функций.<br><em>Рабочая система.</em></h2></div><p>Каждый продукт СКОЛ создаётся вокруг реального сценария. В каталоге публикуются программы, которые можно изучить, установить и использовать.</p></div>
-  <article class="skol-product-card" data-home-folder>
+  <article class="skol-product-card home-reveal" data-home-folder>
     <div class="skol-product-main">
       <div class="skol-product-label"><span>PRODUCT 001 / BUSINESS MANAGEMENT</span><span class="skol-available"><i></i> ДОСТУПЕН</span></div>
       <div class="skol-product-title"><span class="skol-product-number">01</span><h3>СКОЛ <em>CRM</em></h3></div>
@@ -166,7 +166,7 @@ function home(){return `<main class="page-home skol-home">
   <div class="skol-product-foot"><span>PRODUCT PIPELINE / 002—∞</span><p>Следующие продукты появятся здесь после готовности и проверки. Не публикуем концепты как готовые программы.</p><a href="/catalog">Весь каталог ↗</a></div>
 </section>
 
-<section class="skol-section skol-method section-pad" id="about">
+<section class="skol-section skol-method section-pad home-reveal" id="about">
   <div class="skol-section-top"><span>03 / DESIGN PRINCIPLES</span><span>СИСТЕМА КООРДИНАЦИИ ОПЕРАЦИЙ И ЛОГИКИ</span></div>
   <div class="skol-method-heading"><p class="skol-kicker">ПОДХОД СКОЛ</p><h2>Сначала понять связи.<br><em>Затем строить систему.</em></h2><p>В реальной работе задачи, люди, сроки и данные влияют друг на друга. Программный инструмент должен делать эти связи понятными, а не добавлять ещё один слой сложности.</p></div>
   <div class="skol-principles">
@@ -177,12 +177,12 @@ function home(){return `<main class="page-home skol-home">
   </div>
 </section>
 
-<section class="skol-section skol-platform section-pad">
+<section class="skol-section skol-platform section-pad home-reveal">
   <div class="skol-section-top"><span>04 / PRODUCT ENGINEERING</span><span>ПРИНЦИПЫ РАЗРАБОТКИ</span></div>
   <div class="skol-platform-grid"><div><p class="skol-kicker">ТЕХНОЛОГИИ БЕЗ ЛИШНИХ ОБЕЩАНИЙ</p><h2>Понятная технология.<br><em>Проверяемый результат.</em></h2></div><div class="skol-engineering-list"><div><span>01</span><b>Реальные возможности</b><p>Описываем только то, что подтверждено в актуальной версии продукта.</p></div><div><span>02</span><b>Прозрачная модель данных</b><p>Объясняем, где хранятся данные и какие функции требуют интернета.</p></div><div><span>03</span><b>Проверка перед выпуском</b><p>Сборка, сценарии, обновления и документация проходят отдельную проверку.</p></div></div></div>
 </section>
 
-<section class="skol-final section-pad">
+<section class="skol-final section-pad home-reveal">
   <div class="skol-final-grid"><div><p class="skol-kicker">SKOL SOFTWARE / NEXT STEP</p><h2>Найдём инструмент<br><em>для вашей задачи.</em></h2><p>Изучите доступные продукты или расскажите, какой рабочий процесс хотите организовать.</p><div class="skol-hero-actions"><a class="skol-button skol-button-lime" href="/catalog"><span>Открыть каталог</span><b>↗</b></a><a class="skol-text-link" href="/#contact">Связаться с нами <span>↗</span></a></div></div><div class="skol-final-mark" aria-hidden="true"><span>SKOL</span><b>S</b><i>SOFTWARE<br>PLATFORM<br>2026</i><small>EST. / DIGITAL SYSTEMS</small></div></div>
 </section>
 ${contact()}</main>`}
