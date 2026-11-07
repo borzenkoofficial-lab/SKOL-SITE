@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>СКОЛ — Software / Experimental Industrial Concept</title>
+<style>
+:root{--paper:#fff;--soft:#f2f4f1;--ink:#20242a;--muted:#66706a;--lime:#a8e500;--line:rgba(32,36,42,.16);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:Inter,Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{width:min(1440px,100% - 64px);margin:auto}.topline{height:34px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font:10px var(--mono);letter-spacing:.08em;color:var(--muted)}header{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:baseline;gap:12px;font-weight:900;letter-spacing:-.09em;font-size:29px}.brand small{font:10px var(--mono);letter-spacing:.12em}.nav{display:flex;align-items:center;gap:34px;font-size:12px}.nav a{position:relative;padding:8px 0}.nav a:after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--lime);transition:width .22s}.nav a:hover:after,.nav a:focus-visible:after{width:100%}.cta{display:inline-flex;align-items:center;gap:18px;padding:15px 18px;background:var(--ink);color:#fff;font-size:12px;transition:transform .2s,background .2s}.cta:hover{background:#30363d;transform:translateY(-2px)}.cta i{width:8px;height:8px;background:var(--lime);display:block}.hero{min-height:670px;padding:76px 0 68px;display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center}.eyebrow,.section-id{font:11px var(--mono);letter-spacing:.1em;color:var(--muted)}.eyebrow:before{content:"";display:inline-block;width:26px;height:7px;background:var(--lime);margin:0 12px 0 0}.hero h1{font-size:clamp(54px,7.2vw,112px);line-height:.91;letter-spacing:-.085em;margin:34px 0 28px;max-width:780px;font-weight:850}.hero h1 span{display:block}.hero h1 .accent{color:#8fc500}.lead{font-size:17px;line-height:1.55;color:#59615c;max-width:490px}.actions{display:flex;gap:12px;align-items:center;margin-top:34px}.secondary{font-size:12px;padding:14px 4px;border-bottom:1px solid var(--line)}.hero-meta{margin-top:70px;display:flex;gap:34px;font:10px var(--mono);color:var(--muted)}.hero-meta b{display:block;color:var(--ink);font-size:12px;font-weight:500;margin-top:7px}.diagram{position:relative;min-height:480px;background:var(--soft);overflow:hidden;border:1px solid var(--line);isolation:isolate}.diagram:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(32,36,42,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(32,36,42,.055) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(135deg,#000 20%,transparent 95%)}.diagram-head{position:absolute;top:22px;left:24px;right:24px;display:flex;justify-content:space-between;font:10px var(--mono);color:var(--muted);z-index:2}.diagram svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}.wire{fill:none;stroke:#8d9690;stroke-width:1.2;stroke-dasharray:5 6;stroke-dashoffset:0;animation:draw 2.2s ease both}.node{cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .25s}.node:hover{transform:scale(1.08)}.node circle{fill:#fff;stroke:var(--ink);stroke-width:1.4}.node.active circle{fill:var(--lime);stroke:var(--ink);stroke-width:1.8}.node text{font:10px var(--mono);fill:var(--ink)}.node.active text{font-weight:700}.diagram-foot{position:absolute;bottom:20px;left:24px;right:24px;display:flex;justify-content:space-between;z-index:2;font:10px var(--mono);color:var(--muted)}.marker{position:absolute;right:24px;top:50%;width:9px;height:9px;background:var(--lime);border:1px solid var(--ink);z-index:3;box-shadow:0 0 0 6px rgba(168,229,0,.17)}.section{padding:94px 0;border-top:1px solid var(--line)}.section-head{display:grid;grid-template-columns:1fr 2fr;gap:24px;margin-bottom:42px}.section h2{font-size:clamp(38px,5vw,70px);line-height:.98;letter-spacing:-.07em;margin:0;max-width:800px}.section-copy{font-size:15px;line-height:1.6;color:var(--muted);max-width:470px;margin-top:22px}.product{display:grid;grid-template-columns:.82fr 1.18fr;background:var(--soft);border:1px solid var(--line);min-height:390px}.product-info{padding:38px;display:flex;flex-direction:column;align-items:flex-start}.tag{font:10px var(--mono);letter-spacing:.08em;padding:8px 10px;border:1px solid var(--line)}.product h3{font-size:clamp(38px,5vw,64px);letter-spacing:-.075em;margin:40px 0 14px}.product p{font-size:14px;line-height:1.6;color:var(--muted);max-width:380px}.product .cta{margin-top:auto}.screen{margin:24px 24px 24px 0;background:#fff;border:1px solid rgba(32,36,42,.2);min-height:330px;padding:18px;position:relative;overflow:hidden}.screen-top{height:22px;display:flex;gap:5px;border-bottom:1px solid var(--line);padding-bottom:12px}.screen-top i{width:6px;height:6px;border-radius:50%;background:#c7cec8}.screen-ui{display:grid;grid-template-columns:70px 1fr;gap:14px;margin-top:18px;height:260px}.screen-side{background:#f3f5f1;padding:10px 7px}.screen-side b{display:block;height:5px;background:#b8c0b8;margin:0 0 14px}.screen-main{display:grid;grid-template-rows:34px 1fr 1fr;gap:10px}.screen-title{font-size:12px;font-weight:700;letter-spacing:-.03em}.screen-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.screen-cards i{background:#f3f5f1;border:1px solid #e3e7e2;position:relative}.screen-cards i:after{content:"";position:absolute;left:9px;top:10px;width:35%;height:5px;background:var(--lime)}.screen-table{border:1px solid #e3e7e2;display:grid;grid-template-rows:repeat(4,1fr)}.screen-table i{border-bottom:1px solid #e8ebe7;margin:0 10px}.pill{display:inline-flex;align-items:center;gap:8px;font:10px var(--mono);color:var(--muted)}.pill:before{content:"";width:7px;height:7px;background:var(--lime);border:1px solid var(--ink)}.triple{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.triple article{padding:28px 26px 34px 0;min-height:210px}.triple article+article{padding-left:26px;border-left:1px solid var(--line)}.triple strong{font:11px var(--mono);color:var(--muted)}.triple h3{font-size:27px;letter-spacing:-.05em;margin:34px 0 10px}.triple p{font-size:13px;line-height:1.6;color:var(--muted);max-width:300px}.platform{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}.platform-list{border-top:1px solid var(--line)}.platform-list div{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:13px}.platform-list small{font:10px var(--mono);color:var(--muted)}.final{background:var(--ink);color:#fff;padding:76px 0;position:relative;overflow:hidden}.final:after{content:"СКОЛ";position:absolute;right:-.04em;bottom:-.35em;font-size:clamp(160px,30vw,420px);font-weight:900;letter-spacing:-.1em;color:rgba(255,255,255,.035);pointer-events:none}.final h2{font-size:clamp(42px,6vw,84px);line-height:.95;letter-spacing:-.08em;max-width:800px;margin:26px 0 34px}.final .section-id{color:#aeb6b0}.final .cta{background:var(--lime);color:var(--ink);font-weight:700}.final .cta i{background:var(--ink)}footer{padding:28px 0;display:flex;justify-content:space-between;align-items:center;font:10px var(--mono);color:var(--muted)}.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}.diagram .node:focus-visible{outline:3px solid var(--lime);outline-offset:5px}@keyframes draw{from{stroke-dashoffset:180;opacity:.2}to{stroke-dashoffset:0;opacity:1}}@media(max-width:900px){.wrap{width:min(100% - 40px,720px)}.nav{gap:16px}.hero{grid-template-columns:1fr;padding:58px 0;gap:36px}.diagram{min-height:400px}.section-head{grid-template-columns:1fr}.product{grid-template-columns:1fr}.screen{margin:0 24px 24px}.platform{grid-template-columns:1fr;gap:30px}}@media(max-width:620px){.wrap{width:calc(100% - 32px)}.topline{font-size:8px}.topline span:last-child{display:none}header{height:68px}.brand{font-size:25px}.nav{display:none}.hero{min-height:0;padding:48px 0}.hero h1{font-size:clamp(48px,14vw,72px);margin:28px 0 20px}.lead{font-size:15px}.actions{align-items:flex-start;flex-direction:column}.hero-meta{margin-top:42px;gap:20px;flex-wrap:wrap}.diagram{min-height:330px}.diagram-head,.diagram-foot{left:14px;right:14px}.diagram-head{top:14px}.diagram-foot{bottom:14px}.section{padding:64px 0}.section-head{margin-bottom:28px}.section h2{font-size:42px}.product-info{padding:24px}.product h3{margin:30px 0 12px}.screen{margin:0 12px 12px;padding:12px;min-height:250px}.screen-ui{height:190px;grid-template-columns:48px 1fr;gap:8px}.screen-main{grid-template-rows:25px 1fr 1fr;gap:7px}.triple{grid-template-columns:1fr}.triple article,.triple article+article{padding:22px 0;border-left:0;border-bottom:1px solid var(--line);min-height:0}.triple h3{margin:16px 0 8px}.platform{gap:24px}.final{padding:58px 0}.final h2{font-size:48px}footer{gap:12px;flex-direction:column;align-items:flex-start}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topline"><span>SKOL SOFTWARE / DIGITAL SYSTEMS</span><span>ART DIRECTION STUDY — 001 / 2026</span></div>
+  <header>
+    <a class="brand" href="#" aria-label="СКОЛ Software">СКОЛ <small>SOFTWARE</small></a>
+    <nav class="nav" aria-label="Основная навигация"><a href="#products">Продукты</a><a href="#platform">Платформа</a><a href="#principles">Принципы</a><a href="#contact">Контакты</a></nav>
+    <a class="cta" href="#contact"><i></i>Обсудить продукт</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">SOFTWARE / SYSTEMS / 001</div>
+        <h1><span>Сложные</span><span>процессы.</span><span class="accent">Под контролем.</span></h1>
+        <p class="lead">Программные инструменты для управления работой, проектами и экономикой бизнеса.</p>
+        <div class="actions"><a class="cta" href="#products"><i></i>Исследовать продукты</a><a class="secondary" href="#platform">Как устроена платформа ↗</a></div>
+        <div class="hero-meta"><div>PRODUCT SYSTEM<b>01 / CRM</b></div><div>DESIGN MODEL<b>EXPERIMENTAL INDUSTRIAL</b></div><div>EDITION<b>2026 — 001</b></div></div>
+      </div>
+      <div class="diagram" aria-label="Схема структуры программной платформы">
+        <div class="diagram-head"><span>OPERATION MAP / 01</span><span>FIG. 001</span></div><span class="marker"></span>
+        <svg viewBox="0 0 600 480" role="img" aria-label="Интерактивная схема связей между модулями">
+          <path class="wire" d="M105 250 L250 150 L430 190 L500 330 M105 250 L245 350 L430 190 M250 150 L245 350 M430 190 L500 330"/>
+          <g class="node active" tabindex="0" role="button" aria-label="Продуктовая система"><circle cx="105" cy="250" r="31"/><text x="105" y="255" text-anchor="middle">01</text><text x="105" y="300" text-anchor="middle">SYSTEM</text></g>
+          <g class="node" tabindex="0" role="button" aria-label="Клиенты и данные"><circle cx="250" cy="150" r="25"/><text x="250" y="154" text-anchor="middle">02</text><text x="250" y="112" text-anchor="middle">DATA</text></g>
+          <g class="node" tabindex="0" role="button" aria-label="Операционные процессы"><circle cx="245" cy="350" r="25"/><text x="245" y="354" text-anchor="middle">03</text><text x="245" y="395" text-anchor="middle">PROCESS</text></g>
+          <g class="node" tabindex="0" role="button" aria-label="Экономика"><circle cx="430" cy="190" r="29"/><text x="430" y="194" text-anchor="middle">04</text><text x="430" y="235" text-anchor="middle">ECONOMY</text></g>
+          <g class="node" tabindex="0" role="button" aria-label="Контроль"><circle cx="500" cy="330" r="23"/><text x="500" y="334" text-anchor="middle">05</text><text x="500" y="370" text-anchor="middle">CONTROL</text></g>
+        </svg>
+        <div class="diagram-foot"><span>STRUCTURE / NOT TO SCALE</span><span>INTERACTION STUDY ↗</span></div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="products">
+      <div class="section-head"><div class="section-id">02 / PRODUCT SYSTEM</div><div><h2>Инструменты для реальной работы.</h2><p class="section-copy">Самостоятельные программные продукты, созданные вокруг конкретных рабочих процессов. Начинаем с системы управления СКОЛ CRM.</p></div></div>
+      <article class="product">
+        <div class="product-info"><span class="tag">01 / DESKTOP SOFTWARE</span><h3>СКОЛ CRM</h3><span class="pill">Продуктовая система</span><p>Управление клиентами, объектами, задачами и экономикой проектов в локальном приложении для Windows.</p><a class="cta" href="#contact"><i></i>Изучить продукт</a></div>
+        <div class="screen" aria-label="Схематичная композиция интерфейса; не является скриншотом CRM"><div class="screen-top"><i></i><i></i><i></i></div><div class="screen-ui"><aside class="screen-side"><b></b><b></b><b></b><b></b><b></b></aside><div class="screen-main"><div class="screen-title">WORKSPACE / OVERVIEW</div><div class="screen-cards"><i></i><i></i><i></i></div><div class="screen-table"><i></i><i></i><i></i><i></i></div></div></div><small style="position:absolute;right:18px;bottom:10px;font:9px var(--mono);color:#66706a">LAYOUT STUDY — REPLACE WITH VERIFIED PRODUCT CAPTURE</small></div>
+      </article>
+    </section>
+
+    <section class="section reveal" id="principles">
+      <div class="section-head"><div class="section-id">03 / OPERATIONAL MODEL</div><div><h2>От информации — к управляемому результату.</h2><p class="section-copy">Показываем структуру работы простым языком. Каждое обещание на сайте должно подтверждаться реальной функцией продукта.</p></div></div>
+      <div class="triple">
+        <article><strong>01 / INFORMATION</strong><h3>Информация</h3><p>Клиенты, заявки, объекты и контекст работы собраны в единой рабочей среде.</p></article>
+        <article><strong>02 / CONTROL</strong><h3>Управление</h3><p>Задачи, этапы и ответственность помогают видеть ход работы и текущие приоритеты.</p></article>
+        <article><strong>03 / ECONOMICS</strong><h3>Экономика</h3><p>Расчёты, бюджеты и отчётность — в рамках возможностей выбранной редакции CRM.</p></article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="platform">
+      <div class="platform"><div><div class="section-id">04 / PLATFORM PRINCIPLES</div><h2>Технологии должны быть понятными.</h2><p class="section-copy">Мы открыто описываем модель работы программ, требования, ограничения и способы получения обновлений. Доверие строится на точности, а не на громких обещаниях.</p></div><div class="platform-list"><div><span>Локальное хранение данных</span><small>01</small></div><div><span>Понятная модель лицензии</span><small>02</small></div><div><span>Версии и история изменений</span><small>03</small></div><div><span>Поддержка и документация</span><small>04</small></div></div></div>
+    </section>
+
+    <section class="final" id="contact"><div class="wrap"><div class="section-id">05 / NEXT STEP</div><h2>Найдём решение для ваших процессов.</h2><a class="cta" href="mailto:hello@skol-software.ru"><i></i>Обсудить продукт</a></div></section>
+  </main>
+  <footer><span>© SKOL SOFTWARE / CONCEPT 001</span><span>EXPERIMENTAL INDUSTRIAL / 2026</span></footer>
+</div>
+<script>
+const revealEls=[...document.querySelectorAll('.reveal')];
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');observer.unobserve(entry.target)}}),{threshold:.14});
+ revealEls.forEach(el=>observer.observe(el));
+}else revealEls.forEach(el=>el.classList.add('in'));
+document.querySelectorAll('.node').forEach(node=>{
+ const activate=()=>{document.querySelectorAll('.node').forEach(n=>n.classList.remove('active'));node.classList.add('active')};
+ node.addEventListener('click',activate);
+ node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();activate()}});
+});
+</script>
+</body>
+</html>
