@@ -55,7 +55,8 @@ test("homepage uses the approved experimental industrial art direction", () => {
   assert.match(styles, /--skol-lime:#a8e500/);
   assert.match(styles, /\.skol-system-visual/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
-  const homeSource = source.slice(source.indexOf("function home()"), source.indexOf("\\nfunction catalog()"));\n  assert.doesNotMatch(homeSource, /hero-monitor/);
+  const homeSource = source.slice(source.indexOf("function home()"), source.indexOf("\nfunction catalog()"));
+  assert.doesNotMatch(homeSource, /hero-monitor/);
 });
 test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
   assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
