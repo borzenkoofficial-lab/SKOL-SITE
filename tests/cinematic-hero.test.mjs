@@ -27,8 +27,8 @@ test("hero motion is frame-batched, pointer-aware and reduced-motion safe",()=>{
 });
 
 test("hero and shared design system support responsive breakpoints and both themes",()=>{
-  for(const breakpoint of ["1100","850","520","380"]) assert.ok(css.includes("max-width:"+breakpoint+"px"));
-  assert.ok(css.includes("prefers-reduced-motion:reduce"));
+  for(const breakpoint of ["1100","850","760","520","380"]) assert.ok(shared.includes("max-width:"+breakpoint+"px"));
+  assert.ok(shared.includes("prefers-reduced-motion:reduce"));
   assert.ok(css.includes(':root[data-theme="dark"]'));
   assert.ok(shared.includes(':root[data-theme="dark"]'));
   assert.ok(shared.includes(".site-header"));
