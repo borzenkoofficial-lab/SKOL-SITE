@@ -69,3 +69,20 @@ body:before{display:none}
   .blueprint-draw,.wordmark-overline path,.diagram-path{stroke-dashoffset:0}
   .cinematic-hero-diagram{transform:none}
 }
+
+:root[data-theme="dark"] .site-header{background:rgba(11,16,25,.94);border-color:rgba(255,255,255,.14)}
+:root[data-theme="dark"] .brand-caption,:root[data-theme="dark"] .desktop-nav a,:root[data-theme="dark"] .header-link{color:#aeb9c8}
+:root[data-theme="dark"] .desktop-nav a:hover,:root[data-theme="dark"] .desktop-nav a.active,:root[data-theme="dark"] .header-link:hover{color:#f8fafc}
+:root[data-theme="dark"] .theme-toggle{border-color:rgba(255,255,255,.2);color:#f8fafc}
+:root[data-theme="dark"] .theme-toggle:hover{background:#172231}
+:root[data-theme="dark"] .inner-hero,:root[data-theme="dark"] .home-products,:root[data-theme="dark"] .home-pillars,:root[data-theme="dark"] .home-method,:root[data-theme="dark"] .contact-section{background:#0f1722;color:#f8fafc}
+:root[data-theme="dark"] .home-story{background:#121e2b;color:#f8fafc}
+:root[data-theme="dark"] .home-story-copy p:not(.eyebrow){color:#b3bdca}
+:root[data-theme="dark"] .home-story-board,:root[data-theme="dark"] .catalog-featured,:root[data-theme="dark"] .catalog-product-card,:root[data-theme="dark"] .product-summary,:root[data-theme="dark"] .product-workflow,:root[data-theme="dark"] .product-capabilities,:root[data-theme="dark"] .product-limitations,:root[data-theme="dark"] .product-technical,:root[data-theme="dark"] .download-panel,:root[data-theme="dark"] .activation-step,:root[data-theme="dark"] .tariff-card,:root[data-theme="dark"] .home-product-folder,:root[data-theme="dark"] .home-pillar-folder,:root[data-theme="dark"] .home-method-step,:root[data-theme="dark"] .contact-form{background:#121e2b;border-color:rgba(255,255,255,.16);color:#f8fafc}
+:root[data-theme="dark"] .home-flow-node-final{background:#1c2a18;border-color:#b8ff00}
+:root[data-theme="dark"] .home-final-card,:root[data-theme="dark"] .footer{background:#080d14}
+:root[data-theme="dark"] .footer{color:#f8fafc}
+:root[data-theme="dark"] .footer-bottom{border-color:rgba(255,255,255,.18)}
+:root[data-theme="dark"] .contact-form input,:root[data-theme="dark"] .contact-form textarea,:root[data-theme="dark"] .contact-form select{background:#0b1019;border-color:rgba(255,255,255,.2);color:#f8fafc}
+:root[data-theme="dark"] .catalog-product-card:hover,:root[data-theme="dark"] .catalog-folder:hover,:root[data-theme="dark"] .home-product-folder:hover,:root[data-theme="dark"] .home-pillar-folder:hover{box-shadow:0 16px 40px rgba(0,0,0,.24)}
+@media(prefers-reduced-motion:reduce){.cinematic-hero,.cinematic-hero *,.cinematic-hero *:before,.cinematic-hero *:after{scroll-behavior:auto!important;animation:none!important;transition:none!important;transform:none!important}}
