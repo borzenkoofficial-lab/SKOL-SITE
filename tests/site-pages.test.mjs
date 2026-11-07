@@ -69,7 +69,7 @@ test("architectural editorial visual system is present across SKOL", () => {
   assert.match(styles, /#a8e500/);
   assert.match(shared, /\.site-header/);
   assert.match(shared, /\.inner-hero/);
-  assert.match(styles, /prefers-reduced-motion:reduce/);
+  assert.match(shared, /prefers-reduced-motion:reduce/);
 });
 test("homepage uses the dedicated cinematic motion controller and tariff motion remains scoped", () => {
   assert.match(source, /initCinematicHero/);
