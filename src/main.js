@@ -153,7 +153,7 @@ function home(){return `<main class="page-home platform-home">
     <div class="cinematic-hero-statement"><p class="eyebrow">СИСТЕМА КООРДИНАЦИИ ОПЕРАЦИЙ И ЛОГИКИ</p><h1>Программные продукты.<br><em>Связанные процессы.</em></h1><p class="cinematic-hero-description">Инструменты СКОЛ объединяют рабочие процессы, данные и решения в единой цифровой системе.</p>
       <div class="hero-actions cinematic-actions"><a class="button button-orange magnetic-control" href="/catalog"><span>Открыть каталог</span><i aria-hidden="true">↗</i></a><a class="hero-text-link magnetic-control" href="/catalog"><span>Наши решения</span><i aria-hidden="true">→</i></a></div>
     </div>
-    <div class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ: продукты, процессы и решения объединены в единую систему" role="img">
+    <div class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ: продукты, процессы и решения объединены в единую систему" role="group">
       <div class="diagram-heading"><span>FIG. 001 / SYSTEM ARCHITECTURE</span><span><i></i> LIVE SCHEMATIC</span></div>
       <svg class="diagram-svg" viewBox="0 0 620 390" fill="none" aria-hidden="true">
         <path class="diagram-path path-a" d="M310 195L110 80H24M310 195L510 80H596M310 195L110 310H24M310 195L510 310H596"/>
