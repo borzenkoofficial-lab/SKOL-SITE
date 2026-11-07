@@ -59,21 +59,28 @@ test("theme control is initialized and has an accessible label", () => {
   }
 });
 
-test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-monitor/);
-  assert.match(source, /site-header/);
-  assert.match(styles, /--accent:#a8e500/);
-  assert.match(styles, /\.hero-visual/);
-  assert.match(styles, /\.site-header/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("architectural editorial visual system is present across SKOL", () => {
+  const styles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
+  assert.match(source, /class="cinematic-hero section-pad"/);
+  assert.match(source, /data-cinematic-wordmark/);
+  assert.match(source, /diagram-module/);
+  assert.match(styles, /\.cinematic-hero/);
+  assert.match(styles, /#a8e500/);
+  assert.match(shared, /\.site-header/);
+  assert.match(shared, /\.inner-hero/);
+  assert.match(shared, /prefers-reduced-motion/);
 });
-test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+test("homepage uses the dedicated cinematic motion controller and tariff motion remains scoped", () => {
+  assert.match(source, /initCinematicHero/);
+  assert.doesNotMatch(source, /function setupParticles\(\)/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
   assert.match(source, /key-visual-plate/);
+  const motion = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
+  assert.match(motion, /requestAnimationFrame/);
+  assert.match(motion, /prefers-reduced-motion/);
+  assert.match(motion, /pointerleave/);
 });
 test("tariff page includes the 3D edition scene, interactive cards and request flow", () => {
   for (const token of ["tariff-hero-scene", "tariff-scene-core", "tariff-card-3d", "data-tariff-card", "comparison-table", "tariff-form"]) assert.ok(source.includes(token));
@@ -101,12 +108,13 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
   assert.match(styles, /prefers-reduced-motion/);
 });
 
-test("SKOL brand acronym is expanded in the homepage hero", () => {
+test("SKOL brand acronym is expanded in the cinematic homepage wordmark", () => {
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+  assert.match(source, /data-cinematic-wordmark/);
+  for (const letter of ['data-letter="С">С</span>','data-letter="К">К</span>','data-letter="О">О</span>','data-letter="Л">Л</span>']) {
+    assert.ok(source.includes(letter), "Missing wordmark letter: " + letter);
+  }
 });
-
 test("desktop navigation has four accessible interactive product links", () => {
   assert.match(source, /data-nav-item/);
   for (const label of ["Продукты","Платформа","Тарифы","Поддержка"]) assert.ok(source.includes("['"+label+"'"));
@@ -121,36 +129,42 @@ test("navigation hover uses a jelly animation, glow and accessible focus state",
   assert.match(styles, /prefers-reduced-motion:reduce/);
 });
 
-test("hero dashboard mockup uses a non-overlapping responsive layout", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /\.hero-monitor-main\s*\{[^}]*display:grid/s);
-  assert.match(styles, /grid-template-rows:auto auto auto minmax\(52px,1fr\) auto/);
-  assert.match(styles, /\.hero-monitor-metrics>div\s*\{[^}]*min-height:50px/s);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("cinematic hero diagram is responsive, accessible and free of the old 3D dashboard mockup", () => {
+  const heroStyles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.match(source, /diagram-module/);
+  assert.doesNotMatch(source, /hero-monitor/);
+  assert.match(heroStyles, /@media\(max-width:520px\)/);
+  assert.match(heroStyles, /prefers-reduced-motion:reduce/);
+  assert.match(heroStyles, /\.cinematic-hero-diagram/);
 });
-test("hero dashboard mockup has jelly hover and reduced-motion behavior", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /@keyframes hero-monitor-jelly/);
-  assert.match(styles, /\.hero-monitor:hover\s*\{/);
-  assert.match(styles, /animation:hero-monitor-jelly/);
-  assert.match(styles, /\.hero-monitor:hover\{animation:none!important\}/);
+test("cinematic hero diagram is responsive, accessible and free of the old 3D dashboard mockup", () => {
+  const heroStyles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.match(source, /diagram-module/);
+  assert.doesNotMatch(source, /hero-monitor/);
+  assert.match(heroStyles, /@media\(max-width:520px\)/);
+  assert.match(heroStyles, /prefers-reduced-motion:reduce/);
+  assert.match(heroStyles, /\.cinematic-hero-diagram/);
 });
-
-test("hero scene places dashboard and supporting elements into distinct layout areas", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /grid-template-areas:[\s\S]*"monitor panel"[\s\S]*"monitor float-top"[\s\S]*"float-right device"[\s\S]*"note note"/);
-  assert.match(styles, /\.hero-monitor\s*\{[\s\S]*grid-area:monitor/);
-  assert.match(styles, /\.hero-back-panel\s*\{[\s\S]*grid-area:panel/);
-  assert.match(styles, /\.hero-float-top\s*\{grid-area:float-top/);
-  assert.match(styles, /\.hero-float-right\s*\{grid-area:float-right/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("cinematic hero diagram is responsive, accessible and free of the old 3D dashboard mockup", () => {
+  const heroStyles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.match(source, /diagram-module/);
+  assert.doesNotMatch(source, /hero-monitor/);
+  assert.match(heroStyles, /@media\(max-width:520px\)/);
+  assert.match(heroStyles, /prefers-reduced-motion:reduce/);
+  assert.match(heroStyles, /\.cinematic-hero-diagram/);
 });
-test("hero scene stacks on mobile without absolute overlap", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /"monitor monitor"[\s\S]*"panel panel"[\s\S]*"float-top float-right"/);
-  assert.match(styles, /\.hero-mini-device\{display:none\}/);
+test("cinematic hero diagram is responsive, accessible and free of the old 3D dashboard mockup", () => {
+  const heroStyles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.match(source, /diagram-module/);
+  assert.doesNotMatch(source, /hero-monitor/);
+  assert.match(heroStyles, /@media\(max-width:520px\)/);
+  assert.match(heroStyles, /prefers-reduced-motion:reduce/);
+  assert.match(heroStyles, /\.cinematic-hero-diagram/);
 });
-
 test("homepage after hero is a five-chapter product story", () => {
   for (const marker of ["home-products","home-story","home-pillars","home-method","home-final"]) assert.ok(source.includes(marker));
   for (const heading of ["Программы, которые","Сначала понять","Четыре буквы","От запроса","Давайте найдём"]) assert.ok(source.includes(heading));
