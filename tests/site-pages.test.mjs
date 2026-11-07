@@ -35,32 +35,51 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(source, /theme-toggle/);
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /:root\[data-theme="dark"\]/);
-  assert.match(styles, /--canvas:#f5f2ed/);
+  assert.match(styles, /--canvas:#ffffff/);
   assert.match(styles, /prefers-reduced-motion/);
 });
+test("SKOL brand palette is white and lime across document, controls and both themes", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(html, /name="theme-color" content="#ffffff"/);
+  assert.match(styles, /--canvas:#ffffff/);
+  assert.match(styles, /--accent:#a8e500/);
+  assert.match(styles, /--accent-strong:#8fc500/);
+  assert.match(styles, /--accent:#b8ff00/);
+  assert.match(styles, /--ink:#202b3b/);
+  assert.ok(!styles.includes("#ef6a21") && !styles.includes("#dc5510") && !styles.includes("rgba(239,106,33"));
+  assert.match(source, /dark\?"#0b1019":"#ffffff"/);
+});
+
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
+  assert.ok(source.includes('["motion system",()=>initMotionSystem(document)]'));
   }
 });
 
-test("reference-driven visual system is present across SKOL", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-monitor/);
-  assert.match(source, /site-header/);
-  assert.match(styles, /--accent:#ef6a21/);
-  assert.match(styles, /\.hero-visual/);
-  assert.match(styles, /\.site-header/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("architectural editorial visual system is present across SKOL", () => {
+  const styles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
+  assert.match(source, /class="platform-hero cinematic-hero section-pad"/);
+  assert.match(source, /data-cinematic-wordmark/);
+  assert.match(source, /diagram-module/);
+  assert.match(styles, /\.cinematic-hero/);
+  assert.match(styles, /#a8e500/);
+  assert.match(shared, /\.site-header/);
+  assert.match(shared, /\.inner-hero/);
+  assert.match(shared, /prefers-reduced-motion:reduce/);
 });
-test("homepage and tariff particle layers are scoped DOM effects, not canvas renderers", () => {
-  assert.match(source, /function setupParticles\(\)\{const scene=document\.querySelector\("\.hero-visual"\)/);
+test("homepage uses the dedicated cinematic motion controller and tariff motion remains scoped", () => {
+  assert.match(source, /initCinematicHero/);
+  assert.doesNotMatch(source, /function setupParticles\(\)/);
   assert.match(source, /function setupTariffMotion\(\)/);
   assert.match(source, /tariff-particle-field/);
-  assert.match(source, /key-visual-plate/);
+  const motion = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
+  assert.match(motion, /requestAnimationFrame/);
+  assert.match(motion, /prefers-reduced-motion/);
+  assert.match(motion, /pointerleave/);
 });
 test("tariff page includes the 3D edition scene, interactive cards and request flow", () => {
   for (const token of ["tariff-hero-scene", "tariff-scene-core", "tariff-card-3d", "data-tariff-card", "comparison-table", "tariff-form"]) assert.ok(source.includes(token));
@@ -88,12 +107,13 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
   assert.match(styles, /prefers-reduced-motion/);
 });
 
-test("SKOL brand acronym is expanded in the homepage hero", () => {
+test("SKOL brand acronym is expanded in the cinematic homepage wordmark", () => {
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+  assert.match(source, /data-cinematic-wordmark/);
+  for (const letter of ['data-letter="С">С</span>','data-letter="К">К</span>','data-letter="О">О</span>','data-letter="Л">Л</span>']) {
+    assert.ok(source.includes(letter), "Missing wordmark letter: " + letter);
+  }
 });
-
 test("desktop navigation has four accessible interactive product links", () => {
   assert.match(source, /data-nav-item/);
   for (const label of ["Продукты","Платформа","Тарифы","Поддержка"]) assert.ok(source.includes("['"+label+"'"));
@@ -104,40 +124,39 @@ test("navigation hover uses a jelly animation, glow and accessible focus state",
   assert.match(styles, /@keyframes nav-jelly/);
   assert.match(styles, /\.desktop-nav a:hover/);
   assert.match(styles, /\.desktop-nav a:focus-visible/);
-  assert.match(styles, /box-shadow:0 0 8px rgba\(239,106,33/);
+  assert.match(styles, /box-shadow:0 0 8px rgba\(168,229,0/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
 });
 
-test("hero dashboard mockup uses a non-overlapping responsive layout", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /\.hero-monitor-main\s*\{[^}]*display:grid/s);
-  assert.match(styles, /grid-template-rows:auto auto auto minmax\(52px,1fr\) auto/);
-  assert.match(styles, /\.hero-monitor-metrics>div\s*\{[^}]*min-height:50px/s);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("cinematic hero uses a clear editorial hierarchy and 2D system diagram", () => {
+  assert.match(source, /cinematic-hero-statement/);
+  assert.match(source, /cinematic-hero-diagram/);
+  assert.match(source, /diagram-module/);
+  assert.doesNotMatch(source, /hero-monitor/);
 });
-test("hero dashboard mockup has jelly hover and reduced-motion behavior", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /@keyframes hero-monitor-jelly/);
-  assert.match(styles, /\.hero-monitor:hover\s*\{/);
-  assert.match(styles, /animation:hero-monitor-jelly/);
-  assert.match(styles, /\.hero-monitor:hover\{animation:none!important\}/);
+test("cinematic hero pointer motion is frame-batched and reduced-motion aware", () => {
+  const motion = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
+  const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
+  assert.match(motion, /requestAnimationFrame/);
+  assert.match(motion, /pointerleave/);
+  assert.match(motion, /magnetic-control/);
+  assert.match(shared, /prefers-reduced-motion:reduce/);
 });
-
-test("hero scene places dashboard and supporting elements into distinct layout areas", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /grid-template-areas:[\s\S]*"monitor panel"[\s\S]*"monitor float-top"[\s\S]*"float-right device"[\s\S]*"note note"/);
-  assert.match(styles, /\.hero-monitor\s*\{[\s\S]*grid-area:monitor/);
-  assert.match(styles, /\.hero-back-panel\s*\{[\s\S]*grid-area:panel/);
-  assert.match(styles, /\.hero-float-top\s*\{grid-area:float-top/);
-  assert.match(styles, /\.hero-float-right\s*\{grid-area:float-right/);
-  assert.match(styles, /@media\(max-width:600px\)/);
+test("cinematic hero system diagram exposes four independent product destinations", () => {
+  const start = source.indexOf('class="cinematic-hero-diagram"');
+  const end = source.indexOf("cinematic-hero-footer", start);
+  const diagram = source.slice(start, end);
+  assert.match(diagram, /module-a/);
+  assert.match(diagram, /module-b/);
+  assert.match(diagram, /module-c/);
+  assert.match(diagram, /module-d/);
+  assert.match(diagram, /href=/);
 });
-test("hero scene stacks on mobile without absolute overlap", () => {
-  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(styles, /"monitor monitor"[\s\S]*"panel panel"[\s\S]*"float-top float-right"/);
-  assert.match(styles, /\.hero-mini-device\{display:none\}/);
+test("cinematic hero has explicit mobile and tablet layout breakpoints", () => {
+  const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
+  for (const width of ["850","760","520","380"]) assert.ok(shared.includes("max-width:"+width+"px"));
+  assert.match(shared, /prefers-reduced-motion:reduce/);
 });
-
 test("homepage after hero is a five-chapter product story", () => {
   for (const marker of ["home-products","home-story","home-pillars","home-method","home-final"]) assert.ok(source.includes(marker));
   for (const heading of ["Программы, которые","Сначала понять","Четыре буквы","От запроса","Давайте найдём"]) assert.ok(source.includes(heading));
@@ -248,12 +267,10 @@ test("homepage product mockup uses the same version constant as the download pag
 test("business edition copy matches the published license feature matrix", () => {
   assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
   assert.doesNotMatch(source, /расширенная аналитика/);
-  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("Последние заметки<br><em>версии 1.24.0.</em>") || source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
-
- 
 test("contact form text uses real line breaks and reports clipboard failures accurately", () => {
   assert.match(source, /\.join\("\\n"\)/);
   assert.match(source, /message\+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"/);
@@ -359,12 +376,11 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
   assert.match(styles, /repeat\(var\(--plan-count,3\),minmax\(35px,\.6fr\)\)/);
 });
 
-test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+test("major software scenes expose meaningful accessible semantics", () => {
+  assert.match(source, /class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ:[^"]+" role="group"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
-
 test("page-level two-column layouts allow grid children to shrink without horizontal overflow", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   for (const selector of [
@@ -410,12 +426,13 @@ test("tariff cards have one source of truth for selection and queued pointer fra
   const start = source.indexOf("function setupForms()");
   const end = source.indexOf("\nfunction setupHomeInteractions()", start);
   const formSetup = source.slice(start, end);
-  assert.doesNotMatch(formSetup, /querySelectorAll\("\[data-plan\]"\)/);
+  assert.doesNotMatch(formSetup, /querySelectorAll\("\\[data-plan\\]"\)/);
   const heroLeaveCount = (source.match(/scene\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;/g) || []).length;
-  assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
+  assert.equal(heroLeaveCount, 1, "Tariff hero should cancel its pending tilt frame");
   assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
+  const cinematic = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
+  assert.match(cinematic, /hero\.addEventListener\("pointerleave",pointerLeave/);
 });
-
 test("selected tariff applies its own computer limit to the request form", () => {
   assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \[name="seats"\]'\)/);
   assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
