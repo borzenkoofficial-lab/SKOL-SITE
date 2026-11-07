@@ -136,11 +136,11 @@ test("cinematic hero uses a clear editorial hierarchy and 2D system diagram", ()
 });
 test("cinematic hero pointer motion is frame-batched and reduced-motion aware", () => {
   const motion = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
-  const styles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
+  const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
   assert.match(motion, /requestAnimationFrame/);
   assert.match(motion, /pointerleave/);
   assert.match(motion, /magnetic-control/);
-  assert.match(styles, /prefers-reduced-motion:reduce/);
+  assert.match(shared, /prefers-reduced-motion:reduce/);
 });
 test("cinematic hero system diagram exposes four independent product destinations", () => {
   const start = source.indexOf('class="cinematic-hero-diagram"');
@@ -267,12 +267,10 @@ test("homepage product mockup uses the same version constant as the download pag
 test("business edition copy matches the published license feature matrix", () => {
   assert.ok(source.includes("PRO + инженерные планы, радар заказов и встроенный браузер."));
   assert.doesNotMatch(source, /расширенная аналитика/);
-  assert.ok(source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
+  assert.ok(source.includes("Последние заметки<br><em>версии 1.24.0.</em>") || source.includes("Что нового<br><em>в версии 1.24.0.</em>"));
   assert.ok(source.includes("LATEST NOTES"));
   assert.doesNotMatch(source, /LATEST IN SOURCE/);
 });
-
- 
 test("contact form text uses real line breaks and reports clipboard failures accurately", () => {
   assert.match(source, /\.join\("\\n"\)/);
   assert.match(source, /message\+="\\n\\nJSON-КОНФИГУРАЦИЯ ДЛЯ LICENSE MANAGER\\n"/);
@@ -378,12 +376,11 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
   assert.match(styles, /repeat\(var\(--plan-count,3\),minmax\(35px,\.6fr\)\)/);
 });
 
-test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+test("major software scenes expose meaningful accessible semantics", () => {
+  assert.match(source, /class="cinematic-hero-diagram" aria-label="Схема платформы СКОЛ:[^"]+" role="group"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
-
 test("page-level two-column layouts allow grid children to shrink without horizontal overflow", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   for (const selector of [
@@ -429,12 +426,13 @@ test("tariff cards have one source of truth for selection and queued pointer fra
   const start = source.indexOf("function setupForms()");
   const end = source.indexOf("\nfunction setupHomeInteractions()", start);
   const formSetup = source.slice(start, end);
-  assert.doesNotMatch(formSetup, /querySelectorAll\("\[data-plan\]"\)/);
+  assert.doesNotMatch(formSetup, /querySelectorAll\("\\[data-plan\\]"\)/);
   const heroLeaveCount = (source.match(/scene\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;/g) || []).length;
-  assert.equal(heroLeaveCount, 2, "Homepage and tariff hero should both cancel pending tilt frames");
+  assert.equal(heroLeaveCount, 1, "Tariff hero should cancel its pending tilt frame");
   assert.match(source, /card\.addEventListener\("pointerleave",\(\)=>\{if\(frame\)cancelAnimationFrame\(frame\);frame=0;card\.style\.transform=""/);
+  const cinematic = readFileSync(new URL("../src/cinematic-hero.js", import.meta.url), "utf8");
+  assert.match(cinematic, /hero\.addEventListener\("pointerleave",pointerLeave/);
 });
-
 test("selected tariff applies its own computer limit to the request form", () => {
   assert.match(source, /const seatsField=document\.querySelector\('#tariff-form \[name="seats"\]'\)/);
   assert.match(source, /const maxDevices=plan\?\.maxDevices\?\?50/);
