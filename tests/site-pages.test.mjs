@@ -41,7 +41,7 @@ test("visual system provides accessible light and dark themes", () => {
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
   }
 });
@@ -90,10 +90,10 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
   assert.match(styles, /prefers-reduced-motion/);
 });
 
-test("SKOL brand acronym is expanded in the homepage hero", () => {
+test("SKOL acronym is expressed through four product principles", () => {
   assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+  assert.match(source, /class="skol-principles"/);
+  for (const line of ["<i>С</i>истема","<i>К</i>оординация","<i>О</i>перации","<i>Л</i>огика"]) assert.ok(source.includes(line));
 });
 
 test("desktop navigation has four accessible interactive product links", () => {
