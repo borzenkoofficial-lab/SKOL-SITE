@@ -39,5 +39,5 @@ test("download release status remains live and accurately describes missing inst
   assert.match(main,/function setupReleaseStatus\(\)/);
   assert.match(main,/GitHub Releases недоступен/);
   assert.match(main,/установочные файлы к нему не прикреплены/);
-  assert.match(main,/\["release status",setupReleaseStatus\]/);
+  assert.match(main,/\["release status",setupReleaseStatus\]/);\n  assert.match(main,/id="release-status" role="status"/);\n  assert.match(main,/Версия исходного кода сама по себе не означает/);\n  assert.match(main,/Проверьте релиз/);
 });
