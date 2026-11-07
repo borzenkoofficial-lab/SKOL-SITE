@@ -62,7 +62,7 @@ test("theme control is initialized and has an accessible label", () => {
 test("architectural editorial visual system is present across SKOL", () => {
   const styles = readFileSync(new URL("../src/cinematic-hero.css", import.meta.url), "utf8");
   const shared = readFileSync(new URL("../src/architectural-system.css", import.meta.url), "utf8");
-  assert.match(source, /class="cinematic-hero section-pad"/);
+  assert.match(source, /class="platform-hero cinematic-hero section-pad"/);
   assert.match(source, /data-cinematic-wordmark/);
   assert.match(source, /diagram-module/);
   assert.match(styles, /\.cinematic-hero/);
