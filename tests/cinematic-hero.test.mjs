@@ -30,7 +30,7 @@ test("hero and shared design system support responsive breakpoints and both them
   for(const breakpoint of ["1100","850","760","520","380"]) assert.ok(shared.includes("max-width:"+breakpoint+"px"));
   assert.ok(shared.includes("prefers-reduced-motion:reduce"));
   assert.ok(css.includes(':root[data-theme="dark"]'));
-  assert.ok(shared.includes(':root[data-theme="dark"]'));
+  assert.ok(shared.includes(':root[data-theme="dark"]'));\n  assert.ok(shared.includes(":root[data-theme=\"dark\"] .inner-hero h1"));
   assert.ok(shared.includes(".site-header"));
   assert.ok(shared.includes(".inner-hero"));
 });
