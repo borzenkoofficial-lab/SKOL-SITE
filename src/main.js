@@ -446,6 +446,7 @@ async function boot(){
     ["catalog folders",setupCatalogFolders],
     ["home interactions",setupHomeInteractions],
     ["motion",setupMotion],
+    ["particles",setupParticles],
     ["motion system",()=>initMotionSystem(document)],
     ["CRM scroll showcase",()=>initCrmScrollShowcase(document)],
     ["demo",setupDemo],
