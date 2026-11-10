@@ -1,7 +1,9 @@
 import "./styles.css";
 import "./visual-stability.css";
 import "./motion-system.css";
+import "./crm-scroll-showcase.css";
 import { initMotionSystem } from "./motion-system.js";
+import { initCrmScrollShowcase } from "./crm-scroll-showcase.js";
 import { normalizePublicTariffConfig } from "./tariff-config.js";
 const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
@@ -445,6 +447,7 @@ async function boot(){
     ["home interactions",setupHomeInteractions],
     ["motion",setupMotion],
     ["motion system",()=>initMotionSystem(document)],
+    ["CRM scroll showcase",()=>initCrmScrollShowcase(document)],
     ["demo",setupDemo],
     ["forms",setupForms],
     ["tariff motion",setupTariffMotion],
