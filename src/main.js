@@ -120,7 +120,7 @@ function mock(){return '<div class="product-stage" id="product-demo"><div class=
 function home(){return `<main class="page-home platform-home">
 <section class="platform-hero section-pad skol-film-hero">
 <div class="platform-hero-top"><span class="hero-top-label"><i class="status-dot"></i> СКОЛ / SOFTWARE ECOSYSTEM</span><span>01 / WORKSPACE SYSTEM</span></div>
-<div class="hero-film" data-hero-film>
+<div class="hero-film" data-hero-film aria-label="Кинематографическая презентация программной платформы СКОЛ">
   <video class="hero-film-video" data-hero-film-video autoplay muted loop playsinline aria-hidden="true"></video>
   <canvas class="hero-film-canvas" data-hero-film-canvas aria-hidden="true"></canvas>
   <div class="hero-film-vignette"></div>
