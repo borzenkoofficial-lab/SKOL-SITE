@@ -2,8 +2,10 @@ import "./styles.css";
 import "./visual-stability.css";
 import "./motion-system.css";
 import "./crm-scroll-showcase.css";
+import "./hero-film.css";
 import { initMotionSystem } from "./motion-system.js";
 import { initCrmScrollShowcase } from "./crm-scroll-showcase.js";
+import { initHeroFilm } from "./hero-film.js";
 import { normalizePublicTariffConfig } from "./tariff-config.js";
 const VERSION = "1.25.0";
 const RELEASES = "https://github.com/borzenkoofficial-lab/struktura-crm-source/releases";
@@ -116,10 +118,44 @@ function footer(){return '<footer class="footer"><div class="footer-top"><div cl
 function contact(){return '<section class="contact-section section-pad" id="contact"><div class="section-kicker"><span>06 / СВЯЗЬ</span><span>ОБРАТНАЯ СВЯЗЬ</span></div><div class="contact-grid"><div><p class="eyebrow">ЕСТЬ ВОПРОС ПО СКОЛ?</p><h2>Давайте обсудим<br><em>вашу задачу.</em></h2><p class="muted">Оставьте тему обращения. Сайт подготовит текст сообщения для отправки по согласованному каналу связи.</p></div><form class="contact-form" id="contact-form"><label>Как к вам обращаться<input name="name" placeholder="Ваше имя" required maxlength="80"></label><label>Контакт для ответа<input name="contact" placeholder="Телефон, Telegram или email" required maxlength="120"></label><label>Тема обращения<select name="topic"><option>Хочу купить СКОЛ</option><option>Консультация по тарифам</option><option>Установка и активация</option><option>Сотрудничество</option><option>Техническая поддержка</option></select></label><label>Сообщение<textarea name="message" placeholder="Опишите задачу или вопрос" rows="3" maxlength="1200"></textarea></label><button class="button button-red" type="submit">Скопировать обращение ↗</button><p class="form-hint">Форма пока не отправляет данные на сервер — она подготовит текст обращения для копирования.</p></form></div></section>'}
 function mock(){return '<div class="product-stage" id="product-demo"><div class="stage-meta"><span><i class="live-dot"></i> ИНТЕРФЕЙС СКОЛ</span><span>01 — 04 / ПРЕВЬЮ</span></div><div class="app-window"><div class="app-topbar"><div class="window-dots"><i></i><i></i><i></i></div><span class="app-title">СКОЛ <b>/</b> Рабочее пространство</span><span class="app-top-right">ЛОКАЛЬНЫЙ РЕЖИМ <i></i></span></div><div class="app-layout"><aside class="app-sidebar"><div class="app-mini-logo">С</div><div class="app-side-group"><span>РАБОТА</span><b class="side-active">▦ <small>Обзор</small></b><b>◫ <small>Заявки</small></b><b>⌂ <small>Объекты</small></b><b>◷ <small>Задачи</small></b></div><div class="app-side-group"><span>УПРАВЛЕНИЕ</span><b>▤ <small>Сметы</small></b><b>⌁ <small>Производство</small></b><b>◈ <small>Финансы</small></b></div><div class="sidebar-bottom">СКОЛ <small>DESKTOP '+VERSION+'</small></div></aside><div class="app-main"><div class="app-heading"><div><small>РАБОЧЕЕ ПРОСТРАНСТВО</small><h3 id="demo-title">Общая картина работы</h3></div><span class="app-avatar">С</span></div><div class="demo-tabs"><button class="demo-tab active" data-demo="overview" aria-pressed="true" aria-controls="demo-content">Обзор</button><button class="demo-tab" data-demo="objects" aria-pressed="false" aria-controls="demo-content">Объекты</button><button class="demo-tab" data-demo="estimates" aria-pressed="false" aria-controls="demo-content">Сметы</button><button class="demo-tab" data-demo="finance" aria-pressed="false" aria-controls="demo-content">Финансы</button></div><div id="demo-content"><div class="metric-row"><div class="metric-card"><span>АКТИВНЫЕ ЗАЯВКИ</span><strong>18</strong><small>В работе</small></div><div class="metric-card"><span>ОБЪЕКТЫ</span><strong>07</strong><small>Текущие проекты</small></div><div class="metric-card"><span>ЗАДАЧИ НА НЕДЕЛЮ</span><strong>24</strong><small>Планирование</small></div></div><div class="demo-lower"><div class="demo-panel"><div class="panel-title">Последние заявки <span>Все заявки ↗</span></div><div class="demo-line"><i>01</i><div><b>Демонтаж помещения</b><small>Москва · Коммерческий объект</small></div><em>В РАБОТЕ</em></div><div class="demo-line"><i>02</i><div><b>Подготовка объекта</b><small>Московская область</small></div><em>НОВАЯ</em></div><div class="demo-line"><i>03</i><div><b>Комплексная отделка</b><small>Москва · Частный заказ</small></div><em>РАСЧЁТ</em></div></div><div class="demo-panel demo-chart"><div class="panel-title">Динамика работы <span>30 дней</span></div><div class="chart-bars">'+[35,52,43,70,58,84,66,100,77,91].map(x=>'<i style="--h:'+x+'%"></i>').join("")+'</div><div class="chart-labels"><span>01</span><span>10</span><span>20</span><span>30</span></div></div></div></div></div></div><div class="stage-caption"><span>01 — ИНТЕРФЕЙС</span><span>Демонстрационный макет · данные условные</span><span>СКОЛ / DESKTOP</span></div><div class="floating-chip chip-a"><b>⌘</b><span>Всё в одной системе<small>От заявки до результата</small></span></div><div class="floating-chip chip-b"><b>◉</b><span>Без обязательного облака<small>Локальная база данных</small></span></div></div>'}
 function home(){return `<main class="page-home platform-home">
-<section class="platform-hero section-pad"><div class="hero-background-grid"></div><div class="platform-hero-top"><span class="hero-top-label"><i class="status-dot"></i> ПРОГРАММНЫЕ ПРОДУКТЫ СКОЛ</span><span>01 / DIGITAL WORKSPACE</span></div>
-<div class="hero-main"><div class="platform-hero-copy"><p class="eyebrow">РАСШИФРОВКА БРЕНДА СКОЛ</p><h1 class="skol-expansion" aria-label="Система координации операций и логики"><span><i>С</i>истема</span><span><i>К</i>оординации</span><span><i>О</i>пераций</span><span><i>Л</i>огики.</span></h1><p class="platform-lead">Создаём программные инструменты, которые связывают рабочие процессы, данные и решения в единую систему.</p><div class="hero-actions"><a class="button button-orange" href="/catalog">Выбрать продукт <span>↗</span></a><a class="hero-text-link" href="/#about">Как устроена платформа <span>→</span></a></div><a class="hero-product-shortcut" href="/products/skol-crm"><span class="shortcut-icon">S</span><span><small>ПЕРВЫЙ ПРОДУКТ СКОЛ</small><b>СКОЛ CRM <i>·</i> Windows</b></span><span class="shortcut-arrow">↗</span></a></div>
-<div class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"><div class="hero-scene-halo"></div><div class="hero-floor"><span>SKOL / SOFTWARE ECOSYSTEM</span><i></i></div><div class="hero-back-panel"><span>PRODUCTS</span><b>01—∞</b><small>TOOLS<br>THAT WORK</small></div><div class="hero-monitor"><div class="hero-monitor-top"><span class="monitor-dots"><i></i><i></i><i></i></span><b>СКОЛ <i>/</i> WORKSPACE</b><small>LOCAL</small></div><div class="hero-monitor-body"><aside class="hero-monitor-side"><b>S</b><i></i><i></i><i></i><i></i><small>СКОЛ</small></aside><div class="hero-monitor-main"><span>РАБОЧЕЕ ПРОСТРАНСТВО / ОБЗОР</span><strong>Работа<br>под контролем.</strong><div class="hero-monitor-metrics"><div><b>18</b><small>ЗАЯВКИ</small></div><div><b>07</b><small>ОБЪЕКТЫ</small></div><div><b>24</b><small>ЗАДАЧИ</small></div></div><div class="hero-monitor-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="hero-monitor-lines"><i></i><i></i><i></i></div></div></div><div class="hero-monitor-base"></div></div><div class="hero-floating-card hero-float-top"><span class="float-icon">⌘</span><div><b>Все процессы</b><small>В одном пространстве</small></div></div><div class="hero-floating-card hero-float-right"><span class="float-icon">↗</span><div><b>Локальная работа</b><small>Данные на вашем ПК</small></div></div><div class="hero-mini-device"><span>СКОЛ</span><b>CRM</b><i></i><small>WINDOWS APP</small></div><div class="hero-orange-route"><i></i><i></i><i></i></div><div class="hero-visual-note">PRODUCT 001 <span>·</span> REAL SOFTWARE</div></div></div>
-<div class="hero-bottom-metrics"><div><strong>01</strong><span>Продукт доступен<br>в каталоге</span></div><div><strong>10 / 11</strong><span>Windows<br>desktop</span></div><div><strong>LOCAL</strong><span>Локальные данные<br>и работа офлайн</span></div><div class="hero-scroll-note">SCROLL TO EXPLORE <span>↓</span></div></div></section>
+<section class="platform-hero section-pad skol-film-hero">
+<div class="platform-hero-top"><span class="hero-top-label"><i class="status-dot"></i> СКОЛ / SOFTWARE ECOSYSTEM</span><span>01 / WORKSPACE SYSTEM</span></div>
+<div class="hero-film" data-hero-film aria-label="Кинематографическая презентация программной платформы СКОЛ">
+  <video class="hero-film-video" data-hero-film-video autoplay muted loop playsinline aria-hidden="true"></video>
+  <canvas class="hero-film-canvas" data-hero-film-canvas aria-hidden="true"></canvas>
+  <div class="hero-film-vignette"></div>
+  <div class="hero-film-content">
+    <div class="hero-film-copy">
+      <p class="hero-film-kicker"><i></i> ПРОГРАММНАЯ СРЕДА ДЛЯ РЕАЛЬНОЙ РАБОТЫ</p>
+      <h1>Вся система<br>работы — <em>в одном месте.</em></h1>
+      <p class="hero-film-lead">Заявки, объекты, сметы, производство и финансы связаны в едином рабочем пространстве СКОЛ.</p>
+      <div class="hero-film-search" role="search">
+        <span class="hero-search-mark" aria-hidden="true">⌕</span>
+        <input data-hero-search type="search" autocomplete="off" spellcheck="false" aria-label="Поиск возможностей СКОЛ" placeholder="Найдите нужный инструмент...">
+        <span class="hero-search-hint" aria-hidden="true">ENTER ↵</span>
+      </div>
+      <div class="hero-film-query-tags" aria-label="Примеры возможностей">
+        <button type="button" data-hero-query="Расчёт сметы и стоимости работ">Расчёт смет</button>
+        <button type="button" data-hero-query="Контроль объектов и бригад">Объекты и бригады</button>
+        <button type="button" data-hero-query="Финансы и прибыль по проектам">Финансы</button>
+      </div>
+      <div class="hero-film-actions">
+        <a class="hero-film-primary" href="/products/skol-crm">Открыть СКОЛ CRM <span>↗</span></a>
+        <a class="hero-film-secondary" href="/catalog">Все продукты</a>
+      </div>
+    </div>
+    <div class="hero-film-orbit" aria-hidden="true">
+      <div class="hero-film-orbit-ring ring-one"></div><div class="hero-film-orbit-ring ring-two"></div>
+      <div class="hero-film-core"><span>СКОЛ</span><b>CRM</b><i>LOCAL WORKSPACE</i></div>
+      <div class="hero-film-float film-card-objects"><small>01 / OBJECTS</small><b>07</b><span>Объектов в работе</span><i class="film-card-line"></i></div>
+      <div class="hero-film-float film-card-estimate"><small>02 / ESTIMATE</small><b>Смета <em>↗</em></b><span>Расчёт и трудоёмкость</span></div>
+      <div class="hero-film-float film-card-finance"><small>03 / FINANCE</small><b>Финансы</b><span>План · факт · прибыль</span><div class="film-finance-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="hero-film-coordinate">55°45' N <span>/</span> 37°37' E</div>
+    </div>
+  </div>
+  <div class="hero-film-bottom"><span>СКОЛ CRM / РАБОЧАЯ СИСТЕМА</span><span>УПРАВЛЕНИЕ · РАСЧЁТ · КОНТРОЛЬ</span><span class="hero-film-scroll">SCROLL TO EXPLORE <i>↓</i></span></div>
+</div>
+</section>
 
 <section class="home-products section-pad" id="products">
 <div class="home-section-top"><span>02 / DIGITAL PRODUCTS</span><span>КАТАЛОГ ПРОГРАММ СКОЛ</span></div>
@@ -449,6 +485,7 @@ async function boot(){
     ["particles",setupParticles],
     ["motion system",()=>initMotionSystem(document)],
     ["CRM scroll showcase",()=>initCrmScrollShowcase(document)],
+    ["cinematic hero",()=>initHeroFilm(document)],
     ["demo",setupDemo],
     ["forms",setupForms],
     ["tariff motion",setupTariffMotion],
