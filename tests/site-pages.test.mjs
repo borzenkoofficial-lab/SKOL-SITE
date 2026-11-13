@@ -35,14 +35,27 @@ test("visual system provides accessible light and dark themes", () => {
   assert.match(source, /theme-toggle/);
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   assert.match(styles, /:root\[data-theme="dark"\]/);
-  assert.match(styles, /--canvas:#f5f2ed/);
+  assert.match(styles, /--canvas:#ffffff/);
   assert.match(styles, /prefers-reduced-motion/);
 });
+test("SKOL brand palette is white and lime across document, controls and both themes", () => {
+  const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(html, /name="theme-color" content="#ffffff"/);
+  assert.match(styles, /--canvas:#ffffff/);
+  assert.match(styles, /--accent:#a8e500/);
+  assert.match(styles, /--accent-strong:#8fc500/);
+  assert.match(styles, /--accent:#b8ff00/);
+  assert.match(styles, /--ink:#202b3b/);
+  assert.ok(!styles.includes("#ef6a21") && !styles.includes("#dc5510") && !styles.includes("rgba(239,106,33"));
+  assert.match(source, /dark\?"#0b1019":"#ffffff"/);
+});
+
 test("theme control is initialized and has an accessible label", () => {
   assert.match(source, /aria-label="Включить тёмную тему"/);
   assert.match(source, /const setupTasks=\[/);
-  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","particles","tariff motion","tariff selection"]) {
+  for (const setup of ["theme","catalog folders","home interactions","motion","demo","forms","tariff motion","tariff selection"]) {
     assert.ok(source.includes('["' + setup + '",setup'));
+  assert.ok(source.includes('["motion system",()=>initMotionSystem(document)]'));
   }
 });
 
@@ -52,7 +65,7 @@ test("reference-driven visual system is present across SKOL", () => {
   assert.match(source, /data-hero-film-video/);
   assert.match(source, /hero-film-search/);
   assert.match(source, /site-header/);
-  assert.match(styles, /--accent:#ef6a21/);
+  assert.match(styles, /--accent:#a8e500/);
   assert.match(styles, /\.hero-visual/);
   assert.match(styles, /\.site-header/);
   assert.match(styles, /@media\(max-width:600px\)/);
@@ -106,7 +119,7 @@ test("navigation hover uses a jelly animation, glow and accessible focus state",
   assert.match(styles, /@keyframes nav-jelly/);
   assert.match(styles, /\.desktop-nav a:hover/);
   assert.match(styles, /\.desktop-nav a:focus-visible/);
-  assert.match(styles, /box-shadow:0 0 8px rgba\(239,106,33/);
+  assert.match(styles, /box-shadow:0 0 8px rgba\(168,229,0/);
   assert.match(styles, /prefers-reduced-motion:reduce/);
 });
 
