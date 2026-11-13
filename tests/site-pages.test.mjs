@@ -48,8 +48,9 @@ test("theme control is initialized and has an accessible label", () => {
 
 test("reference-driven visual system is present across SKOL", () => {
   const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
-  assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /hero-monitor/);
+  assert.match(source, /hero-film-content/);
+  assert.match(source, /data-hero-film-video/);
+  assert.match(source, /hero-film-search/);
   assert.match(source, /site-header/);
   assert.match(styles, /--accent:#ef6a21/);
   assert.match(styles, /\.hero-visual/);
@@ -88,10 +89,11 @@ test("folder reveal has hover, keyboard, touch and reduced-motion styling", () =
   assert.match(styles, /prefers-reduced-motion/);
 });
 
-test("SKOL brand acronym is expanded in the homepage hero", () => {
-  assert.match(source, /Система координации операций и логики/);
-  assert.match(source, /class="skol-expansion"/);
-  for (const line of ["<i>С</i>истема","<i>К</i>оординации","<i>О</i>пераций","<i>Л</i>огики."]) assert.ok(source.includes(line));
+test("homepage hero presents the SKOL software system in the cinematic experience", () => {
+  assert.match(source, /Вся система<br>работы — <em>в одном месте\.<\/em>/);
+  assert.match(source, /data-hero-search/);
+  assert.match(source, /data-hero-query/);
+  assert.match(source, /initHeroFilm/);
 });
 
 test("desktop navigation has four accessible interactive product links", () => {
@@ -360,7 +362,8 @@ test("tariff comparison columns follow the number of enabled plans and remain sc
 });
 
 test("major decorative software scenes expose meaningful image semantics", () => {
-  assert.match(source, /class="hero-visual" role="img" aria-label="Изометрическая композиция с интерфейсом СКОЛ CRM"/);
+  assert.match(source, /class="hero-film" data-hero-film/);
+  assert.match(source, /aria-label="Кинематографическая презентация программной платформы СКОЛ"/);
   assert.match(source, /class="product-detail-visual" role="img" aria-label="Иллюстративный макет интерфейса СКОЛ CRM"/);
   assert.match(source, /class="tariff-hero-scene" role="img" aria-label="Объёмная визуализация лицензий СКОЛ"/);
 });
